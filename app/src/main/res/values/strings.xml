@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MobileClient</string>
+    <string name="device_name">Device name</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
