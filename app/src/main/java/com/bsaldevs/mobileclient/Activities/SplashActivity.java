@@ -1,17 +1,13 @@
-package com.bsaldevs.mobileclient;
+package com.bsaldevs.mobileclient.Activities;
 
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.animation.LinearInterpolator;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.bsaldevs.mobileclient.Activities.FirstConnectionActivity;
+import com.bsaldevs.mobileclient.R;
 
 public class SplashActivity extends AppCompatActivity {
 

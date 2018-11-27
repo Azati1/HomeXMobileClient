@@ -9,21 +9,18 @@ import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bsaldevs.mobileclient.Activities.MainActivity;
+import com.bsaldevs.mobileclient.Activities.LampSettingsActivity;
 import com.bsaldevs.mobileclient.Devices.Component;
 import com.bsaldevs.mobileclient.Devices.ConnectedDevices.CompositeDevice;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.ConnectedDevice;
 
 import java.util.ArrayList;
 import java.util.List;

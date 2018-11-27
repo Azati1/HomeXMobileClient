@@ -164,7 +164,7 @@ public class MainActivity extends FragmentActivity implements MainFragment.OnFra
     }
 
 
-    public static class ViewPagerAdapter extends FragmentPagerAdapter {
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragments;
         private List<String> titles;

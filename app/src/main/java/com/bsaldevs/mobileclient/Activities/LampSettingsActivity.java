@@ -1,4 +1,4 @@
-package com.bsaldevs.mobileclient;
+package com.bsaldevs.mobileclient.Activities;
 
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +10,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.bsaldevs.mobileclient.R;
 
 public class LampSettingsActivity extends AppCompatActivity {
 

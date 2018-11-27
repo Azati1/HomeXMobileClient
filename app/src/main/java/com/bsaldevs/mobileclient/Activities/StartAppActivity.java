@@ -1,9 +1,10 @@
-package com.bsaldevs.mobileclient;
+package com.bsaldevs.mobileclient.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.bsaldevs.mobileclient.R;
 import com.bumptech.glide.Glide;
 
 public class StartAppActivity extends AppCompatActivity {
