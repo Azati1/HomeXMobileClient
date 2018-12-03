@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.FirstConnectionActivity" />
-        <activity android:name=".Activities.SplashActivity"></activity>
+        <activity android:name=".Activities.SplashActivity" />
         <activity android:name=".Activities.LampSettingsActivity" />
         <activity android:name=".Activities.StartAppActivity" />
         <activity android:name=".Activities.RegistrationActivity">
@@ -24,7 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.RegistrationSheet"></activity>
     </application>
 
 </manifest>
