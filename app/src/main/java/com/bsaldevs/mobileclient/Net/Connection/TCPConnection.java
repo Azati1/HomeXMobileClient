@@ -46,10 +46,6 @@ public class TCPConnection {
 
                 try {
                     socket = new Socket(ip, port);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
                     in = new BufferedReader(new InputStreamReader(socket.getInputStream(), Charset.forName("UTF-8")));
                     out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), Charset.forName("UTF-8")));
                     eventListener.onConnectionReady(TCPConnection.this);

@@ -33,7 +33,7 @@ public class FirstConnectionActivity extends AppCompatActivity {
 
                 UserDevice mobile = new Mobile(editName.getText().toString());
 
-                //String ip = "localhost";A
+                //String ip = "localhost";
                 String ip = "192.168.0.101";
                 int port = 3346;
 
