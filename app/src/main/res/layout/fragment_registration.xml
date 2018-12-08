@@ -97,7 +97,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
             android:layout_marginBottom="57dp"
-            android:text="Сделать магию"
+            android:text="Создать аккаунт"
             android:textColor="@color/colorPrimaryText" />
 
     </RelativeLayout>

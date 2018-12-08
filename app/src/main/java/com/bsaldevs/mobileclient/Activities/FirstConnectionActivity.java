@@ -25,7 +25,7 @@ public class FirstConnectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first_connection);
 
         editName = findViewById(R.id.editText);
-        buttonContinue = findViewById(R.id.button);
+        buttonContinue = findViewById(R.id.button_forward_to_second_init_step);
 
         buttonContinue.setOnClickListener(new View.OnClickListener() {
             @Override

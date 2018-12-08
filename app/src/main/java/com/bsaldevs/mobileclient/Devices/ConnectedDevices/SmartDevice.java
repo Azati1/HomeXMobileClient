@@ -2,14 +2,13 @@ package com.bsaldevs.mobileclient.Devices.ConnectedDevices;
 
 import com.bsaldevs.mobileclient.Devices.Component;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
-import com.bsaldevs.mobileclient.Devices.Abilities.Controllable;
 import com.bsaldevs.mobileclient.Devices.States.LoadingState;
 import com.bsaldevs.mobileclient.Devices.States.LockedState;
 import com.bsaldevs.mobileclient.Devices.States.ReadyState;
 import com.bsaldevs.mobileclient.Devices.States.SwitchOffState;
 import com.bsaldevs.mobileclient.Devices.States.State;
 
-public abstract class ConnectedDevice implements Component {
+public abstract class SmartDevice implements Component {
 
     private String name;
     private int id;
@@ -17,7 +16,7 @@ public abstract class ConnectedDevice implements Component {
     private TCPConnection connection;
     private static int counter;
 
-    public ConnectedDevice(String name, final TCPConnection connection) {
+    public SmartDevice(String name, final TCPConnection connection) {
         this.id = counter++;
         this.name = name;
         this.connection = connection;
@@ -65,7 +64,7 @@ public abstract class ConnectedDevice implements Component {
             @Override
             public void run() {
                 //TODO(Принять сообщение о готовности устройства к работе)
-                changeState(new ReadyState(ConnectedDevice.this, connection));
+                changeState(new ReadyState(SmartDevice.this, connection));
             }
         });
         thread.start();

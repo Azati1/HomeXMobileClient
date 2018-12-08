@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationFirstStepFragment">
+    tools:context=".Fragments.UserInitializationFirstStepFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -61,6 +61,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout2"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -99,32 +100,29 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="84dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="20dp"
             android:text="Войти при помощи соц. сетей"
             android:textColor="@color/colorPrimaryText"
-            app:layout_constraintBottom_toTopOf="@+id/imageButtonGoogle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
         <ImageButton
             android:id="@+id/imageButtonFacebook"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="156dp"
+            android:layout_marginTop="12dp"
             android:layout_toStartOf="@+id/textView9"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:scaleType="centerInside"
             android:src="@drawable/facebook500"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButtonGoogle"
-            app:layout_constraintHorizontal_bias="0.803"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <ImageButton
             android:id="@+id/imageButtonGoogle"
@@ -133,31 +131,29 @@
             android:layout_alignTop="@+id/imageButtonFacebook"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="156dp"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:scaleType="centerInside"
             android:src="@drawable/googleplus"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/imageButtonVK"
+            app:layout_constraintStart_toEndOf="@+id/imageButtonFacebook"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <ImageButton
             android:id="@+id/imageButtonVK"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignTop="@+id/imageButtonFacebook"
-            android:layout_marginBottom="156dp"
+            android:layout_marginTop="12dp"
             android:layout_toEndOf="@+id/textView9"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:scaleType="centerInside"
             android:src="@drawable/vk"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.168"
-            app:layout_constraintStart_toEndOf="@+id/imageButtonGoogle" />
+            app:layout_constraintEnd_toEndOf="@+id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     </android.support.constraint.ConstraintLayout>
 

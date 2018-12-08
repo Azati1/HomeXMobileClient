@@ -2,9 +2,7 @@ package com.bsaldevs.mobileclient;
 
 import android.app.Application;
 
-import com.bsaldevs.mobileclient.Devices.Abilities.Controllable;
 import com.bsaldevs.mobileclient.Devices.Component;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.ConnectedDevice;
 import com.bsaldevs.mobileclient.User.MobileClient;
 
 import java.util.ArrayList;

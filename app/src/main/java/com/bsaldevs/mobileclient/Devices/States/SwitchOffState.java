@@ -3,11 +3,11 @@ package com.bsaldevs.mobileclient.Devices.States;
 import android.util.Log;
 
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.ConnectedDevice;
+import com.bsaldevs.mobileclient.Devices.ConnectedDevices.SmartDevice;
 
 public class SwitchOffState extends State {
 
-    public SwitchOffState(ConnectedDevice sender, TCPConnection connection) {
+    public SwitchOffState(SmartDevice sender, TCPConnection connection) {
         super(sender, connection);
     }
 

@@ -2,12 +2,12 @@ package com.bsaldevs.mobileclient.Devices.States;
 
 import android.util.Log;
 
+import com.bsaldevs.mobileclient.Devices.ConnectedDevices.SmartDevice;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.ConnectedDevice;
 
 public class LockedState extends State {
 
-    public LockedState(ConnectedDevice sender, TCPConnection connection) {
+    public LockedState(SmartDevice sender, TCPConnection connection) {
         super(sender, connection);
     }
 

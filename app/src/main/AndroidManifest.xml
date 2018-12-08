@@ -17,13 +17,14 @@
         <activity android:name=".Activities.SplashActivity" />
         <activity android:name=".Activities.LampSettingsActivity" />
         <activity android:name=".Activities.StartAppActivity" />
-        <activity android:name=".Activities.RegistrationActivity">
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.AppInitializationActivity"></activity>
     </application>
 
 </manifest>

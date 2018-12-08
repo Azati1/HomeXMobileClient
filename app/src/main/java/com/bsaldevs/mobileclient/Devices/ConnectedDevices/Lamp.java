@@ -1,14 +1,11 @@
 package com.bsaldevs.mobileclient.Devices.ConnectedDevices;
 
-import android.graphics.Color;
-
 import com.bsaldevs.mobileclient.Devices.Abilities.IntensityChangeable;
-import com.bsaldevs.mobileclient.Devices.Abilities.ColorWarmChangeable;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Devices.Abilities.ColorChangeable;
 import com.bsaldevs.mobileclient.R;
 
-public class Lamp extends ConnectedDevice implements ColorChangeable, IntensityChangeable {
+public class Lamp extends SmartDevice implements ColorChangeable, IntensityChangeable {
 
     private int lightColor;
     private float warmDegrees;
@@ -29,11 +26,6 @@ public class Lamp extends ConnectedDevice implements ColorChangeable, IntensityC
     @Override
     public int getColor() {
         return lightColor;
-    }
-
-    @Override
-    public void execute() {
-
     }
 
     @Override

@@ -1,18 +1,23 @@
 package com.bsaldevs.mobileclient.Devices.ConnectedDevices;
 
+import com.bsaldevs.mobileclient.Devices.Abilities.Controllable;
 import com.bsaldevs.mobileclient.Devices.Component;
+import com.bsaldevs.mobileclient.Devices.States.LoadingState;
+import com.bsaldevs.mobileclient.Devices.States.State;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompositeDevice implements Component {
+public class DeviceGroup implements Controllable {
 
     private List<Component> components;
     private String name;
+    private State state;
 
-    public CompositeDevice(String groupName) {
+    public DeviceGroup(String compositeName) {
         components = new ArrayList<>();
-        name = groupName;
+        name = compositeName;
+        //state = new LoadingState(this, connection);
     }
 
     public void add(Component device) {
@@ -27,19 +32,8 @@ public class CompositeDevice implements Component {
         return components;
     }
 
-    @Override
-    public void execute() {
-
-    }
-
-    @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public int getImageResourceID() {
-        return 0;
     }
 
     @Override
@@ -61,10 +55,4 @@ public class CompositeDevice implements Component {
     public void block() {
 
     }
-
-    /*public void execute() {
-        for (ConnectedDevice device : devices) {
-            device.execute();
-        }
-    }*/
 }

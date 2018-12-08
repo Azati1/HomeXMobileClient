@@ -3,12 +3,12 @@ package com.bsaldevs.mobileclient.Devices.States;
 import com.bsaldevs.mobileclient.Net.Command;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Devices.Abilities.Controllable;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.ConnectedDevice;
+import com.bsaldevs.mobileclient.Devices.ConnectedDevices.SmartDevice;
 import com.bsaldevs.mobileclient.Net.Request;
 
 public abstract class State implements Controllable {
 
-    protected ConnectedDevice sender;
+    protected SmartDevice sender;
     protected TCPConnection connection;
 
     @Override
@@ -39,7 +39,7 @@ public abstract class State implements Controllable {
         connection.sendRequest(request);
     }
 
-    public State(ConnectedDevice sender, TCPConnection connection) {
+    public State(SmartDevice sender, TCPConnection connection) {
         this.sender = sender;
         this.connection = connection;
     }

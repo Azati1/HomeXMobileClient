@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainFragment">
+    tools:context=".Fragments.MainFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -27,12 +27,13 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_launcher_round" />
 
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerConnectedItems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layoutAnimation="@anim/layout_animation_fall_down"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="8dp"></android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_groups_of_devices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutAnimation="@anim/layout_animation_fall_down"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp" />
 
 </LinearLayout>

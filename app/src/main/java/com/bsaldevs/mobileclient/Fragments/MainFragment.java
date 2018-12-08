@@ -1,4 +1,4 @@
-package com.bsaldevs.mobileclient;
+package com.bsaldevs.mobileclient.Fragments;
 
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -20,7 +20,9 @@ import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.Activities.LampSettingsActivity;
 import com.bsaldevs.mobileclient.Devices.Component;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.CompositeDevice;
+import com.bsaldevs.mobileclient.Devices.ConnectedDevices.DeviceGroup;
+import com.bsaldevs.mobileclient.MyApplication;
+import com.bsaldevs.mobileclient.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +73,7 @@ public class MainFragment extends android.support.v4.app.Fragment {
     private List<RecyclerItem> setupItems() {
         List<RecyclerItem> items = new ArrayList<>();
         for (Component component : components) {
-            if (component instanceof CompositeDevice)
+            if (component instanceof DeviceGroup)
                 items.add(new GroupItem(component));
             else
                 items.add(new Item(component));
@@ -132,7 +134,7 @@ public class MainFragment extends android.support.v4.app.Fragment {
         }
 
         public List<Component> getComponents() {
-            return ((CompositeDevice) (component)).getComponents();
+            return ((DeviceGroup) (component)).getComponents();
         }
 
         @Override
@@ -218,13 +220,14 @@ public class MainFragment extends android.support.v4.app.Fragment {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerConnectedItems);
+        recyclerView = view.findViewById(R.id.recycler_groups_of_devices);
 
         int resId = R.anim.layout_animation_fall_down;
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getActivity(), resId);
 
         recyclerView.setLayoutAnimation(animation);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
         recyclerView.setAdapter(new Adapter());
 
         return view;

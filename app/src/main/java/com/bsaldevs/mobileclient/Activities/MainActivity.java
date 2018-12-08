@@ -1,11 +1,9 @@
 package com.bsaldevs.mobileclient.Activities;
 
-import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -13,38 +11,28 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.Devices.Component;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.CompositeDevice;
-import com.bsaldevs.mobileclient.MainFragment;
+import com.bsaldevs.mobileclient.Devices.ConnectedDevices.DeviceGroup;
+import com.bsaldevs.mobileclient.Fragments.MainFragment;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.ConnectedDevice;
 import com.bsaldevs.mobileclient.Devices.ConnectedDevices.Lamp;
 import com.bsaldevs.mobileclient.Devices.ConnectedDevices.Locker;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.R;
-import com.bsaldevs.mobileclient.ScheduleFragment;
+import com.bsaldevs.mobileclient.Fragments.ScheduleFragment;
 import com.bsaldevs.mobileclient.User.Client;
+import com.bsaldevs.mobileclient.User.Mobile;
+import com.bsaldevs.mobileclient.User.MobileClient;
+import com.bsaldevs.mobileclient.User.UserDevice;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +52,7 @@ public class MainActivity extends FragmentActivity implements MainFragment.OnFra
 
     //private ViewPagerAdapter vpAdapter;
     private ViewPager viewPager;
+    private RecyclerView recyclerView;
 
 
     @Override
@@ -71,6 +60,14 @@ public class MainActivity extends FragmentActivity implements MainFragment.OnFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        UserDevice mobile = new Mobile("username");
+
+        //String ip = "localhost";
+        String ip = "192.168.0.101";
+        int port = 3346;
+
+        application = (MyApplication) getApplication();
+        application.setupClient(new MobileClient(ip, port, mobile));
         application = (MyApplication) getApplication();
         connection = application.getClient().getConnection();
         client = application.getClient();
@@ -95,16 +92,16 @@ public class MainActivity extends FragmentActivity implements MainFragment.OnFra
     }
 
     private void loadDevices() {
-        CompositeDevice composite1 = new CompositeDevice("Гостиная");
+        /*DeviceGroup composite1 = new DeviceGroup("Гостиная");
         composite1.add(new Lamp("Лампа в гостиной 1", connection));
         composite1.add(new Lamp("Лампа в гостиной 2", connection));
         components.add(composite1);
 
-        CompositeDevice composite2 = new CompositeDevice("Кухня");
+        DeviceGroup composite2 = new DeviceGroup("Кухня");
         composite2.add(new Lamp("Лампа в кухне 1", connection));
         composite2.add(new Lamp("Лампа в кухне 2", connection));
         composite2.add(new Lamp("Лампа в кухне 3", connection));
-        components.add(composite2);
+        components.add(composite2);*/
 
         components.add(new Lamp("Лампа 1", connection));
         components.add(new Lamp("Лампа 2", connection));
@@ -198,11 +195,11 @@ public class MainActivity extends FragmentActivity implements MainFragment.OnFra
     }
 
     /*private class Item {
-        private ConnectedDevice device;
+        private SmartDevice device;
         private String subTitle;
         private boolean expanded;
 
-        public Item(ConnectedDevice device, String subTitle) {
+        public Item(SmartDevice device, String subTitle) {
             this.device = device;
             this.subTitle = subTitle;
         }
@@ -215,7 +212,7 @@ public class MainActivity extends FragmentActivity implements MainFragment.OnFra
             return subTitle;
         }
 
-        public ConnectedDevice getDevice() {
+        public SmartDevice getDevice() {
             return device;
         }
     }
