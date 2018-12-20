@@ -30,7 +30,7 @@ public class Lamp extends SmartDevice implements ColorChangeable, IntensityChang
 
     @Override
     public int getImageResourceID() {
-        return R.drawable.ic_baseline_highlight_24px;
+        return R.drawable.lamp_on;
     }
 
     @Override

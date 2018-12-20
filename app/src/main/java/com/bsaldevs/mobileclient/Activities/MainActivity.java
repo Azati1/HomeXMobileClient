@@ -20,12 +20,15 @@ import android.widget.LinearLayout;
 import com.bsaldevs.mobileclient.Devices.Component;
 import com.bsaldevs.mobileclient.Devices.ConnectedDevices.DeviceGroup;
 import com.bsaldevs.mobileclient.Fragments.MainFragment;
+import com.bsaldevs.mobileclient.Net.Command;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Devices.ConnectedDevices.Lamp;
 import com.bsaldevs.mobileclient.Devices.ConnectedDevices.Locker;
 import com.bsaldevs.mobileclient.MyApplication;
+import com.bsaldevs.mobileclient.Net.Request;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.ScheduleFragment;
+import com.bsaldevs.mobileclient.RoomsFragment;
 import com.bsaldevs.mobileclient.User.Client;
 import com.bsaldevs.mobileclient.User.Mobile;
 import com.bsaldevs.mobileclient.User.MobileClient;
@@ -36,7 +39,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements MainFragment.OnFragmentInteractionListener, ScheduleFragment.OnFragmentInteractionListener {
+public class MainActivity extends FragmentActivity implements RoomsFragment.OnFragmentInteractionListener, ScheduleFragment.OnFragmentInteractionListener {
 
     private List<Component> components;
     private MyApplication application;
@@ -68,7 +71,6 @@ public class MainActivity extends FragmentActivity implements MainFragment.OnFra
 
         application = (MyApplication) getApplication();
         application.setupClient(new MobileClient(ip, port, mobile));
-        application = (MyApplication) getApplication();
         connection = application.getClient().getConnection();
         client = application.getClient();
 
@@ -140,7 +142,7 @@ public class MainActivity extends FragmentActivity implements MainFragment.OnFra
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragmentPage(new MainFragment(), "Устройства");
+        adapter.addFragmentPage(new RoomsFragment(), "Устройства");
         adapter.addFragmentPage(new ScheduleFragment(), "Расписание");
 
         viewPager.setAdapter(adapter);
@@ -315,6 +317,32 @@ public class MainActivity extends FragmentActivity implements MainFragment.OnFra
             }
         }
 
+    }
+
+    private class BackupData extends AsyncTask<Void, Void, Void> {
+
+        private boolean isLoaded = false;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            downloadData();
+            return null;
+        }
+
+        private void downloadData() {
+            Command command = new Command("getSmartDevicesList");
+            Request request = new Request("username", "cloudServer", command);
+
+            connection.sendRequest(request);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            //super.onPostExecute(aVoid);
+            if (isLoaded) {
+
+            }
+        }
     }
 
     private class CheckServerStatus extends AsyncTask<Void, Void, Boolean> {

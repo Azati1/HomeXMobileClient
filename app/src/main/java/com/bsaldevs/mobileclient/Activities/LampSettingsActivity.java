@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-
 import com.bsaldevs.mobileclient.R;
 
 public class LampSettingsActivity extends AppCompatActivity {

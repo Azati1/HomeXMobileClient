@@ -11,6 +11,6 @@ public class Locker extends SmartDevice {
 
     @Override
     public int getImageResourceID() {
-        return R.drawable.ic_baseline_lock_24px;
+        return R.drawable.ic_lock;
     }
 }

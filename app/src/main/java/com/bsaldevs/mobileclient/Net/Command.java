@@ -11,6 +11,11 @@ public class Command {
         this.args = args;
     }
 
+    public Command(String funcName) {
+        this.funcName = funcName;
+        args = new String[]{""};
+    }
+
     public String getFuncName() {
         return funcName;
     }

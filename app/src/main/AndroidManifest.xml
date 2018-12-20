@@ -24,7 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.AppInitializationActivity"></activity>
+        <activity android:name=".Activities.AppInitializationActivity" />
+        <activity
+            android:name=".SmartDevicesActivity"
+            android:label="@string/title_activity_smart_devices"></activity>
     </application>
 
 </manifest>

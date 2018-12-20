@@ -203,8 +203,8 @@ public class MainFragment extends android.support.v4.app.Fragment {
 
             public ItemViewHolder(@NonNull View itemView) {
                 super(itemView);
-                name = itemView.findViewById(R.id.textView7);
-                image = itemView.findViewById(R.id.imageView6);
+                /*name = itemView.findViewById(R.id.textView7);
+                image = itemView.findViewById(R.id.imageView6);*/
             }
 
             private void bind(final RecyclerItem item) {

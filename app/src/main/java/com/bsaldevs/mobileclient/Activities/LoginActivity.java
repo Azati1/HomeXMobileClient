@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent login = new Intent(LoginActivity.this, AppInitializationActivity.class);
+                Intent login = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(login);
             }
         });
