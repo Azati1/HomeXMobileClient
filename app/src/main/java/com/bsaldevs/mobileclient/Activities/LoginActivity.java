@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.login_activity);
 
         FragmentManager manager = getSupportFragmentManager();

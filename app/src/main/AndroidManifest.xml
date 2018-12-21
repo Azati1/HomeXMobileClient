@@ -14,15 +14,16 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.FirstConnectionActivity" />
-        <activity android:name=".Activities.SplashActivity" />
-        <activity android:name=".Activities.LampSettingsActivity" />
-        <activity android:name=".Activities.StartAppActivity" />
-        <activity android:name=".Activities.LoginActivity">
+        <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Activities.LampSettingsActivity" />
+        <activity android:name=".Activities.StartAppActivity" />
+        <activity android:name=".Activities.LoginActivity">
         </activity>
         <activity android:name=".Activities.AppInitializationActivity" />
         <activity
