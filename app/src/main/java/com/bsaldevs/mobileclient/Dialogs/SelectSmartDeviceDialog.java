@@ -1,4 +1,4 @@
-package com.bsaldevs.mobileclient;
+package com.bsaldevs.mobileclient.Dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -16,8 +16,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.Activities.LampSettingsActivity;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.Lamp;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.SmartDevice;
+import com.bsaldevs.mobileclient.R;
 
 import java.util.ArrayList;
 import java.util.List;

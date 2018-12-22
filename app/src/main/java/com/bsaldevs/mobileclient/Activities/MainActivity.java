@@ -17,18 +17,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.bsaldevs.mobileclient.Devices.Component;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.DeviceGroup;
-import com.bsaldevs.mobileclient.Fragments.MainFragment;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.Net.Command;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.Lamp;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.Locker;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.Lamp;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.Locker;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.Net.Request;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.ScheduleFragment;
-import com.bsaldevs.mobileclient.RoomsFragment;
+import com.bsaldevs.mobileclient.Fragments.RoomsFragment;
 import com.bsaldevs.mobileclient.User.Client;
 import com.bsaldevs.mobileclient.User.Mobile;
 import com.bsaldevs.mobileclient.User.MobileClient;
@@ -41,7 +39,7 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements RoomsFragment.OnFragmentInteractionListener, ScheduleFragment.OnFragmentInteractionListener {
 
-    private List<Component> components;
+    private List<SmartDevice> smartDevices;
     private MyApplication application;
     private TCPConnection connection;
     private Client client;
@@ -52,8 +50,6 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
     private LinearLayout mainLayout;
 
     private TabLayout tabLayout;
-
-    //private ViewPagerAdapter vpAdapter;
     private ViewPager viewPager;
     private RecyclerView recyclerView;
 
@@ -81,10 +77,10 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
             }
         });
 
-        components = new ArrayList<>();
+        smartDevices = new ArrayList<>();
         loadDevices();
-        for (Component component : components) {
-            application.addComponent(component);
+        for (SmartDevice smartDevice : smartDevices) {
+            application.addSmartDevice(smartDevice);
         }
 
         initGUI();
@@ -94,22 +90,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
     }
 
     private void loadDevices() {
-        /*DeviceGroup composite1 = new DeviceGroup("Гостиная");
-        composite1.add(new Lamp("Лампа в гостиной 1", connection));
-        composite1.add(new Lamp("Лампа в гостиной 2", connection));
-        components.add(composite1);
 
-        DeviceGroup composite2 = new DeviceGroup("Кухня");
-        composite2.add(new Lamp("Лампа в кухне 1", connection));
-        composite2.add(new Lamp("Лампа в кухне 2", connection));
-        composite2.add(new Lamp("Лампа в кухне 3", connection));
-        components.add(composite2);*/
-
-        components.add(new Lamp("Лампа 1", connection));
-        components.add(new Lamp("Лампа 2", connection));
-        components.add(new Lamp("Лампа 3", connection));
-        components.add(new Lamp("Лампа 4", connection));
-        components.add(new Locker("Замок во входной двери", connection));
     }
 
     private void initGUI() {
@@ -142,7 +123,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragmentPage(new RoomsFragment(), "Устройства");
+        adapter.addFragmentPage(new RoomsFragment(), "Комнаты");
         adapter.addFragmentPage(new ScheduleFragment(), "Расписание");
 
         viewPager.setAdapter(adapter);

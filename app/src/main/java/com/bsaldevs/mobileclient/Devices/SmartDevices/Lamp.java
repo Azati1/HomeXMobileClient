@@ -1,8 +1,9 @@
-package com.bsaldevs.mobileclient.Devices.ConnectedDevices;
+package com.bsaldevs.mobileclient.Devices.SmartDevices;
 
 import com.bsaldevs.mobileclient.Devices.Abilities.IntensityChangeable;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Devices.Abilities.ColorChangeable;
+import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 
 public class Lamp extends SmartDevice implements ColorChangeable, IntensityChangeable {
@@ -11,8 +12,8 @@ public class Lamp extends SmartDevice implements ColorChangeable, IntensityChang
     private float warmDegrees;
     private float intensity;
 
-    public Lamp(String name, TCPConnection connection) {
-        super(name, connection);
+    public Lamp(String name, PlaceGroup placeGroup, TCPConnection connection) {
+        super(name, placeGroup, connection);
         lightColor = 0;
         warmDegrees = 0;
         intensity = 0;
@@ -30,7 +31,7 @@ public class Lamp extends SmartDevice implements ColorChangeable, IntensityChang
 
     @Override
     public int getImageResourceID() {
-        return R.drawable.lamp_on;
+        return LAMP_IMG_RES_ID;
     }
 
     @Override

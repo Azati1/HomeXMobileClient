@@ -2,7 +2,7 @@ package com.bsaldevs.mobileclient.Devices.States;
 
 import android.util.Log;
 
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.SmartDevice;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 
 public class LockedState extends State {

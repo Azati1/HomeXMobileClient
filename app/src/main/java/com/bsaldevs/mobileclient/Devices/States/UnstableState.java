@@ -3,7 +3,7 @@ package com.bsaldevs.mobileclient.Devices.States;
 import android.util.Log;
 
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.SmartDevice;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
 
 public class UnstableState extends State {
     public UnstableState(SmartDevice sender, TCPConnection connection) {

@@ -3,7 +3,7 @@ package com.bsaldevs.mobileclient.Devices.States;
 import com.bsaldevs.mobileclient.Net.Command;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Devices.Abilities.Controllable;
-import com.bsaldevs.mobileclient.Devices.ConnectedDevices.SmartDevice;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.Net.Request;
 
 public abstract class State implements Controllable {

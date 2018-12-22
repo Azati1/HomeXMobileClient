@@ -2,7 +2,7 @@ package com.bsaldevs.mobileclient;
 
 import android.app.Application;
 
-import com.bsaldevs.mobileclient.Devices.Component;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.User.MobileClient;
 
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import java.util.List;
 public class MyApplication extends Application {
 
     private MobileClient client;
-    private List<Component> components;
+    private List<SmartDevice> devices;
 
     public MyApplication() {
         super();
-        components = new ArrayList<>();
+        devices = new ArrayList<>();
     }
 
     public void setupClient(MobileClient client) {
@@ -26,15 +26,15 @@ public class MyApplication extends Application {
         return client;
     }
 
-    public void addComponent(Component component) {
-        components.add(component);
+    public void addSmartDevice(SmartDevice device) {
+        devices.add(device);
     }
 
-    public void removeComponent(Component component) {
-        components.remove(component);
+    public void removeSmartDevice(SmartDevice device) {
+        devices.remove(device);
     }
 
-    public List<Component> getComponents() {
-        return components;
+    public List<SmartDevice> getSmartDevices() {
+        return devices;
     }
 }

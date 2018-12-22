@@ -1,4 +1,4 @@
-package com.bsaldevs.mobileclient;
+package com.bsaldevs.mobileclient.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,11 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bsaldevs.mobileclient.Activities.DeviceGroupActivity;
+import com.bsaldevs.mobileclient.PlaceGroup;
+import com.bsaldevs.mobileclient.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,7 +112,7 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), SmartDevicesActivity.class);
+                    Intent intent = new Intent(getContext(), DeviceGroupActivity.class);
                     startActivity(intent);
                 }
             });

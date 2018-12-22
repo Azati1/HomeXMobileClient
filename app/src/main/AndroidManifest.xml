@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.MainActivity" />
-        <activity android:name=".Activities.FirstConnectionActivity" />
         <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,9 +24,8 @@
         <activity android:name=".Activities.StartAppActivity" />
         <activity android:name=".Activities.LoginActivity">
         </activity>
-        <activity android:name=".Activities.AppInitializationActivity" />
         <activity
-            android:name=".SmartDevicesActivity"
+            android:name=".Activities.DeviceGroupActivity"
             android:label="@string/title_activity_smart_devices"></activity>
     </application>
 

@@ -1,24 +1,28 @@
-package com.bsaldevs.mobileclient.Devices.ConnectedDevices;
+package com.bsaldevs.mobileclient.Devices.SmartDevices;
 
-import com.bsaldevs.mobileclient.Devices.Component;
+import com.bsaldevs.mobileclient.Devices.Abilities.Controllable;
+import com.bsaldevs.mobileclient.Devices.SmartDeviceDisplay;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Devices.States.LoadingState;
 import com.bsaldevs.mobileclient.Devices.States.LockedState;
 import com.bsaldevs.mobileclient.Devices.States.ReadyState;
 import com.bsaldevs.mobileclient.Devices.States.SwitchOffState;
 import com.bsaldevs.mobileclient.Devices.States.State;
+import com.bsaldevs.mobileclient.PlaceGroup;
 
-public abstract class SmartDevice implements Component {
+public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
 
     private String name;
     private int id;
     private State state;
     private TCPConnection connection;
     private static int counter;
+    private PlaceGroup place;
 
-    public SmartDevice(String name, final TCPConnection connection) {
+    public SmartDevice(String name, PlaceGroup placeGroup, final TCPConnection connection) {
         this.id = counter++;
         this.name = name;
+        this.place = placeGroup;
         this.connection = connection;
         state = new LoadingState(this, connection);
         load();
@@ -68,5 +72,9 @@ public abstract class SmartDevice implements Component {
             }
         });
         thread.start();
+    }
+
+    public PlaceGroup placedIn() {
+        return place;
     }
 }
