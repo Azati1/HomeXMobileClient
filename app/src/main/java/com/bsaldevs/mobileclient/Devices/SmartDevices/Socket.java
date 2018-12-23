@@ -1,12 +1,16 @@
 package com.bsaldevs.mobileclient.Devices.SmartDevices;
 
+import com.bsaldevs.mobileclient.DeviceType;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 
 public class Socket extends SmartDevice {
+
+    private static final DeviceType deviceType = DeviceType.SOCKET;
+
     public Socket(String name, PlaceGroup placeGroup, TCPConnection connection) {
-        super(name, placeGroup, connection);
+        super(deviceType, name, placeGroup, connection);
     }
 
     @Override

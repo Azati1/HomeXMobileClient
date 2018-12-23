@@ -17,13 +17,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.bsaldevs.mobileclient.Devices.SmartDevices.Conditioner;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.MusicPlayer;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.Socket;
 import com.bsaldevs.mobileclient.Net.Command;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Lamp;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Locker;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.Net.Request;
+import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.ScheduleFragment;
 import com.bsaldevs.mobileclient.Fragments.RoomsFragment;
@@ -39,7 +43,6 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements RoomsFragment.OnFragmentInteractionListener, ScheduleFragment.OnFragmentInteractionListener {
 
-    private List<SmartDevice> smartDevices;
     private MyApplication application;
     private TCPConnection connection;
     private Client client;
@@ -77,11 +80,8 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
             }
         });
 
-        smartDevices = new ArrayList<>();
+        loadPlaceGroups();
         loadDevices();
-        for (SmartDevice smartDevice : smartDevices) {
-            application.addSmartDevice(smartDevice);
-        }
 
         initGUI();
         /*Thread thread = new Thread(new ServerStatusCheckThread());
@@ -89,8 +89,67 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
 
     }
 
+    private void loadPlaceGroups() {
+        List<PlaceGroup> placeGroups = new ArrayList<>();
+
+        PlaceGroup placeGroupOffice = new PlaceGroup("Офис", R.drawable.ic_desk);
+        PlaceGroup placeGroupLivingRoom = new PlaceGroup("Гостиная", R.drawable.ic_tv);
+        PlaceGroup placeGroupBathroom = new PlaceGroup("Ванная", R.drawable.ic_bathtub);
+        PlaceGroup placeGroupBedroom = new PlaceGroup("Спальня", R.drawable.ic_bunk_bed);
+        PlaceGroup placeGroupRestroom = new PlaceGroup("Уборная", R.drawable.ic_wc);
+        PlaceGroup placeGroupKitchen = new PlaceGroup("Кухня", R.drawable.ic_stove);
+
+        application.addPlaceGroup(placeGroupOffice);
+        application.addPlaceGroup(placeGroupLivingRoom);
+        application.addPlaceGroup(placeGroupBathroom);
+        application.addPlaceGroup(placeGroupBedroom);
+        application.addPlaceGroup(placeGroupRestroom);
+        application.addPlaceGroup(placeGroupKitchen);
+    }
+
     private void loadDevices() {
 
+        List<PlaceGroup> placeGroups = application.getPlaceGroups();
+
+        Lamp lamp1 = new Lamp("Лампа 1", placeGroups.get(0), connection);
+        Lamp lamp2 = new Lamp("Лампа 2", placeGroups.get(0), connection);
+        Lamp lamp3 = new Lamp("Лампа 3", placeGroups.get(0), connection);
+
+        application.addSmartDevice(lamp1);
+        application.addSmartDevice(lamp2);
+        application.addSmartDevice(lamp3);
+
+        Socket socket1 = new Socket("Розетка 1", placeGroups.get(1), connection);
+        Socket socket2 = new Socket("Розетка 2", placeGroups.get(1), connection);
+        Socket socket3 = new Socket("Розетка 3", placeGroups.get(1), connection);
+
+        application.addSmartDevice(socket1);
+        application.addSmartDevice(socket2);
+        application.addSmartDevice(socket3);
+
+        Locker locker1 = new Locker("Замок 1", placeGroups.get(2), connection);
+        Locker locker2 = new Locker("Замок 2", placeGroups.get(2), connection);
+        Locker locker3 = new Locker("Замок 3", placeGroups.get(2), connection);
+
+        application.addSmartDevice(locker1);
+        application.addSmartDevice(locker2);
+        application.addSmartDevice(locker3);
+
+        Conditioner conditioner1 = new Conditioner("Кондей 1", placeGroups.get(3), connection);
+        Conditioner conditioner2 = new Conditioner("Кондей 2", placeGroups.get(3), connection);
+        Conditioner conditioner3 = new Conditioner("Кондей 3", placeGroups.get(3), connection);
+
+        application.addSmartDevice(conditioner1);
+        application.addSmartDevice(conditioner2);
+        application.addSmartDevice(conditioner3);
+
+        MusicPlayer musicPlayer1 = new MusicPlayer("Плеер 1", placeGroups.get(5), connection);
+        MusicPlayer musicPlayer2 = new MusicPlayer("Плеер 2", placeGroups.get(5), connection);
+        MusicPlayer musicPlayer3 = new MusicPlayer("Плеер 3", placeGroups.get(5), connection);
+
+        application.addSmartDevice(musicPlayer1);
+        application.addSmartDevice(musicPlayer2);
+        application.addSmartDevice(musicPlayer3);
     }
 
     private void initGUI() {
@@ -176,112 +235,6 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
             return fragments.get(position);
         }
     }
-
-    /*private class Item {
-        private SmartDevice device;
-        private String subTitle;
-        private boolean expanded;
-
-        public Item(SmartDevice device, String subTitle) {
-            this.device = device;
-            this.subTitle = subTitle;
-        }
-
-        public void setExpanded(boolean expanded) {
-            this.expanded = expanded;
-        }
-
-        public String getSubTitle() {
-            return subTitle;
-        }
-
-        public SmartDevice getDevice() {
-            return device;
-        }
-    }
-
-    private class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> {
-
-        @NonNull
-        @Override
-        public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.connected_item, viewGroup, false);
-            return new ItemViewHolder(v);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ItemViewHolder holder, final int i) {
-
-            final Item item = items.get(i);
-
-            holder.bind(item);
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Get the current state of the item
-                    boolean expanded = item.expanded;
-                    // Change the state
-                    item.setExpanded(!expanded);
-                    // Notify the adapter that item has changed
-                    notifyItemChanged(i);
-                }
-            });
-
-            if (item.expanded) {
-                holder.subTextView.setVisibility(View.VISIBLE);
-            } else {
-                holder.subTextView.setVisibility(View.GONE);
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return devices.size();
-        }
-
-        public class ItemViewHolder extends RecyclerView.ViewHolder {
-
-            private ImageView imageView;
-            private TextView textView;
-            private TextView subTextView;
-            private Button buttonTurnOn;
-            private Button buttonTurnOff;
-
-            public ItemViewHolder(@NonNull View itemView) {
-                super(itemView);
-                imageView = itemView.findViewById(R.id.imageConnectedItem);
-                textView = itemView.findViewById(R.id.textConnectedItemName);
-                subTextView = itemView.findViewById(R.id.textExpandedItem);
-                buttonTurnOn = itemView.findViewById(R.id.button2);
-                buttonTurnOff = itemView.findViewById(R.id.button3);
-            }
-
-            private void bind(final Item item) {
-                // Get the state
-                boolean expanded = item.expanded;
-                // Set the visibility based on state
-                subTextView.setVisibility(expanded ? View.VISIBLE : View.GONE);
-                buttonTurnOn.setVisibility(expanded ? View.VISIBLE : View.GONE);
-                buttonTurnOff.setVisibility(expanded ? View.VISIBLE : View.GONE);
-                subTextView.setText(item.getSubTitle());
-                textView.setText(item.getDevice().getName());
-                imageView.setImageResource(item.getDevice().getImage());
-                buttonTurnOn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        item.getDevice().turnOn();
-                    }
-                });
-                buttonTurnOff.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        item.getDevice().turnOff();
-                    }
-                });
-            }
-        }
-    }*/
 
     private class ServerStatusCheckThread implements Runnable {
 

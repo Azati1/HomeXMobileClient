@@ -13,9 +13,15 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.Activities.LampSettingsActivity;
+import com.bsaldevs.mobileclient.DeviceType;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.Lamp;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
+import com.bsaldevs.mobileclient.MyApplication;
+import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 
 import java.util.ArrayList;
@@ -24,12 +30,17 @@ import java.util.List;
 public class SelectSmartDeviceDialog extends Dialog {
 
     private RecyclerView recyclerView;
-    private List<String> deviceList;
+    private List<SmartDevice> deviceList;
     private Context context;
+    private MyApplication application;
+    private DeviceType deviceType;
+    private PlaceGroup placeGroup;
 
-    public SelectSmartDeviceDialog(@NonNull Context context) {
+    public SelectSmartDeviceDialog(@NonNull Context context, DeviceType deviceType, PlaceGroup placeGroup) {
         super(context);
         this.context = context;
+        this.deviceType = deviceType;
+        this.placeGroup = placeGroup;
     }
 
     @Override
@@ -38,7 +49,8 @@ public class SelectSmartDeviceDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_select_smart_device);
 
-        deviceList = getDevicesList();
+        application = (MyApplication) context.getApplicationContext();
+        deviceList = getDevicesList(deviceType, placeGroup);
 
         recyclerView = findViewById(R.id.recycler_select_smart_device);
 
@@ -51,13 +63,8 @@ public class SelectSmartDeviceDialog extends Dialog {
         recyclerView.setAdapter(new Adapter());
     }
 
-    private List<String> getDevicesList() {
-        List<String> smartDevices = new ArrayList<>();
-        smartDevices.add("Аниме");
-        smartDevices.add("Аниме1");
-        smartDevices.add("Аниме2");
-        smartDevices.add("Аниме3");
-        return smartDevices;
+    private List<SmartDevice> getDevicesList(DeviceType deviceType, PlaceGroup placeGroup) {
+        return application.getSmartDevices(deviceType, placeGroup);
     }
 
     private class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> {
@@ -72,7 +79,7 @@ public class SelectSmartDeviceDialog extends Dialog {
         @Override
         public void onBindViewHolder(@NonNull final Adapter.ItemViewHolder holder, final int i) {
 
-            final String smartDevice = deviceList.get(i);
+            final SmartDevice smartDevice = deviceList.get(i);
 
             holder.bind(smartDevice);
 
@@ -93,14 +100,17 @@ public class SelectSmartDeviceDialog extends Dialog {
         public class ItemViewHolder extends RecyclerView.ViewHolder {
 
             private TextView name;
+            private ImageView imageView;
 
             public ItemViewHolder(@NonNull View itemView) {
                 super(itemView);
-                name = itemView.findViewById(R.id.textView7);
+                name = itemView.findViewById(R.id.small_smart_device_name);
+                imageView = itemView.findViewById(R.id.small_smart_device_image);
             }
 
-            private void bind(final String smartDevice) {
-                name.setText(smartDevice);
+            private void bind(final SmartDevice smartDevice) {
+                name.setText(smartDevice.getName());
+                imageView.setImageResource(smartDevice.getImageResourceID());
             }
         }
     }

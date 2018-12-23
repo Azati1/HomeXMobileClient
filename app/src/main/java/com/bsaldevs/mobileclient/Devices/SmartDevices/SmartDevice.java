@@ -1,5 +1,6 @@
 package com.bsaldevs.mobileclient.Devices.SmartDevices;
 
+import com.bsaldevs.mobileclient.DeviceType;
 import com.bsaldevs.mobileclient.Devices.Abilities.Controllable;
 import com.bsaldevs.mobileclient.Devices.SmartDeviceDisplay;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
@@ -18,14 +19,17 @@ public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
     private TCPConnection connection;
     private static int counter;
     private PlaceGroup place;
+    private DeviceType deviceType;
 
-    public SmartDevice(String name, PlaceGroup placeGroup, final TCPConnection connection) {
+    public SmartDevice(DeviceType deviceType, String name, PlaceGroup placeGroup, final TCPConnection connection) {
         this.id = counter++;
         this.name = name;
         this.place = placeGroup;
+        this.deviceType = deviceType;
         this.connection = connection;
         state = new LoadingState(this, connection);
         load();
+        placeGroup.addSmartDevice(this);
     }
 
     public String getName() {
@@ -34,6 +38,10 @@ public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
 
     public int getId() {
         return id;
+    }
+
+    public DeviceType getDeviceType() {
+        return deviceType;
     }
 
     private void changeState(State state) {

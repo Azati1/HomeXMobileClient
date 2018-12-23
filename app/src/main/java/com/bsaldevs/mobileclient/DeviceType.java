@@ -1,5 +1,5 @@
 package com.bsaldevs.mobileclient;
 
-public enum DeviceTypes {
+public enum DeviceType {
     LAMP, SOCKET, LOCKER, CONDITIONER, THERMOMETER, PLAYER
 }

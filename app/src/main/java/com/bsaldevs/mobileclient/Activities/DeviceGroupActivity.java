@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bsaldevs.mobileclient.DeviceType;
+import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Dialogs.SelectSmartDeviceDialog;
@@ -29,11 +31,18 @@ public class DeviceGroupActivity extends Activity {
     private RecyclerView recyclerDeviceGroup;
     private PlaceGroup placeGroup;
     private List<DeviceGroupLineDisplay> deviceGroupLineDisplayList;
+    private MyApplication application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_group);
+
+        application = (MyApplication) getApplication();
+
+        String placeGroupString = getIntent().getStringExtra("placeGroupName");
+
+        placeGroup = application.getPlaceGroup(placeGroupString);
 
         deviceGroupLineDisplayList = loadDeviceGroupData();
 
@@ -51,16 +60,16 @@ public class DeviceGroupActivity extends Activity {
     private List<DeviceGroupLineDisplay> loadDeviceGroupData() {
         List<DeviceGroupLineDisplay> deviceGroupLineDisplays = new ArrayList<>();
 
-        DeviceGroup deviceGroupLamp = new DeviceGroup("Лампы", R.drawable.lamp_on);
-        DeviceGroup deviceGroupSocket = new DeviceGroup("Розетки", R.drawable.ic_socket);
+        DeviceGroup deviceGroupLamp = new DeviceGroup(DeviceType.LAMP, "Лампы", R.drawable.lamp_on);
+        DeviceGroup deviceGroupSocket = new DeviceGroup(DeviceType.SOCKET,"Розетки", R.drawable.ic_socket);
         DeviceGroupLineDisplay deviceGroupLineDisplay1 = new DeviceGroupLineDisplay(deviceGroupLamp, deviceGroupSocket);
 
-        DeviceGroup deviceGroupLocker = new DeviceGroup("Замки", R.drawable.ic_lock);
-        DeviceGroup deviceGroupConditioner = new DeviceGroup("Кондиционеры", R.drawable.ic_air_conditioner);
+        DeviceGroup deviceGroupLocker = new DeviceGroup(DeviceType.LOCKER,"Замки", R.drawable.ic_lock);
+        DeviceGroup deviceGroupConditioner = new DeviceGroup(DeviceType.CONDITIONER,"Кондиционеры", R.drawable.ic_air_conditioner);
         DeviceGroupLineDisplay deviceGroupLineDisplay2 = new DeviceGroupLineDisplay(deviceGroupLocker, deviceGroupConditioner);
 
-        DeviceGroup deviceGroupThermometer = new DeviceGroup("Термометры", R.drawable.ic_thermometer);
-        DeviceGroup deviceGroupMusicPlayer = new DeviceGroup("Музыка", R.drawable.ic_music_player);
+        DeviceGroup deviceGroupThermometer = new DeviceGroup(DeviceType.THERMOMETER,"Термометры", R.drawable.ic_thermometer);
+        DeviceGroup deviceGroupMusicPlayer = new DeviceGroup(DeviceType.PLAYER,"Музыка", R.drawable.ic_music_player);
         DeviceGroupLineDisplay deviceGroupLineDisplay3 = new DeviceGroupLineDisplay(deviceGroupThermometer, deviceGroupMusicPlayer);
 
         DeviceGroupLineDisplay deviceGroupLineDisplay4 = new DeviceGroupLineDisplay(deviceGroupThermometer, deviceGroupMusicPlayer);
@@ -77,8 +86,10 @@ public class DeviceGroupActivity extends Activity {
 
         private String name;
         private int imageResId;
+        private DeviceType deviceType;
 
-        public DeviceGroup(String name, int imageResId) {
+        public DeviceGroup(DeviceType deviceType, String name, int imageResId) {
+            this.deviceType = deviceType;
             this.imageResId = imageResId;
             this.name = name;
         }
@@ -111,14 +122,6 @@ public class DeviceGroupActivity extends Activity {
 
             holder.bind(deviceGroupLineDisplay);
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), DeviceGroupActivity.class);
-                    startActivity(intent);
-                }
-            });
-
             holder.cardView1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -129,7 +132,7 @@ public class DeviceGroupActivity extends Activity {
             holder.cardView1.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(DeviceGroupActivity.this);
+                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(DeviceGroupActivity.this, deviceGroupLineDisplay.deviceGroup1.deviceType, placeGroup);
                     dialog.show();
                     return false;
                 }
@@ -145,7 +148,7 @@ public class DeviceGroupActivity extends Activity {
             holder.cardView2.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(DeviceGroupActivity.this);
+                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(DeviceGroupActivity.this, deviceGroupLineDisplay.deviceGroup2.deviceType, placeGroup);
                     dialog.show();
                     return false;
                 }

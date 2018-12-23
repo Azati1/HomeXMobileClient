@@ -98,7 +98,7 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
         @NonNull
         @Override
         public Adapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.place_group_recycler_item, viewGroup, false);
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_place_group_item, viewGroup, false);
             return new Adapter.ItemViewHolder(v);
         }
 
@@ -113,6 +113,7 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), DeviceGroupActivity.class);
+                    intent.putExtra("placeGroupName", placeGroup.getName());
                     startActivity(intent);
                 }
             });
