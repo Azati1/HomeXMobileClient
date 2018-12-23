@@ -54,8 +54,6 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private RecyclerView recyclerView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,14 +88,12 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
     }
 
     private void loadPlaceGroups() {
-        List<PlaceGroup> placeGroups = new ArrayList<>();
-
         PlaceGroup placeGroupOffice = new PlaceGroup("Офис", R.drawable.ic_desk);
-        PlaceGroup placeGroupLivingRoom = new PlaceGroup("Гостиная", R.drawable.ic_tv);
+        PlaceGroup placeGroupLivingRoom = new PlaceGroup("Гостиная", R.drawable.ic_livingroom);
         PlaceGroup placeGroupBathroom = new PlaceGroup("Ванная", R.drawable.ic_bathtub);
-        PlaceGroup placeGroupBedroom = new PlaceGroup("Спальня", R.drawable.ic_bunk_bed);
-        PlaceGroup placeGroupRestroom = new PlaceGroup("Уборная", R.drawable.ic_wc);
-        PlaceGroup placeGroupKitchen = new PlaceGroup("Кухня", R.drawable.ic_stove);
+        PlaceGroup placeGroupBedroom = new PlaceGroup("Спальня", R.drawable.ic_bed);
+        PlaceGroup placeGroupRestroom = new PlaceGroup("Уборная", R.drawable.ic_toilet);
+        PlaceGroup placeGroupKitchen = new PlaceGroup("Кухня", R.drawable.ic_coffee_machine);
 
         application.addPlaceGroup(placeGroupOffice);
         application.addPlaceGroup(placeGroupLivingRoom);

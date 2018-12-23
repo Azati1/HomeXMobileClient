@@ -14,18 +14,16 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bsaldevs.mobileclient.Activities.DeviceGroupActivity;
+import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class RoomsFragment extends android.support.v4.app.Fragment {
 
     private OnFragmentInteractionListener mListener;
-    private List<PlaceGroup> places;
+    private List<PlaceGroup> placeGroups;
 
     public RoomsFragment() {
         // Required empty public constructor
@@ -39,13 +37,7 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        places = new ArrayList<>();
-        places.add(new PlaceGroup("Офис", R.drawable.ic_desk));
-        places.add(new PlaceGroup("Гостиная", R.drawable.ic_tv));
-        places.add(new PlaceGroup("Ванная", R.drawable.ic_bathtub));
-        places.add(new PlaceGroup("Спальня", R.drawable.ic_bunk_bed));
-        places.add(new PlaceGroup("Уборная", R.drawable.ic_wc));
-        places.add(new PlaceGroup("Кухня", R.drawable.ic_stove));
+        placeGroups = ((MyApplication) getContext().getApplicationContext()).getPlaceGroups();
     }
 
     @Override
@@ -105,7 +97,7 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
         @Override
         public void onBindViewHolder(@NonNull final Adapter.ItemViewHolder holder, final int i) {
 
-            final PlaceGroup placeGroup = places.get(i);
+            final PlaceGroup placeGroup = placeGroups.get(i);
 
             holder.bind(placeGroup);
 
@@ -121,7 +113,7 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
 
         @Override
         public int getItemCount() {
-            return places.size();
+            return placeGroups.size();
         }
 
         public class ItemViewHolder extends RecyclerView.ViewHolder {

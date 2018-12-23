@@ -10,6 +10,7 @@ public class LampSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_light_settings);
+        getSupportActionBar().hide();
     }
 
 }
