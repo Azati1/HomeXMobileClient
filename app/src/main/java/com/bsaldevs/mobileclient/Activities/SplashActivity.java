@@ -14,7 +14,7 @@ import com.bsaldevs.mobileclient.R;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final int SPLASH_DISPLAY_TIME = 3000;
+    private static final int SPLASH_DISPLAY_TIME = 4000;
     private AnimationDrawable animationDrawable;
     private RelativeLayout layout;
 
