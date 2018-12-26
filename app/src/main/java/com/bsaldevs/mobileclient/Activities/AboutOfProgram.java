@@ -12,7 +12,7 @@ import com.bsaldevs.mobileclient.R;
 
 public class AboutOfProgram extends AppCompatActivity {
 
-    private static final int SPLASH_DISPLAY_TIME = 100000;
+    private static final int SPLASH_DISPLAY_TIME = 60000;
     private AnimationDrawable animationDrawable;
     private RelativeLayout layout;
 
