@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         ImageButton loginByFacebookButton = findViewById(R.id.imageButtonFacebook);
         ImageButton loginByGooglePlusButton = findViewById(R.id.imageButtonGoogle);
         ImageButton loginByVKButton = findViewById(R.id.imageButtonVK);
+        ImageButton about = findViewById(R.id.about);
 
         View sheet = findViewById(R.id.bottomRegistrationSheet);
 
@@ -52,6 +53,14 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             @Override
             public void onSlide(@NonNull View view, float v) {
                 Log.d("CDA", "bottom sheet onSlide");
+            }
+        });
+
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent aboutofProg = new Intent(LoginActivity.this, AboutOfProgram.class);
+                startActivity(aboutofProg);
             }
         });
 

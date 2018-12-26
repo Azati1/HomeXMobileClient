@@ -1,18 +1,16 @@
 package com.bsaldevs.mobileclient.Activities;
 
-        import android.content.Intent;
-        import android.graphics.drawable.AnimationDrawable;
-        import android.os.Handler;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.view.Window;
-        import android.view.WindowManager;
-        import android.widget.RelativeLayout;
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.RelativeLayout;
 
-        import com.airbnb.lottie.LottieAnimationView;
-        import com.bsaldevs.mobileclient.R;
+import com.airbnb.lottie.LottieAnimationView;
+import com.bsaldevs.mobileclient.R;
 
-public class SplashActivity extends AppCompatActivity {
+public class AboutOfProgram extends AppCompatActivity {
 
     private static final int SPLASH_DISPLAY_TIME = 4000;
     private AnimationDrawable animationDrawable;
@@ -22,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_about);
 
         /*layout = findViewById(R.id.load_container);
 
@@ -34,14 +32,14 @@ public class SplashActivity extends AppCompatActivity {
 
         LottieAnimationView lottieAnimationView = (LottieAnimationView) findViewById(R.id.animation_view);
         lottieAnimationView.setImageAssetsFolder("images/");
-        lottieAnimationView.setAnimation("loading.json");
+        lottieAnimationView.setAnimation("about.json");
         lottieAnimationView.loop(false);
         lottieAnimationView.playAnimation();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent login = new Intent(SplashActivity.this, LoginActivity.class);
+                Intent login = new Intent(AboutOfProgram.this, LoginActivity.class);
                 startActivity(login);
                 finish();
             }

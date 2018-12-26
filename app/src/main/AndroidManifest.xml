@@ -22,11 +22,13 @@
         </activity>
         <activity android:name=".Activities.LampSettingsActivity" />
         <activity android:name=".Activities.StartAppActivity" />
-        <activity android:name=".Activities.LoginActivity">
-        </activity>
+        <activity android:name=".Activities.LoginActivity"></activity>
         <activity
             android:name=".Activities.DeviceGroupActivity"
-            android:label="@string/title_activity_smart_devices"></activity>
+            android:label="@string/title_activity_smart_devices" />
+        <activity
+            android:name=".Activities.AboutOfProgram"
+            android:label="@string/title_activity_main2"></activity>
     </application>
 
 </manifest>
