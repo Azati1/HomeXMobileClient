@@ -22,19 +22,26 @@
             android:layout_gravity="center"
             android:src="@drawable/lamp_on" />
 
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/color1" />
+
         <TextView
             android:id="@+id/small_smart_device_name"
-            android:layout_width="wrap_content"
+            android:layout_width="243dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Lamp 1"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="24sp" />
+            android:text="Розетка 1"
+            android:textColor="@color/color1"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <Switch
-            android:id="@+id/small_smart_device_toggle_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
             android:layout_marginLeft="10dp" />
     </LinearLayout>
 

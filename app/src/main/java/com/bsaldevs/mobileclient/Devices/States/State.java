@@ -10,12 +10,19 @@ public abstract class State implements Controllable {
 
     protected SmartDevice sender;
     protected TCPConnection connection;
+    public static final int ENABLED = 1;
+    public static final int DISABLED = 2;
+    public static final int RESETED = 3;
+    public static final int BLOCKED = 4;
+    public static final int LOADED = 5;
+    protected int currentState;
 
     @Override
     public void turnOn() {
         Command command = new Command("turnOn", new String[]{""});
         Request request = new Request(sender.getName(), sender.getName(), command);
         connection.sendRequest(request);
+        currentState = ENABLED;
     }
 
     @Override
@@ -23,6 +30,7 @@ public abstract class State implements Controllable {
         Command command = new Command("turnOff", new String[]{""});
         Request request = new Request(sender.getName(), sender.getName(), command);
         connection.sendRequest(request);
+        currentState = DISABLED;
     }
 
     @Override
@@ -30,6 +38,7 @@ public abstract class State implements Controllable {
         Command command = new Command("reset", new String[]{""});
         Request request = new Request(sender.getName(), sender.getName(), command);
         connection.sendRequest(request);
+        currentState = RESETED;
     }
 
     @Override
@@ -37,10 +46,15 @@ public abstract class State implements Controllable {
         Command command = new Command("block", new String[]{""});
         Request request = new Request(sender.getName(), sender.getName(), command);
         connection.sendRequest(request);
+        currentState = BLOCKED;
     }
 
     public State(SmartDevice sender, TCPConnection connection) {
         this.sender = sender;
         this.connection = connection;
+    }
+
+    public int getState() {
+        return currentState;
     }
 }

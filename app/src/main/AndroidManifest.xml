@@ -27,7 +27,7 @@
             android:name=".Activities.DeviceGroupActivity"
             android:label="@string/title_activity_smart_devices" />
         <activity
-            android:name=".Activities.AboutOfProgram"
+            android:name=".Activities.AboutOfProgramActivity"
             android:label="@string/title_activity_main2"></activity>
     </application>
 

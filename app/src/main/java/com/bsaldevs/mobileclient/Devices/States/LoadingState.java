@@ -7,6 +7,7 @@ public class LoadingState extends State {
 
     public LoadingState(SmartDevice sender, TCPConnection connection) {
         super(sender, connection);
+        currentState = LOADED;
     }
 
     @Override

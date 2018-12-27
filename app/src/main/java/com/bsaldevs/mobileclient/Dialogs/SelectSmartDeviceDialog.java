@@ -13,8 +13,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.bsaldevs.mobileclient.Activities.LampSettingsActivity;
 import com.bsaldevs.mobileclient.DeviceType;
@@ -101,16 +104,28 @@ public class SelectSmartDeviceDialog extends Dialog {
 
             private TextView name;
             private ImageView imageView;
+            private Switch aSwitch;
 
             public ItemViewHolder(@NonNull View itemView) {
                 super(itemView);
                 name = itemView.findViewById(R.id.small_smart_device_name);
                 imageView = itemView.findViewById(R.id.small_smart_device_image);
+                aSwitch = itemView.findViewById(R.id.small_smart_device_toggle_button);
             }
 
             private void bind(final SmartDevice smartDevice) {
                 name.setText(smartDevice.getName());
                 imageView.setImageResource(smartDevice.getImageResourceID());
+                aSwitch.setChecked(smartDevice.isEnabled());
+                aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b)
+                            smartDevice.turnOff();
+                        else
+                            smartDevice.turnOn();
+                    }
+                });
             }
         }
     }

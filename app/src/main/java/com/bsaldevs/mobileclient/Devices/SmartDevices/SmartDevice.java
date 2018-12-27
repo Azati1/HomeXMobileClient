@@ -20,6 +20,7 @@ public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
     private static int counter;
     private PlaceGroup place;
     private DeviceType deviceType;
+    private int currentState;
 
     public SmartDevice(DeviceType deviceType, String name, PlaceGroup placeGroup, final TCPConnection connection) {
         this.id = counter++;
@@ -82,7 +83,18 @@ public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
         thread.start();
     }
 
+    public int getState() {
+        return currentState;
+    }
+
     public PlaceGroup placedIn() {
         return place;
+    }
+
+    public boolean isEnabled() {
+        if (state.getState() == State.ENABLED)
+            return true;
+        else
+            return false;
     }
 }

@@ -108,7 +108,9 @@ public class TCPConnection {
         protected Void doInBackground(Request... values) {
             Request request = values[0];
             try {
-                out.write(request.toString()+ "\r\n");
+                String message = request.toString();
+                Log.d("CDA", message);
+                out.write(message + "\r\n");
                 out.flush();
             } catch (IOException e) {
                 eventListener.onException(TCPConnection.this, e);

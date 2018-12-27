@@ -63,7 +63,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         UserDevice mobile = new Mobile("username");
 
         //String ip = "localhost";
-        String ip = "192.168.0.101";
+        String ip = "192.168.0.100";
         int port = 3346;
 
         application = (MyApplication) getApplication();

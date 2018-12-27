@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="BarChart">
+        <attr name="title" format="string" />
+        <attr name="strokeColor" format="color" />
+        <attr name="fillColor" format="color" />
+    </declare-styleable>
+</resources>

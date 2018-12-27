@@ -1,6 +1,5 @@
 package com.bsaldevs.mobileclient.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -13,16 +12,14 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bsaldevs.mobileclient.DeviceType;
+import com.bsaldevs.mobileclient.Dialogs.ConfirmEnableDeviceGroup;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Dialogs.SelectSmartDeviceDialog;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,32 +122,52 @@ public class DeviceGroupActivity extends Activity {
             holder.cardView1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), "Вкл/выкл", Toast.LENGTH_SHORT).show();
+                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(DeviceGroupActivity.this, deviceGroupLineDisplay.deviceGroup1.deviceType, placeGroup);
+                    dialog.show();
                 }
             });
 
             holder.cardView1.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(DeviceGroupActivity.this, deviceGroupLineDisplay.deviceGroup1.deviceType, placeGroup);
+                    //Toast.makeText(getApplicationContext(), "Вкл/выкл", Toast.LENGTH_SHORT).show();
+                    ConfirmEnableDeviceGroup dialog = new ConfirmEnableDeviceGroup(DeviceGroupActivity.this, false) {
+                        @Override
+                        public void setOnConfirmListener(boolean deviceGroupEnabled) {
+                            if (deviceGroupEnabled)
+                                Toast.makeText(getContext(), "Выключено", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(getContext(), "Включено", Toast.LENGTH_SHORT).show();
+                        }
+                    };
                     dialog.show();
-                    return false;
+                    return true;
                 }
             });
 
             holder.cardView2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), "Вкл/выкл", Toast.LENGTH_SHORT).show();
+                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(DeviceGroupActivity.this, deviceGroupLineDisplay.deviceGroup2.deviceType, placeGroup);
+                    dialog.show();
                 }
             });
 
             holder.cardView2.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(DeviceGroupActivity.this, deviceGroupLineDisplay.deviceGroup2.deviceType, placeGroup);
+                    //Toast.makeText(getApplicationContext(), "Вкл/выкл", Toast.LENGTH_SHORT).show();
+                    ConfirmEnableDeviceGroup dialog = new ConfirmEnableDeviceGroup(DeviceGroupActivity.this, true) {
+                        @Override
+                        public void setOnConfirmListener(boolean deviceGroupEnabled) {
+                            if (deviceGroupEnabled)
+                                Toast.makeText(getContext(), "Выключено", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(getContext(), "Включено", Toast.LENGTH_SHORT).show();
+                        }
+                    };
                     dialog.show();
-                    return false;
+                    return true;
                 }
             });
         }
