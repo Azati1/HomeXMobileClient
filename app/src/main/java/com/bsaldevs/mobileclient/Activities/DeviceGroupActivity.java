@@ -57,7 +57,7 @@ public class DeviceGroupActivity extends Activity {
     private List<DeviceGroupLineDisplay> loadDeviceGroupData() {
         List<DeviceGroupLineDisplay> deviceGroupLineDisplays = new ArrayList<>();
 
-        DeviceGroup deviceGroupLamp = new DeviceGroup(DeviceType.LAMP, "Лампы", R.drawable.lamp_on);
+        DeviceGroup deviceGroupLamp = new DeviceGroup(DeviceType.LAMP, "Освещение", R.drawable.lamp_on);
         DeviceGroup deviceGroupSocket = new DeviceGroup(DeviceType.SOCKET,"Розетки", R.drawable.ic_socket);
         DeviceGroupLineDisplay deviceGroupLineDisplay1 = new DeviceGroupLineDisplay(deviceGroupLamp, deviceGroupSocket);
 
@@ -66,7 +66,7 @@ public class DeviceGroupActivity extends Activity {
         DeviceGroupLineDisplay deviceGroupLineDisplay2 = new DeviceGroupLineDisplay(deviceGroupLocker, deviceGroupConditioner);
 
         DeviceGroup deviceGroupThermometer = new DeviceGroup(DeviceType.THERMOMETER,"Термометры", R.drawable.ic_thermometer);
-        DeviceGroup deviceGroupMusicPlayer = new DeviceGroup(DeviceType.PLAYER,"Музыка", R.drawable.ic_music_player);
+        DeviceGroup deviceGroupMusicPlayer = new DeviceGroup(DeviceType.PLAYER,"Окружение", R.drawable.ic_music_player);
         DeviceGroupLineDisplay deviceGroupLineDisplay3 = new DeviceGroupLineDisplay(deviceGroupThermometer, deviceGroupMusicPlayer);
 
         DeviceGroupLineDisplay deviceGroupLineDisplay4 = new DeviceGroupLineDisplay(deviceGroupThermometer, deviceGroupMusicPlayer);
@@ -140,6 +140,7 @@ public class DeviceGroupActivity extends Activity {
                                 Toast.makeText(getContext(), "Включено", Toast.LENGTH_SHORT).show();
                         }
                     };
+                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     dialog.show();
                     return true;
                 }
@@ -166,6 +167,7 @@ public class DeviceGroupActivity extends Activity {
                                 Toast.makeText(getContext(), "Включено", Toast.LENGTH_SHORT).show();
                         }
                     };
+                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     dialog.show();
                     return true;
                 }

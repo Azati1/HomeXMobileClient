@@ -1,9 +1,9 @@
 package com.bsaldevs.mobileclient.Devices.SmartDevices;
 
+import com.bsaldevs.mobileclient.Activities.MusicPlayerSettingsActivity;
 import com.bsaldevs.mobileclient.DeviceType;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.PlaceGroup;
-import com.bsaldevs.mobileclient.R;
 
 public class Conditioner extends SmartDevice {
 
@@ -16,6 +16,11 @@ public class Conditioner extends SmartDevice {
     @Override
     public int getImageResourceID() {
         return CONDITIONER_IMG_RES_ID;
+    }
+
+    @Override
+    public Class<?> getDisplayActivity() {
+        return CONDITIONER_SETTINGS_ACTIVITY;
     }
 
 }

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.User.MobileClient;
+import com.vk.sdk.VKSdk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,12 @@ public class MyApplication extends Application {
         super();
         devices = new ArrayList<>();
         placeGroups = new ArrayList<>();
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        VKSdk.initialize(getApplicationContext());
     }
 
     public void setupClient(MobileClient client) {

@@ -6,12 +6,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -54,6 +56,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,12 +169,8 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
 
-        /*recyclerView = findViewById(R.id.recyclerConnectedItems);
-
-        recyclerView.setLayoutAnimation(animation);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setAdapter(new Adapter());*/
-
+        navigationView = findViewById(R.id.main_navigation_view);
+        navigationView.setItemIconTintList(null);
     }
 
     private void setupViewPager(ViewPager viewPager) {

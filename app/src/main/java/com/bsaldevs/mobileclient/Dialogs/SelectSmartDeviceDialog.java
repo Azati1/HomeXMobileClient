@@ -89,7 +89,7 @@ public class SelectSmartDeviceDialog extends Dialog {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), LampSettingsActivity.class);
+                    Intent intent = new Intent(getContext(), smartDevice.getDisplayActivity());
                     context.startActivity(intent);
                 }
             });

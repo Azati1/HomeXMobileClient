@@ -3,7 +3,6 @@ package com.bsaldevs.mobileclient.Devices.SmartDevices;
 import com.bsaldevs.mobileclient.DeviceType;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.PlaceGroup;
-import com.bsaldevs.mobileclient.R;
 
 public class MusicPlayer extends SmartDevice {
 
@@ -16,5 +15,10 @@ public class MusicPlayer extends SmartDevice {
     @Override
     public int getImageResourceID() {
         return MUSICPLAYER_IMG_RES_ID;
+    }
+
+    @Override
+    public Class<?> getDisplayActivity() {
+        return MUSICPLAYER_SETTINGS_ACTIVITY;
     }
 }

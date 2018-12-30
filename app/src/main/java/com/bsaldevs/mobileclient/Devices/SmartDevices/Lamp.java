@@ -36,6 +36,11 @@ public class Lamp extends SmartDevice implements ColorChangeable, IntensityChang
     }
 
     @Override
+    public Class<?> getDisplayActivity() {
+        return LAMP_SETTINGS_ACTIVITY;
+    }
+
+    @Override
     public void setWarmDegrees(float degrees) {
         this.warmDegrees = degrees;
     }

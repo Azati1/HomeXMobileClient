@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorRegistration"
+        android:background="@color/colorSoftPrimary"
         android:gravity="center"
         android:text="Я тут в первый раз"
         android:textColor="@android:color/white" />

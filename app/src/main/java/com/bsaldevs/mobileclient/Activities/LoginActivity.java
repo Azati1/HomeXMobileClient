@@ -3,6 +3,7 @@ package com.bsaldevs.mobileclient.Activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,18 @@ import android.widget.Toast;
 
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.RegistrationFragment;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity implements RegistrationFragment.OnFragmentInteractionListener {
 
@@ -59,8 +72,8 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent aboutofProg = new Intent(LoginActivity.this, AboutOfProgramActivity.class);
-                startActivity(aboutofProg);
+                Intent aboutOfProgram = new Intent(LoginActivity.this, AboutOfProgramActivity.class);
+                startActivity(aboutOfProgram);
             }
         });
 
@@ -90,9 +103,50 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             @Override
             public void onClick(View view) {
                 Toast.makeText(LoginActivity.this, "Login by vk", Toast.LENGTH_SHORT).show();
+                VKSdk.login(LoginActivity.this);
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+            @Override
+            public void onResult(VKAccessToken res) {
+
+                VKRequest request = VKApi.users().get();
+                request.executeWithListener(new VKRequest.VKRequestListener() {
+                    @Override
+                    public void onComplete(VKResponse response) {
+                        super.onComplete(response);
+                        String status = "";
+
+                        try {
+
+                            JSONArray jsonArray = response.json.getJSONArray("response");
+
+                            for (int i = 0; i < 1; i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                String first_name = jsonObject.getString("first_name");
+                                String last_name = jsonObject.getString("last_name");
+                                Log.d("CDA", first_name + " " + last_name);// Пользователь успешно авторизовался
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+            @Override
+            public void onError(VKError error) {
+// Произошла ошибка авторизации (например, пользователь запретил авторизацию)
+            }
+        })) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override

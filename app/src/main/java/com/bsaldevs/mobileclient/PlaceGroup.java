@@ -21,8 +21,16 @@ public class PlaceGroup {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getImageResourceID() {
         return imageResourceID;
+    }
+
+    public void setImageResourceID(int imageResourceID) {
+        this.imageResourceID = imageResourceID;
     }
 
     public List<SmartDevice> getDevicesInside() {

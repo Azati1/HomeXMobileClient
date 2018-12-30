@@ -12,9 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bsaldevs.mobileclient.Activities.DeviceGroupActivity;
+import com.bsaldevs.mobileclient.Dialogs.ChangePlaceGroupDataDialog;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
@@ -96,19 +99,8 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull final Adapter.ItemViewHolder holder, final int i) {
-
             final PlaceGroup placeGroup = placeGroups.get(i);
-
             holder.bind(placeGroup);
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), DeviceGroupActivity.class);
-                    intent.putExtra("placeGroupName", placeGroup.getName());
-                    startActivity(intent);
-                }
-            });
         }
 
         @Override
@@ -130,6 +122,41 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
             private void bind(final PlaceGroup item) {
                 name.setText(item.getName());
                 image.setImageResource(item.getImageResourceID());
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), DeviceGroupActivity.class);
+                        intent.putExtra("placeGroupName", item.getName());
+                        startActivity(intent);
+                    }
+                });
+                itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        final ChangePlaceGroupDataDialog dialog = new ChangePlaceGroupDataDialog(getContext(), item.getName(), item.getImageResourceID());
+                        dialog.show();
+                        dialog.findViewById(R.id.button_confirm_place_group_changes).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+
+                                EditText changedNameText = dialog.findViewById(R.id.edit_place_group_name);
+                                ImageButton changedImageButton = dialog.findViewById(R.id.edit_place_group_image);
+
+                                name.setText(changedNameText.getText());
+                                image.setImageResource((Integer) changedImageButton.getTag());
+                                item.setName(changedNameText.getText().toString());
+                            }
+                        });
+                        dialog.findViewById(R.id.button_cancel_place_group_changes).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                            }
+                        });
+                        return true;
+                    }
+                });
             }
         }
     }

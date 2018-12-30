@@ -17,4 +17,9 @@ public class Socket extends SmartDevice {
     public int getImageResourceID() {
         return SOCKET_IMG_RES_ID;
     }
+
+    @Override
+    public Class<?> getDisplayActivity() {
+        return SOCKET_SETTINGS_ACTIVITY;
+    }
 }

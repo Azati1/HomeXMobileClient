@@ -1,12 +1,13 @@
-package com.bsaldevs.mobileclient;
+package com.bsaldevs.mobileclient.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.bsaldevs.mobileclient.R;
 
 public class RoomInfoFragment extends android.support.v4.app.Fragment {
 

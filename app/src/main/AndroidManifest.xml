@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.vk.sdk.VKServiceActivity" android:label="ServiceActivity" android:theme="@style/VK.Transparent" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.SplashActivity">
             <intent-filter>
@@ -21,6 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.LampSettingsActivity" />
+        <activity android:name=".Activities.ConditionerSettingsActivity" />
+        <activity android:name=".Activities.MusicPlayerSettingsActivity" />
         <activity android:name=".Activities.StartAppActivity" />
         <activity android:name=".Activities.LoginActivity"></activity>
         <activity
