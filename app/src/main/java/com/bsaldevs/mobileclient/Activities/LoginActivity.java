@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -47,11 +49,13 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         EditText editLogin = findViewById(R.id.editText2);
         EditText editPassword = findViewById(R.id.editText4);
         Button login = findViewById(R.id.button9);
-        TextView titleLoginBy = findViewById(R.id.textView9);
-        ImageButton loginByFacebookButton = findViewById(R.id.imageButtonFacebook);
-        ImageButton loginByGooglePlusButton = findViewById(R.id.imageButtonGoogle);
-        ImageButton loginByVKButton = findViewById(R.id.imageButtonVK);
+        //TextView titleLoginBy = findViewById(R.id.textView9);
+        final ImageButton loginByFacebookButton = findViewById(R.id.imageButtonFacebook);
+        final ImageButton loginByGooglePlusButton = findViewById(R.id.imageButtonGoogle);
+        final ImageButton loginByVKButton = findViewById(R.id.imageButtonVK);
         ImageButton about = findViewById(R.id.about);
+        Button soc = findViewById(R.id.soc_button);
+        final TextView textsoc = findViewById(R.id.soc_text);
 
         View sheet = findViewById(R.id.bottomRegistrationSheet);
 
@@ -106,6 +110,31 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                 VKSdk.login(LoginActivity.this);
             }
         });
+
+        loginByVKButton.setVisibility(loginByVKButton.INVISIBLE);
+        loginByGooglePlusButton.setVisibility(loginByGooglePlusButton.INVISIBLE);
+        loginByFacebookButton.setVisibility(loginByFacebookButton.INVISIBLE);
+
+        final Animation animScale = AnimationUtils.loadAnimation(this, R.anim.scale);
+        final Animation animScaleMin = AnimationUtils.loadAnimation(this, R.anim.scale_to_min);
+
+        soc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.startAnimation(animScaleMin);
+                view.setVisibility(view.INVISIBLE);
+                textsoc.setVisibility(textsoc.VISIBLE);
+                textsoc.startAnimation(animScale);
+
+                loginByVKButton.setVisibility(loginByVKButton.VISIBLE);
+                loginByVKButton.startAnimation(animScale);
+                loginByGooglePlusButton.setVisibility(loginByGooglePlusButton.VISIBLE);
+                loginByGooglePlusButton.startAnimation(animScale);
+                loginByFacebookButton.setVisibility(loginByFacebookButton.VISIBLE);
+                loginByFacebookButton.startAnimation(animScale);
+            }
+        });
+
 
     }
 

@@ -97,33 +97,20 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="84dp"
-            android:layout_marginEnd="8dp"
-            android:text="Войти при помощи соц. сетей"
-            android:textColor="@color/colorPrimaryText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
-
         <ImageButton
             android:id="@+id/imageButtonFacebook"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="12dp"
-            android:layout_toStartOf="@+id/textView9"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="9dp"
+            android:layout_toStartOf="@+id/textView10"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:scaleType="centerInside"
             android:src="@drawable/facebook500"
-            app:layout_constraintStart_toStartOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/soc_button" />
 
         <ImageButton
             android:id="@+id/imageButtonGoogle"
@@ -131,30 +118,31 @@
             android:layout_height="50dp"
             android:layout_alignTop="@+id/imageButtonFacebook"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="16dp"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:scaleType="centerInside"
             android:src="@drawable/googleplus"
             app:layout_constraintEnd_toStartOf="@+id/imageButtonVK"
             app:layout_constraintStart_toEndOf="@+id/imageButtonFacebook"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/soc_button" />
 
         <ImageButton
             android:id="@+id/imageButtonVK"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignTop="@+id/imageButtonFacebook"
-            android:layout_marginTop="12dp"
-            android:layout_toEndOf="@+id/textView9"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="90dp"
+            android:layout_toEndOf="@+id/textView11"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:scaleType="centerInside"
             android:src="@drawable/vk"
-            app:layout_constraintEnd_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/soc_button" />
 
         <ImageButton
             android:id="@+id/about"
@@ -166,6 +154,33 @@
             android:src="@drawable/ic_star"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/soc_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="66dp"
+            android:layout_marginTop="66dp"
+            android:layout_marginEnd="66dp"
+            android:text="Войти при помощи соц. сетей"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+        <TextView
+            android:id="@+id/soc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="66dp"
+            android:layout_marginEnd="136dp"
+            android:text="ВОЙТИ ЧЕРЕЗ:"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
 
     </android.support.constraint.ConstraintLayout>
