@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Conditioner;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.MusicPlayer;
@@ -171,6 +172,11 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
 
         navigationView = findViewById(R.id.main_navigation_view);
         navigationView.setItemIconTintList(null);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView navigationViewHeaderTitle = headerView.findViewById(R.id.navigation_header_title);
+        navigationViewHeaderTitle.setText("Привет, " + application.getAccount().getName() + "!");
     }
 
     private void setupViewPager(ViewPager viewPager) {

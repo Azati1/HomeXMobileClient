@@ -10,22 +10,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.RegistrationFragment;
+import com.bsaldevs.mobileclient.User.Account;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 
@@ -33,17 +37,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity /*implements RegistrationFragment.OnFragmentInteractionListener */{
+public class LoginActivity extends AppCompatActivity implements RegistrationFragment.OnFragmentInteractionListener {
+
+    private MyApplication application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
-        setContentView(R.layout.login_activity);
 
-       // FragmentManager manager = getSupportFragmentManager();
-       // RegistrationFragment registrationFragment = new RegistrationFragment();
-       // manager.beginTransaction().replace(R.id.bottomRegistrationSheet, registrationFragment).commit();
+        application = (MyApplication) getApplication();
+
+        getSupportActionBar().hide();
+        setContentView(R.layout.activity_login);
+
+        FragmentManager manager = getSupportFragmentManager();
+        RegistrationFragment registrationFragment = new RegistrationFragment();
+        manager.beginTransaction().replace(R.id.bottom_registration_sheet, registrationFragment).commit();
 
         TextView title = findViewById(R.id.textView10);
         EditText editLogin = findViewById(R.id.editText2);
@@ -55,35 +64,69 @@ public class LoginActivity extends AppCompatActivity /*implements RegistrationFr
         final ImageButton loginByVKButton = findViewById(R.id.imageButtonVK);
         ImageButton about = findViewById(R.id.about);
         Button soc = findViewById(R.id.soc_button);
-        Button reg = findViewById(R.id.button_registration);
-
         final TextView textsoc = findViewById(R.id.soc_text);
 
-        // View sheet = findViewById(R.id.bottomRegistrationSheet);
+        View sheet = findViewById(R.id.bottom_registration_sheet);
 
-        //BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(sheet);
+        final ImageView slideArrow = sheet.findViewById(R.id.image_slide_sheet_arrow);
 
-        //bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-        //    @Override
-        //    public void onStateChanged(@NonNull View view, int i) {
-         //       Log.d("CDA", "bottom sheet onStateChanged");
-         //   }
+        final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(sheet);
 
-         //   @Override
-         //   public void onSlide(@NonNull View view, float v) {
-         //       Log.d("CDA", "bottom sheet onSlide");
-         //   }
-       // });
-
-        reg.setOnClickListener(new View.OnClickListener() {
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
-            public void onClick(View view) {
-                Intent registr = new Intent(LoginActivity.this, RegistrationActivity.class);
-                startActivity(registr);
+            public void onStateChanged(@NonNull View view, int i) {
+                Log.d("CDA", "bottom sheet onStateChanged");
+            }
 
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+                Log.d("CDA", "bottom sheet onSlide");
             }
         });
 
+        final Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_slide_arrow);
+
+        Button button = findViewById(R.id.button10);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                slideArrow.startAnimation(rotation);
+            }
+        });
+
+        sheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d("CDA", bottomSheetBehavior.getState() + "");
+
+                switch (bottomSheetBehavior.getState()) {
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+
+                        /*RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
+                                RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+
+                        rotateAnimation.setFillAfter(true);
+                        rotateAnimation.setDuration(1000);
+                        rotateAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                        slideArrow.startAnimation(rotateAnimation);*/
+
+                        //slideArrow.startAnimation(rotation);
+
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        break;
+                    }
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+
+            }
+        });
 
         about.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +215,7 @@ public class LoginActivity extends AppCompatActivity /*implements RegistrationFr
                                 String first_name = jsonObject.getString("first_name");
                                 String last_name = jsonObject.getString("last_name");
                                 Log.d("CDA", first_name + " " + last_name);// Пользователь успешно авторизовался
+                                login(new Account(first_name, last_name));
                             }
 
                         } catch (JSONException e) {
@@ -190,8 +234,14 @@ public class LoginActivity extends AppCompatActivity /*implements RegistrationFr
         }
     }
 
-   /* @Override
+    @Override
     public void onFragmentInteraction(Uri uri) {
 
-    }*/
+    }
+
+    private void login(Account account) {
+        application.login(account);
+        Intent login = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(login);
+    }
 }

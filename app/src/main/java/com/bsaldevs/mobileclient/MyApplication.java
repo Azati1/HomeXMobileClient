@@ -3,6 +3,7 @@ package com.bsaldevs.mobileclient;
 import android.app.Application;
 
 import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
+import com.bsaldevs.mobileclient.User.Account;
 import com.bsaldevs.mobileclient.User.MobileClient;
 import com.vk.sdk.VKSdk;
 
@@ -14,6 +15,7 @@ public class MyApplication extends Application {
     private MobileClient client;
     private List<SmartDevice> devices;
     private List<PlaceGroup> placeGroups;
+    private Account account;
 
     public MyApplication() {
         super();
@@ -25,6 +27,16 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         VKSdk.initialize(getApplicationContext());
+        this.account = new Account("#empty", "#empty");
+    }
+
+    public boolean login(Account account) {
+        this.account = account;
+        return true;
+    }
+
+    public Account getAccount() {
+        return account;
     }
 
     public void setupClient(MobileClient client) {

@@ -85,11 +85,12 @@
 
             <Button
                 android:id="@+id/button9"
-                android:layout_width="130dp"
-                android:layout_height="45dp"
-                android:layout_marginEnd="1dp"
-                android:background="@drawable/button_enter_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/button_confirm_style"
                 android:text="Войти"
+                android:textColor="@android:color/background_light"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/button10"
@@ -157,14 +158,12 @@
 
         <Button
             android:id="@+id/soc_button"
-            android:layout_width="280dp"
-            android:layout_height="45dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginStart="66dp"
             android:layout_marginTop="66dp"
             android:layout_marginEnd="66dp"
-            android:background="@drawable/button_soc_style"
             android:text="Войти при помощи соц. сетей"
-            android:textColor="#ff00ddff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
@@ -173,34 +172,22 @@
             android:id="@+id/soc_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="126dp"
-            android:layout_marginTop="76dp"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="66dp"
             android:layout_marginEnd="136dp"
             android:text="ВОЙТИ ЧЕРЕЗ:"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
-        <Button
-            android:id="@+id/button_registration"
-            android:layout_width="280dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="66dp"
-            android:layout_marginEnd="66dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/button_registration_style"
-            android:text="Я тут в первый раз"
-            android:textAllCaps="false"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
 
     </android.support.constraint.ConstraintLayout>
+
+    <include
+        android:id="@+id/bottom_registration_sheet"
+        layout="@layout/fragment_registration"></include>
 
 </android.support.design.widget.CoordinatorLayout>
