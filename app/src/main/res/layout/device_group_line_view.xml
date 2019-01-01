@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/device_group_line"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,98 +10,134 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/cardview_device_group1"
-        android:layout_width="160dp"
-        android:layout_height="190dp"
-        android:layout_margin="10dp"
-        android:clickable="true">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_device_group1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            app:cardCornerRadius="5dp">
 
-            <ImageView
-                android:id="@+id/device_group_image1"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/lamp_on" />
-
-            <TextView
-                android:id="@+id/device_group_name1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Lamp on/off"
-                android:textStyle="bold" />
-
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/color1" />
-
-            <TextView
-                android:id="@+id/smart_device_hint1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:padding="5dp"
-                android:text="You may change bright and color of lamp"
-                android:textColor="@color/color1" />
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/device_group_image1"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:padding="15dp"
+                    android:src="@drawable/lamp_on" />
 
-    </android.support.v7.widget.CardView>
+                <TextView
+                    android:id="@+id/device_group_name1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="Lamp on/off"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/cardview_device_group2"
-        android:layout_width="160dp"
-        android:layout_height="190dp"
-        android:layout_margin="10dp"
-        android:clickable="true">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/color1" />
 
-        <LinearLayout
+                <TextView
+                    android:id="@+id/smart_device_hint1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="You may change bright and color of lamp"
+                    android:textColor="@color/color1" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_device_group2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            app:cardCornerRadius="5dp">
 
-            <ImageView
-                android:id="@+id/device_group_image2"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/lamp_on" />
-
-            <TextView
-                android:id="@+id/device_group_name2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Lamp on/off"
-                android:textStyle="bold" />
-
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/color1" />
-
-            <TextView
-                android:id="@+id/smart_device_hint2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:padding="5dp"
-                android:text="You may change bright and color of lamp"
-                android:textColor="@color/color1" />
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/device_group_image2"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:padding="15dp"
+                    android:src="@drawable/lamp_on" />
 
-    </android.support.v7.widget.CardView>
+                <TextView
+                    android:id="@+id/device_group_name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="Lamp on/off"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/color1" />
+
+                <TextView
+                    android:id="@+id/smart_device_hint2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="You may change bright and color of lamp"
+                    android:textColor="@color/color1" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 
 </LinearLayout>

@@ -17,9 +17,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Office"
+            android:text="Office222"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="48sp" />
+            android:textSize="48sp"
+            app:autoSizeMaxTextSize="48sp"
+            app:autoSizeMinTextSize="30sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform" />
 
         <ImageView
             android:id="@+id/place_group_image"

@@ -17,18 +17,14 @@
         <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Activities.LampSettingsActivity" />
         <activity android:name=".Activities.ConditionerSettingsActivity" />
         <activity android:name=".Activities.MusicPlayerSettingsActivity" />
-        <activity android:name=".Activities.StartAppActivity" />
         <activity android:name=".Activities.LoginActivity"></activity>
-        <activity
-            android:name=".Activities.DeviceGroupActivity"
-            android:label="@string/title_activity_smart_devices" />
+        <activity android:name=".Activities.DeviceGroupActivity" />
         <activity
             android:name=".Activities.AboutOfProgramActivity"
             android:label="@string/title_activity_main2"></activity>

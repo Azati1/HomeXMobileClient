@@ -17,4 +17,9 @@
         <item name="android:windowActivityTransitions">true</item>
     </style>
 
+    <style name="AppTheme.LighterEditText" parent="Widget.AppCompat.EditText">
+        <item name="colorControlActivated">@color/colorAccent2</item>
+        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

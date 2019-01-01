@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,10 +95,10 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             }
         });
 
-        sheet.setOnClickListener(new View.OnClickListener() {
+        LinearLayout linearLayout = sheet.findViewById(R.id.bottom_sheet_head);
+        linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Log.d("CDA", bottomSheetBehavior.getState() + "");
 
                 switch (bottomSheetBehavior.getState()) {
@@ -124,7 +125,6 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                         break;
                     }
                 }
-
             }
         });
 

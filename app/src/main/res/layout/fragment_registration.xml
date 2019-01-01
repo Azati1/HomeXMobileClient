@@ -6,15 +6,17 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    app:behavior_peekHeight="50dp"
+    app:behavior_peekHeight="53dp"
     android:elevation="8dp"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
     <LinearLayout
+        android:id="@+id/bottom_sheet_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorSoftPrimary"
-        android:gravity="center_vertical|center_horizontal">
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="15dp">
 
         <ImageView
             android:id="@+id/image_slide_sheet_arrow"
@@ -26,7 +28,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:gravity="center"
             android:text="Регистрация"
@@ -35,10 +37,14 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="50dp">
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="83dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView11"
@@ -46,22 +52,20 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="50dp"
             android:text="Имя"
             android:textColor="@color/colorPrimaryText" />
 
         <EditText
             android:id="@+id/editText3"
+            android:theme="@style/AppTheme.LighterEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="75dp"
             android:ems="10"
             android:hint="Имя"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColorLink="@color/colorAccent2" />
 
         <TextView
             android:id="@+id/textView12"
@@ -69,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="20dp"
             android:text="Адрес почты"
             android:textColor="@color/colorPrimaryText" />
 
@@ -77,13 +81,13 @@
             android:id="@+id/editText7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.LighterEditText"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="165dp"
             android:ems="10"
             android:hint="E-mail"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColorLink="@color/colorAccent2" />
 
         <TextView
             android:id="@+id/textView15"
@@ -91,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="false"
             android:layout_centerVertical="false"
-            android:layout_marginTop="230dp"
+            android:layout_marginTop="20dp"
             android:text="Пароль"
             android:textColor="@color/colorPrimaryText" />
 
@@ -99,25 +103,25 @@
             android:id="@+id/editText10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.LighterEditText"
             android:layout_alignParentStart="false"
             android:layout_alignParentBottom="false"
-            android:layout_marginTop="255dp"
             android:ems="10"
             android:hint="Пароль"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textColorLink="@color/colorAccent2" />
 
         <Button
             android:id="@+id/button8"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="57dp"
-            android:background="@drawable/button_registration_style"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_confirm_style"
             android:text="Создать аккаунт"
-            android:textColor="@color/colorPrimaryText" />
+            android:textColor="@android:color/background_light" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
