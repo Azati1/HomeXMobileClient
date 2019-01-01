@@ -33,7 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity implements RegistrationFragment.OnFragmentInteractionListener {
+public class LoginActivity extends AppCompatActivity /*implements RegistrationFragment.OnFragmentInteractionListener */{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +41,9 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         getSupportActionBar().hide();
         setContentView(R.layout.login_activity);
 
-        FragmentManager manager = getSupportFragmentManager();
-        RegistrationFragment registrationFragment = new RegistrationFragment();
-        manager.beginTransaction().replace(R.id.bottomRegistrationSheet, registrationFragment).commit();
+       // FragmentManager manager = getSupportFragmentManager();
+       // RegistrationFragment registrationFragment = new RegistrationFragment();
+       // manager.beginTransaction().replace(R.id.bottomRegistrationSheet, registrationFragment).commit();
 
         TextView title = findViewById(R.id.textView10);
         EditText editLogin = findViewById(R.id.editText2);
@@ -55,23 +55,35 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         final ImageButton loginByVKButton = findViewById(R.id.imageButtonVK);
         ImageButton about = findViewById(R.id.about);
         Button soc = findViewById(R.id.soc_button);
+        Button reg = findViewById(R.id.button_registration);
+
         final TextView textsoc = findViewById(R.id.soc_text);
 
-        View sheet = findViewById(R.id.bottomRegistrationSheet);
+        // View sheet = findViewById(R.id.bottomRegistrationSheet);
 
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(sheet);
+        //BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(sheet);
 
-        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+        //bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+        //    @Override
+        //    public void onStateChanged(@NonNull View view, int i) {
+         //       Log.d("CDA", "bottom sheet onStateChanged");
+         //   }
+
+         //   @Override
+         //   public void onSlide(@NonNull View view, float v) {
+         //       Log.d("CDA", "bottom sheet onSlide");
+         //   }
+       // });
+
+        reg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onStateChanged(@NonNull View view, int i) {
-                Log.d("CDA", "bottom sheet onStateChanged");
-            }
+            public void onClick(View view) {
+                Intent registr = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(registr);
 
-            @Override
-            public void onSlide(@NonNull View view, float v) {
-                Log.d("CDA", "bottom sheet onSlide");
             }
         });
+
 
         about.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,8 +190,8 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         }
     }
 
-    @Override
+   /* @Override
     public void onFragmentInteraction(Uri uri) {
 
-    }
+    }*/
 }

@@ -15,8 +15,9 @@
         android:layout_height="50dp"
         android:background="@color/colorSoftPrimary"
         android:gravity="center"
-        android:text="Я тут в первый раз"
-        android:textColor="@android:color/white" />
+        android:text="Регистрация"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -92,11 +93,12 @@
         <Button
             android:id="@+id/button8"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
             android:layout_marginBottom="57dp"
+            android:background="@drawable/button_registration_style"
             android:text="Создать аккаунт"
             android:textColor="@color/colorPrimaryText" />
 
