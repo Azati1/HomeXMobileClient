@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         final ImageButton loginByGooglePlusButton = findViewById(R.id.imageButtonGoogle);
         final ImageButton loginByVKButton = findViewById(R.id.imageButtonVK);
         ImageButton about = findViewById(R.id.about);
-        Button soc = findViewById(R.id.soc_button);
+
         final TextView textsoc = findViewById(R.id.soc_text);
 
         View sheet = findViewById(R.id.bottom_registration_sheet);
@@ -166,29 +166,7 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             }
         });
 
-        loginByVKButton.setVisibility(loginByVKButton.INVISIBLE);
-        loginByGooglePlusButton.setVisibility(loginByGooglePlusButton.INVISIBLE);
-        loginByFacebookButton.setVisibility(loginByFacebookButton.INVISIBLE);
 
-        final Animation animScale = AnimationUtils.loadAnimation(this, R.anim.scale);
-        final Animation animScaleMin = AnimationUtils.loadAnimation(this, R.anim.scale_to_min);
-
-        soc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.startAnimation(animScaleMin);
-                view.setVisibility(view.INVISIBLE);
-                textsoc.setVisibility(textsoc.VISIBLE);
-                textsoc.startAnimation(animScale);
-
-                loginByVKButton.setVisibility(loginByVKButton.VISIBLE);
-                loginByVKButton.startAnimation(animScale);
-                loginByGooglePlusButton.setVisibility(loginByGooglePlusButton.VISIBLE);
-                loginByGooglePlusButton.startAnimation(animScale);
-                loginByFacebookButton.setVisibility(loginByFacebookButton.VISIBLE);
-                loginByFacebookButton.startAnimation(animScale);
-            }
-        });
 
 
     }
