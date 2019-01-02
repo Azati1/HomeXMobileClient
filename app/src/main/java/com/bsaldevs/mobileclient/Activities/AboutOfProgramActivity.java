@@ -28,7 +28,6 @@ public class AboutOfProgramActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent login = new Intent(AboutOfProgramActivity.this, LoginActivity.class);
-                startActivity(login);
                 finish();
             }
         }, SPLASH_DISPLAY_TIME);

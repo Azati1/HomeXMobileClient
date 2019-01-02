@@ -11,7 +11,7 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
@@ -72,8 +72,9 @@
                     android:paddingTop="5dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="You may change bright and color of lamp"
-                    android:textColor="@color/color1" />
+                    android:text="Количество: 3"
+                    android:textColor="@color/color1"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -132,8 +133,9 @@
                     android:paddingTop="5dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="You may change bright and color of lamp"
-                    android:textColor="@color/color1" />
+                    android:text="Количество: 3"
+                    android:textColor="@color/color1"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 

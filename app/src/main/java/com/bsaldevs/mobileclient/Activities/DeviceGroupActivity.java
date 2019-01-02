@@ -69,12 +69,19 @@ public class DeviceGroupActivity extends Activity {
         DeviceGroup deviceGroupMusicPlayer = new DeviceGroup(DeviceType.PLAYER,"Окружение", R.drawable.ic_music_player);
         DeviceGroupLineDisplay deviceGroupLineDisplay3 = new DeviceGroupLineDisplay(deviceGroupThermometer, deviceGroupMusicPlayer);
 
-        DeviceGroupLineDisplay deviceGroupLineDisplay4 = new DeviceGroupLineDisplay(deviceGroupThermometer, deviceGroupMusicPlayer);
+        DeviceGroup deviceGroupHoover = new DeviceGroup(DeviceType.Hoover,"Пылесос", R.drawable.ic_hoover);
+        DeviceGroup deviceGroupBlind = new DeviceGroup(DeviceType.Blind,"Жалюзи", R.drawable.ic_blind);
+        DeviceGroupLineDisplay deviceGroupLineDisplay4 = new DeviceGroupLineDisplay(deviceGroupHoover, deviceGroupBlind);
+
+        DeviceGroup deviceGroupСameras = new DeviceGroup(DeviceType.Cameras,"Камеры", R.drawable.ic_camera);
+        DeviceGroup deviceGroupKettle = new DeviceGroup(DeviceType.Kettle,"Чайник", R.drawable.ic_kettle);
+        DeviceGroupLineDisplay deviceGroupLineDisplay5 = new DeviceGroupLineDisplay(deviceGroupСameras, deviceGroupKettle);
 
         deviceGroupLineDisplays.add(deviceGroupLineDisplay1);
         deviceGroupLineDisplays.add(deviceGroupLineDisplay2);
         deviceGroupLineDisplays.add(deviceGroupLineDisplay3);
         deviceGroupLineDisplays.add(deviceGroupLineDisplay4);
+        deviceGroupLineDisplays.add(deviceGroupLineDisplay5);
 
         return deviceGroupLineDisplays;
     }
