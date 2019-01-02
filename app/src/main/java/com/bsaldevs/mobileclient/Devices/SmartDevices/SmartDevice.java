@@ -1,6 +1,6 @@
 package com.bsaldevs.mobileclient.Devices.SmartDevices;
 
-import com.bsaldevs.mobileclient.DeviceType;
+import com.bsaldevs.mobileclient.Devices.DeviceType;
 import com.bsaldevs.mobileclient.Devices.Abilities.Controllable;
 import com.bsaldevs.mobileclient.Devices.SmartDeviceDisplay;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;

@@ -63,7 +63,6 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         final ImageButton loginByFacebookButton = findViewById(R.id.imageButtonFacebook);
         final ImageButton loginByGooglePlusButton = findViewById(R.id.imageButtonGoogle);
         final ImageButton loginByVKButton = findViewById(R.id.imageButtonVK);
-        ImageButton about = findViewById(R.id.about);
 
         final TextView textsoc = findViewById(R.id.soc_text);
 
@@ -128,14 +127,6 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             }
         });
 
-        about.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent aboutOfProgram = new Intent(LoginActivity.this, AboutOfProgramActivity.class);
-                startActivity(aboutOfProgram);
-            }
-        });
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,9 +156,6 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                 VKSdk.login(LoginActivity.this);
             }
         });
-
-
-
 
     }
 

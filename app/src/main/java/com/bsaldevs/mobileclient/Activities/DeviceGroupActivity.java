@@ -14,7 +14,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.bsaldevs.mobileclient.DeviceType;
+import com.bsaldevs.mobileclient.Devices.DeviceType;
 import com.bsaldevs.mobileclient.Dialogs.ConfirmEnableDeviceGroup;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
@@ -65,17 +65,17 @@ public class DeviceGroupActivity extends Activity {
         DeviceGroup deviceGroupConditioner = new DeviceGroup(DeviceType.CONDITIONER,"Кондиционеры", R.drawable.ic_air_conditioner);
         DeviceGroupLineDisplay deviceGroupLineDisplay2 = new DeviceGroupLineDisplay(deviceGroupLocker, deviceGroupConditioner);
 
-        DeviceGroup deviceGroupThermometer = new DeviceGroup(DeviceType.THERMOMETER,"Термометры", R.drawable.ic_thermometer);
-        DeviceGroup deviceGroupMusicPlayer = new DeviceGroup(DeviceType.PLAYER,"Окружение", R.drawable.ic_music_player);
+        DeviceGroup deviceGroupThermometer = new DeviceGroup(DeviceType.HEATERS,"Обогрев", R.drawable.ic_thermometer);
+        DeviceGroup deviceGroupMusicPlayer = new DeviceGroup(DeviceType.PLAYER,"Окружение", R.drawable.ic_sound_system);
         DeviceGroupLineDisplay deviceGroupLineDisplay3 = new DeviceGroupLineDisplay(deviceGroupThermometer, deviceGroupMusicPlayer);
 
-        DeviceGroup deviceGroupHoover = new DeviceGroup(DeviceType.Hoover,"Пылесос", R.drawable.ic_hoover);
-        DeviceGroup deviceGroupBlind = new DeviceGroup(DeviceType.Blind,"Жалюзи", R.drawable.ic_blind);
+        DeviceGroup deviceGroupHoover = new DeviceGroup(DeviceType.HOOVER,"Пылесос", R.drawable.ic_hoover);
+        DeviceGroup deviceGroupBlind = new DeviceGroup(DeviceType.JALOUSIE,"Шторы", R.drawable.ic_window);
         DeviceGroupLineDisplay deviceGroupLineDisplay4 = new DeviceGroupLineDisplay(deviceGroupHoover, deviceGroupBlind);
 
-        DeviceGroup deviceGroupСameras = new DeviceGroup(DeviceType.Cameras,"Камеры", R.drawable.ic_camera);
-        DeviceGroup deviceGroupKettle = new DeviceGroup(DeviceType.Kettle,"Чайник", R.drawable.ic_kettle);
-        DeviceGroupLineDisplay deviceGroupLineDisplay5 = new DeviceGroupLineDisplay(deviceGroupСameras, deviceGroupKettle);
+        DeviceGroup deviceGroupCamera = new DeviceGroup(DeviceType.CAMERA,"Камеры", R.drawable.ic_security_cam);
+        DeviceGroup deviceGroupKettle = new DeviceGroup(DeviceType.KETTLE,"Чайник", R.drawable.ic_kettle);
+        DeviceGroupLineDisplay deviceGroupLineDisplay5 = new DeviceGroupLineDisplay(deviceGroupCamera, deviceGroupKettle);
 
         deviceGroupLineDisplays.add(deviceGroupLineDisplay1);
         deviceGroupLineDisplays.add(deviceGroupLineDisplay2);

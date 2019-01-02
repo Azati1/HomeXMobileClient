@@ -1,6 +1,6 @@
 package com.bsaldevs.mobileclient.Devices.SmartDevices;
 
-import com.bsaldevs.mobileclient.DeviceType;
+import com.bsaldevs.mobileclient.Devices.DeviceType;
 import com.bsaldevs.mobileclient.Devices.Abilities.IntensityChangeable;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Devices.Abilities.ColorChangeable;

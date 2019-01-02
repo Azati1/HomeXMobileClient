@@ -17,17 +17,13 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
-import com.bsaldevs.mobileclient.Activities.LampSettingsActivity;
-import com.bsaldevs.mobileclient.DeviceType;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Lamp;
+import com.bsaldevs.mobileclient.Devices.DeviceType;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SelectSmartDeviceDialog extends Dialog {

@@ -2,6 +2,7 @@ package com.bsaldevs.mobileclient;
 
 import android.app.Application;
 
+import com.bsaldevs.mobileclient.Devices.DeviceType;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.User.Account;
 import com.bsaldevs.mobileclient.User.MobileClient;
@@ -84,9 +85,9 @@ public class MyApplication extends Application {
                         smartDevices.add(device);
                 }
                 break;
-            case THERMOMETER:
+            case HEATERS:
                 for (SmartDevice device : devices) {
-                    if (device.getDeviceType() == DeviceType.THERMOMETER)
+                    if (device.getDeviceType() == DeviceType.HEATERS)
                         smartDevices.add(device);
                 }
                 break;
