@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Conditioner;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.MusicPlayer;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.Blind;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Socket;
 import com.bsaldevs.mobileclient.Net.Command;
@@ -150,6 +151,16 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         application.addSmartDevice(musicPlayer1);
         application.addSmartDevice(musicPlayer2);
         application.addSmartDevice(musicPlayer3);
+
+        Blind Blind1 = new Blind("Шторы 1", placeGroups.get(0), connection);
+        Blind Blind2 = new Blind("Шторы 2", placeGroups.get(1), connection);
+        Blind Blind3 = new Blind("Шторы 3", placeGroups.get(3), connection);
+        Blind Blind4 = new Blind("Шторы 3", placeGroups.get(5), connection);
+
+        application.addSmartDevice(Blind1);
+        application.addSmartDevice(Blind2);
+        application.addSmartDevice(Blind3);
+        application.addSmartDevice(Blind4);
     }
 
     private void initGUI() {

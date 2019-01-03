@@ -4,18 +4,83 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/vk_white"
+    >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_gravity="top"
+                android:background="@color/color1" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_gravity=""
+                android:layout_marginLeft="4dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_backar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="32dp"
+                android:background="@android:color/transparent"
+                android:enabled="false"
+                android:text="Кондиционер"
+                android:textColor="@color/vk_white"
+                android:textSize="36dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="right"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                app:srcCompat="@drawable/ic_air_conditioner" />
+
+
+        </FrameLayout>
+    </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/conditioner_controller"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
         <TextView
             android:id="@+id/text_thermometr_settings"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:text="Настроить температуру" />
 
         <LinearLayout
@@ -27,20 +92,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:gravity="center">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp">
 
                     <ImageButton
                         android:id="@+id/button_colder"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
                         android:background="@android:color/transparent"
                         android:tint="@color/colorColder"
                         app:srcCompat="@drawable/ic_minus" />
@@ -48,8 +110,9 @@
                 </android.support.v7.widget.CardView>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
@@ -57,32 +120,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
                         android:text="23"
                         android:textColor="@android:color/black"
-                        android:textSize="100sp" />
+                        android:textSize="64sp" />
 
                     <ImageView
                         android:id="@+id/degree_cur"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
-                        android:layout_weight="1"
                         app:srcCompat="@drawable/ic_celsius" />
 
                 </LinearLayout>
 
                 <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp">
 
                     <ImageButton
                         android:id="@+id/button_warmer"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
                         android:background="@android:color/transparent"
                         android:tint="@color/colorWarmer"
                         app:srcCompat="@drawable/ic_plus" />
@@ -95,8 +154,9 @@
 
         <TextView
             android:id="@+id/text_airfresh_settings"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:text="Настроить влажность" />
 
         <LinearLayout
@@ -108,20 +168,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:gravity="center">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp">
 
                     <ImageButton
                         android:id="@+id/button_drier"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
                         android:background="@android:color/transparent"
                         android:tint="@color/colorColder"
                         app:srcCompat="@drawable/ic_minus" />
@@ -129,8 +186,9 @@
                 </android.support.v7.widget.CardView>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
@@ -138,32 +196,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
                         android:text="100"
                         android:textColor="@android:color/black"
-                        android:textSize="100sp" />
+                        android:textSize="64sp" />
 
                     <ImageView
                         android:id="@+id/percent_cur"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
-                        android:layout_weight="1"
                         app:srcCompat="@drawable/ic_percentage_discount" />
 
                 </LinearLayout>
 
                 <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp">
 
                     <ImageButton
                         android:id="@+id/button_wetter"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
                         android:background="@android:color/transparent"
                         android:tint="@color/colorWarmer"
                         app:srcCompat="@drawable/ic_plus" />
@@ -184,11 +238,12 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:wheelCursorHeight="20dp"
         app:wheelItemRotateMode="none"
-        app:wheelSelectedAngle="270">
+        app:wheelSelectedAngle="270"
+        android:layout_marginBottom="16dp">
 
     </github.hellocsl.cursorwheel.CursorWheelLayout>
 

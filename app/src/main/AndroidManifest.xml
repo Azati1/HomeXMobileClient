@@ -12,27 +12,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name="com.vk.sdk.VKServiceActivity"
-            android:label="ServiceActivity"
-            android:theme="@style/VK.Transparent" />
+        <activity android:name="com.vk.sdk.VKServiceActivity" android:label="ServiceActivity" android:theme="@style/VK.Transparent" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Activities.LampSettingsActivity" />
         <activity android:name=".Activities.ConditionerSettingsActivity" />
         <activity android:name=".Activities.MusicPlayerSettingsActivity" />
-        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.LoginActivity"></activity>
         <activity android:name=".Activities.DeviceGroupActivity" />
         <activity
             android:name=".Activities.AboutOfProgramActivity"
-            android:label="@string/title_activity_main2" />
-        <activity android:name=".Activities.RegistrationActivity"></activity>
+            android:label="@string/title_activity_main2"></activity>
+        <activity android:name=".Activities.RegistrationActivity" >
+        </activity>
+        <activity android:name=".Activities.BlindSettingsActivity"></activity>
     </application>
 
 </manifest>
