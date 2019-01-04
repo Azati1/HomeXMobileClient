@@ -130,8 +130,8 @@
                 android:layout_toEndOf="@+id/textView11"
                 android:adjustViewBounds="true"
                 android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                android:src="@drawable/vk"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_vk_v2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/soc_text" />
 
@@ -145,8 +145,8 @@
                 android:layout_toStartOf="@+id/textView10"
                 android:adjustViewBounds="true"
                 android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                android:src="@drawable/facebook500"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_facebook_v2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/soc_text" />
 
@@ -158,8 +158,8 @@
                 android:layout_centerHorizontal="true"
                 android:adjustViewBounds="true"
                 android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                android:src="@drawable/googleplus"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_google_plus_v2"
                 app:layout_constraintEnd_toStartOf="@+id/imageButtonVK"
                 app:layout_constraintStart_toEndOf="@+id/imageButtonFacebook"
                 app:layout_constraintTop_toBottomOf="@+id/soc_text" />

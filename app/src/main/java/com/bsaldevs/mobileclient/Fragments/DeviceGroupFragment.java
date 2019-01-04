@@ -27,14 +27,6 @@ import com.bsaldevs.mobileclient.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DeviceGroupFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DeviceGroupFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DeviceGroupFragment extends android.support.v4.app.Fragment {
 
     private OnFragmentInteractionListener mListener;
@@ -75,7 +67,7 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_device_group, container, false);
-        // Inflate the layout for this fragment
+
         recyclerDeviceGroup = view.findViewById(R.id.device_group_recycler);
 
         int resId = R.anim.layout_animation_fall_down;

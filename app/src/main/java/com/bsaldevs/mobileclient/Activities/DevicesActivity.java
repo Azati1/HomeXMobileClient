@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.bsaldevs.mobileclient.Fragments.DeviceGroupFragment;
+import com.bsaldevs.mobileclient.Fragments.DevicesFragment;
 import com.bsaldevs.mobileclient.Fragments.RoomsFragment;
 import com.bsaldevs.mobileclient.Fragments.ScheduleFragment;
 import com.bsaldevs.mobileclient.R;
@@ -21,7 +22,7 @@ import com.bsaldevs.mobileclient.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DevicesActivity extends FragmentActivity implements DeviceGroupFragment.OnFragmentInteractionListener, ScheduleFragment.OnFragmentInteractionListener {
+public class DevicesActivity extends FragmentActivity implements DeviceGroupFragment.OnFragmentInteractionListener, DevicesFragment.OnFragmentInteractionListener {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -46,11 +47,17 @@ public class DevicesActivity extends FragmentActivity implements DeviceGroupFrag
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         DeviceGroupFragment deviceGroupFragment = new DeviceGroupFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("placeGroupName", placeGroupName);
-        deviceGroupFragment.setArguments(bundle);
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("placeGroupName", placeGroupName);
+        deviceGroupFragment.setArguments(bundle1);
+
+        DevicesFragment devicesFragment = new DevicesFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putString("placeGroupName", placeGroupName);
+        devicesFragment.setArguments(bundle2);
+
         adapter.addFragmentPage(deviceGroupFragment, "Группы устройств");
-        adapter.addFragmentPage(new ScheduleFragment(), "Все устройства");
+        adapter.addFragmentPage(devicesFragment, "Все устройства");
 
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0);

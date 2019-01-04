@@ -1,5 +1,6 @@
 package com.bsaldevs.mobileclient.Activities;
 
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,6 +41,7 @@ import com.bsaldevs.mobileclient.User.Client;
 import com.bsaldevs.mobileclient.User.Mobile;
 import com.bsaldevs.mobileclient.User.MobileClient;
 import com.bsaldevs.mobileclient.User.UserDevice;
+import com.vk.sdk.VKSdk;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -188,6 +191,19 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
 
         TextView navigationViewHeaderTitle = headerView.findViewById(R.id.navigation_header_title);
         navigationViewHeaderTitle.setText("Привет, " + application.getAccount().getName() + "!");
+
+        MenuItem exitMenuButton = navigationView.getMenu().getItem(3);
+        exitMenuButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                VKSdk.logout();
+
+                Intent login = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(login);
+
+                return true;
+            }
+        });
     }
 
     private void setupViewPager(ViewPager viewPager) {

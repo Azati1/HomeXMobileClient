@@ -103,16 +103,6 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                 switch (bottomSheetBehavior.getState()) {
                     case BottomSheetBehavior.STATE_COLLAPSED: {
 
-                        /*RotateAnimation rotateAnimation = new RotateAnimation(0, 360,
-                                RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-
-                        rotateAnimation.setFillAfter(true);
-                        rotateAnimation.setDuration(1000);
-                        rotateAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                        slideArrow.startAnimation(rotateAnimation);*/
-
-                        //slideArrow.startAnimation(rotation);
-
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                         break;
                     }
