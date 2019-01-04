@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:gravity="top"
     android:orientation="vertical"
-    app:cardElevation="0dp">
+    app:cardElevation="0dp"
+    android:background="@color/vk_white">
 
 
     <android.support.v7.widget.CardView
@@ -22,7 +23,7 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_height="57dp"
                 android:layout_gravity="top"
                 android:background="@color/color1" />
 
@@ -32,7 +33,8 @@
                 android:layout_gravity=""
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_backar"
-                android:layout_marginLeft="4dp"/>
+                android:layout_marginLeft="4dp"
+                android:clickable="true"/>
 
             <TextView
                 android:layout_width="wrap_content"

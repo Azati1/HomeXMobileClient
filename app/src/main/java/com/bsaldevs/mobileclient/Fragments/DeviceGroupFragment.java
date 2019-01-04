@@ -1,7 +1,9 @@
-package com.bsaldevs.mobileclient.Activities;
+package com.bsaldevs.mobileclient.Fragments;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
+import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,44 +16,115 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bsaldevs.mobileclient.Devices.DeviceType;
 import com.bsaldevs.mobileclient.Dialogs.ConfirmEnableDeviceGroup;
+import com.bsaldevs.mobileclient.Dialogs.SelectSmartDeviceDialog;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
-import com.bsaldevs.mobileclient.Dialogs.SelectSmartDeviceDialog;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeviceGroupActivity extends Activity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link DeviceGroupFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link DeviceGroupFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class DeviceGroupFragment extends android.support.v4.app.Fragment {
+
+    private OnFragmentInteractionListener mListener;
 
     private RecyclerView recyclerDeviceGroup;
     private PlaceGroup placeGroup;
     private List<DeviceGroupLineDisplay> deviceGroupLineDisplayList;
     private MyApplication application;
+    private String placeGroupName;
+
+    public DeviceGroupFragment() {
+        // Required empty public constructor
+    }
+
+    // TODO: Rename and change types and number of parameters
+    public static DeviceGroupFragment newInstance(String placeGroupName) {
+        DeviceGroupFragment fragment = new DeviceGroupFragment();
+        Bundle args = new Bundle();
+        args.putString("placeGroupName", placeGroupName);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_device_group);
 
-        application = (MyApplication) getApplication();
+        application = (MyApplication) getContext().getApplicationContext();
 
-        String placeGroupString = getIntent().getStringExtra("placeGroupName");
+        placeGroupName = getArguments().getString("placeGroupName");
 
-        placeGroup = application.getPlaceGroup(placeGroupString);
+        placeGroup = application.getPlaceGroup(placeGroupName);
 
         deviceGroupLineDisplayList = loadDeviceGroupData();
+    }
 
-        recyclerDeviceGroup = findViewById(R.id.device_group_recycler);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_device_group, container, false);
+        // Inflate the layout for this fragment
+        recyclerDeviceGroup = view.findViewById(R.id.device_group_recycler);
 
         int resId = R.anim.layout_animation_fall_down;
-        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(DeviceGroupActivity.this, resId);
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
 
         recyclerDeviceGroup.setLayoutAnimation(animation);
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerDeviceGroup.setLayoutManager(horizontalLayoutManager);
         recyclerDeviceGroup.setAdapter(new Adapter());
+        return view;
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 
     private List<DeviceGroupLineDisplay> loadDeviceGroupData() {
@@ -129,7 +202,7 @@ public class DeviceGroupActivity extends Activity {
             holder.cardView1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(DeviceGroupActivity.this, deviceGroupLineDisplay.deviceGroup1.deviceType, placeGroup);
+                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(getContext(), deviceGroupLineDisplay.deviceGroup1.deviceType, placeGroup);
                     dialog.show();
                 }
             });
@@ -138,7 +211,7 @@ public class DeviceGroupActivity extends Activity {
                 @Override
                 public boolean onLongClick(View view) {
                     //Toast.makeText(getApplicationContext(), "Вкл/выкл", Toast.LENGTH_SHORT).show();
-                    ConfirmEnableDeviceGroup dialog = new ConfirmEnableDeviceGroup(DeviceGroupActivity.this, false) {
+                    ConfirmEnableDeviceGroup dialog = new ConfirmEnableDeviceGroup(getContext(), false) {
                         @Override
                         public void setOnConfirmListener(boolean deviceGroupEnabled) {
                             if (deviceGroupEnabled)
@@ -156,7 +229,7 @@ public class DeviceGroupActivity extends Activity {
             holder.cardView2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(DeviceGroupActivity.this, deviceGroupLineDisplay.deviceGroup2.deviceType, placeGroup);
+                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(getContext(), deviceGroupLineDisplay.deviceGroup2.deviceType, placeGroup);
                     dialog.show();
                 }
             });
@@ -165,7 +238,7 @@ public class DeviceGroupActivity extends Activity {
                 @Override
                 public boolean onLongClick(View view) {
                     //Toast.makeText(getApplicationContext(), "Вкл/выкл", Toast.LENGTH_SHORT).show();
-                    ConfirmEnableDeviceGroup dialog = new ConfirmEnableDeviceGroup(DeviceGroupActivity.this, true) {
+                    ConfirmEnableDeviceGroup dialog = new ConfirmEnableDeviceGroup(getContext(), true) {
                         @Override
                         public void setOnConfirmListener(boolean deviceGroupEnabled) {
                             if (deviceGroupEnabled)
