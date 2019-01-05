@@ -36,9 +36,7 @@
         <activity
             android:name=".Activities.DevicesActivity"
             android:label="@string/title_activity_devices" />
-        <activity
-            android:name=".Activities.AddNewSmartDeviceActivity"
-            android:label="@string/title_activity_add_new_smart_device"></activity>
+        <activity android:name=".Activities.AddNewDeviceActivity"></activity>
     </application>
 
 </manifest>

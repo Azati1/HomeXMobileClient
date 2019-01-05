@@ -15,11 +15,9 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
-import com.bsaldevs.mobileclient.Dialogs.ConfirmEnableDeviceGroup;
-import com.bsaldevs.mobileclient.Dialogs.SelectSmartDeviceDialog;
+import com.bsaldevs.mobileclient.Activities.AddNewDeviceActivity;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
@@ -129,10 +127,11 @@ public class DevicesFragment extends android.support.v4.app.Fragment {
                     break;
 
                 SmartDevice smartDevice = smartDevices.get(i * DISPLAY_LINE_CAPACITY + j);
-                smartDeviceLineDisplay.addDeviceToLine(smartDevice);
+                smartDeviceLineDisplay.addCardDeviceToLine(smartDevice);
             }
 
             smartDeviceLineDisplayList.add(smartDeviceLineDisplay);
+
         }
 
         return smartDeviceLineDisplayList;
@@ -146,7 +145,7 @@ public class DevicesFragment extends android.support.v4.app.Fragment {
             smartDevices = new ArrayList<>();
         }
 
-        public void addDeviceToLine(SmartDevice smartDevice) {
+        public void addCardDeviceToLine(SmartDevice smartDevice) {
             smartDevices.add(smartDevice);
         }
 
@@ -249,6 +248,28 @@ public class DevicesFragment extends android.support.v4.app.Fragment {
                     imageView.setImageResource(smartDevice.getImageResourceID());
                 }
 
+                if (smartDevices.size() != 3) {
+                    installAddNewDevicesCard(smartDevices.size());
+                }
+
+            }
+
+            private void installAddNewDevicesCard(int index) {
+                CardView cardView = cardViews.get(index);
+                cardView.setVisibility(View.VISIBLE);
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), AddNewDeviceActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                TextView textView = textViewsName.get(index);
+                textView.setText("Добавить");
+
+                ImageView imageView = imageViewsPicture.get(index);
+                imageView.setImageResource(R.drawable.ic_plus);
             }
         }
     }
