@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/vk_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    app:cardElevation="0dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="57dp"
+                android:layout_gravity="top"
+                android:background="@color/color1" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_gravity=""
+                android:layout_marginLeft="4dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:src="@drawable/ic_backar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="32dp"
+                android:background="@android:color/transparent"
+                android:enabled="false"
+                android:text="Чайник"
+                android:textColor="@color/vk_white"
+                android:textSize="36dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="right"
+                android:layout_margin="8dp"
+                android:orientation="horizontal"
+                app:srcCompat="@drawable/ic_kettle" />
+        </FrameLayout>
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/button_kettle_style"
+        android:text="Вскипятить"
+        android:elevation="2dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_kettle_style"
+            android:text="Подогреть"
+            android:elevation="2dp"
+            />
+
+        <Button
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_kettle_style"
+            android:text="Выключить"
+            android:elevation="2dp"/>
+
+    </LinearLayout>
+
+    <github.hellocsl.cursorwheel.CursorWheelLayout
+        android:id="@+id/conditioner_controller2"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_margin="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:wheelBackgroundColor="@color/color1"
+        app:wheelCursorHeight="20dp"
+        app:wheelItemRotateMode="none"
+        app:wheelSelectedAngle="270"></github.hellocsl.cursorwheel.CursorWheelLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="4dp"
+            android:background="@color/color1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Текущая температура: "
+                android:textColor="@color/vk_black"
+                android:textSize="30sp" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/app_name"
+                android:text="25°"
+                android:textSize="32sp" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</LinearLayout>

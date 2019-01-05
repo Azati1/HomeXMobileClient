@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Conditioner;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.Kettle;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.MusicPlayer;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Blind;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
@@ -172,6 +173,12 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         application.addSmartDevice(Blind2);
         application.addSmartDevice(Blind3);
         application.addSmartDevice(Blind4);
+
+        Kettle Kettle1 = new Kettle("Чайник 1", placeGroups.get(3), connection);
+        Kettle Kettle2 = new Kettle("Чайник 2", placeGroups.get(5), connection);
+
+        application.addSmartDevice(Kettle1);
+        application.addSmartDevice(Kettle2);
     }
 
     private void initGUI() {
