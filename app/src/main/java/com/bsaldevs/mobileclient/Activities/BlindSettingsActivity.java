@@ -11,6 +11,6 @@ public class BlindSettingsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.fragment_blind_settings);
+        setContentView(R.layout.dialog_add_new_devices);
     }
 }

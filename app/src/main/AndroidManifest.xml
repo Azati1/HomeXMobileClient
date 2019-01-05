@@ -31,11 +31,14 @@
         <activity
             android:name=".Activities.AboutOfProgramActivity"
             android:label="@string/title_activity_main2" />
-        <activity android:name=".Activities.RegistrationActivity"></activity>
+        <activity android:name=".Activities.RegistrationActivity" />
         <activity android:name=".Activities.BlindSettingsActivity" />
         <activity
             android:name=".Activities.DevicesActivity"
-            android:label="@string/title_activity_devices"></activity>
+            android:label="@string/title_activity_devices" />
+        <activity
+            android:name=".Activities.AddNewSmartDeviceActivity"
+            android:label="@string/title_activity_add_new_smart_device"></activity>
     </application>
 
 </manifest>
