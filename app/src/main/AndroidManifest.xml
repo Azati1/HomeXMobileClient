@@ -39,7 +39,10 @@
             android:label="@string/title_activity_devices" />
         <activity
             android:name=".Activities.AddNewDeviceActivity"
-            android:label="@string/title_activity_add_new_smart_device"></activity>
+            android:label="@string/title_activity_add_new_smart_device" />
+        <activity
+            android:name=".Activities.FloorSettingsActivity"
+            android:label="@string/title_activity_floor_settings"></activity>
     </application>
 
 </manifest>

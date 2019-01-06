@@ -12,14 +12,26 @@
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/StatusBarColor1</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowActivityTransitions">true</item>
     </style>
+
+
 
     <style name="AppTheme.LighterEditText" parent="Widget.AppCompat.EditText">
         <item name="colorControlActivated">@color/colorAccent2</item>
         <item name="colorControlNormal">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title." parent="@android:style/TextAppearance">
+
+        <item name="android:textSize">30dp</item>
+        <item name="android:textColor">@color/vk_black</item>
+        <item name="android:fontFamily">monospace</item>
+
+    </style>
+
+
 
 </resources>

@@ -10,5 +10,6 @@ public enum DeviceType {
     HOOVER,
     JALOUSIE,
     KETTLE,
-    CAMERA
+    CAMERA,
+    FLOOR
 }

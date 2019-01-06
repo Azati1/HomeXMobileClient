@@ -6,10 +6,7 @@
     android:background="@color/vk_white"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    app:cardElevation="0dp"
-    >
-    
-
+    app:cardElevation="0dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -45,7 +42,7 @@
                 android:background="@android:color/transparent"
                 android:enabled="false"
                 android:gravity="center"
-                android:text="Чайник"
+                android:text="Подогрев полов"
                 android:textColor="@color/vk_white"
                 android:textSize="36dp"
                 android:textStyle="bold" />
@@ -56,7 +53,7 @@
                 android:layout_gravity="right"
                 android:layout_margin="8dp"
                 android:orientation="horizontal"
-                app:srcCompat="@drawable/ic_kettle" />
+                app:srcCompat="@drawable/ic_thermometer" />
         </FrameLayout>
     </android.support.v7.widget.CardView>
 
@@ -66,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:background="@drawable/button_kettle_style"
-        android:text="Вскипятить"
+        android:text="Автоподогрев"
         android:elevation="2dp"/>
 
     <LinearLayout
@@ -80,7 +77,7 @@
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
             android:background="@drawable/button_kettle_style"
-            android:text="Подогреть"
+            android:text="Включить"
             android:elevation="2dp"
             />
 
@@ -97,7 +94,7 @@
     </LinearLayout>
 
     <github.hellocsl.cursorwheel.CursorWheelLayout
-        android:id="@+id/conditioner_controller2"
+        android:id="@+id/conditioner_controller3"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_margin="30dp"
@@ -117,40 +114,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom">
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="4dp"
-            android:background="@color/color1" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView
+            <View
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="4dp"
+                android:background="@color/color1" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Текущая температура: "
-                android:textColor="@color/vk_black"
-                android:textSize="30sp" />
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-            <TextView
-                style="@style/TextAppearance.AppCompat.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@string/app_name"
-                android:text="25°"
-                android:textSize="32sp" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Текущая температура: "
+                    android:textColor="@color/vk_black"
+                    android:textSize="30sp" />
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@string/app_name"
+                    android:text="25°"
+                    android:textSize="32sp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
 </LinearLayout>

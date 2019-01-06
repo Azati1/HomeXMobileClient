@@ -2,6 +2,7 @@ package com.bsaldevs.mobileclient.Devices;
 
 import com.bsaldevs.mobileclient.Activities.BlindSettingsActivity;
 import com.bsaldevs.mobileclient.Activities.ConditionerSettingsActivity;
+import com.bsaldevs.mobileclient.Activities.FloorSettingsActivity;
 import com.bsaldevs.mobileclient.Activities.KettleSettingsActivity;
 import com.bsaldevs.mobileclient.Activities.LampSettingsActivity;
 import com.bsaldevs.mobileclient.Activities.MusicPlayerSettingsActivity;
@@ -13,6 +14,7 @@ public interface SmartDeviceDisplay {
     int LOCKER_IMG_RES_ID = R.drawable.ic_lock;
     int CONDITIONER_IMG_RES_ID = R.drawable.ic_air_conditioner;
     int KETTLE_IMG_RES_ID = R.drawable.ic_kettle;
+    int FLOOR_IMG_RES_ID = R.drawable.ic_thermometer;
     int MUSIC_PLAYER_IMG_RES_ID = R.drawable.ic_music_player;
     int BLIND_IMG_RES_ID = R.drawable.ic_window;
     int SOCKET_IMG_RES_ID = R.drawable.ic_socket;
@@ -24,6 +26,7 @@ public interface SmartDeviceDisplay {
     Class<BlindSettingsActivity> BLIND_SETTINGS_ACTIVITY = BlindSettingsActivity.class;
     Class<LampSettingsActivity> SOCKET_SETTINGS_ACTIVITY = LampSettingsActivity.class;
     Class<KettleSettingsActivity> KETTLE_SETTINGS_ACTIVITY = KettleSettingsActivity.class;
+    Class<FloorSettingsActivity> FLOOR_SETTINGS_ACTIVITY = FloorSettingsActivity.class;
 
     int getImageResourceID();
     Class<?> getDisplayActivity();

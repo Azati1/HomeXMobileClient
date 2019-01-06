@@ -8,6 +8,7 @@
     <color name="colorSoftPrimaryDark">#00796b</color>
     <color name="colorPrimaryText">#000000</color>
     <color name="color1">#ffb300</color>
+    <color name="StatusBarColor1">#ffbd23</color>
     <color name="colorWarmer">#c62828</color>
     <color name="colorColder">#1976d2</color>
 </resources>

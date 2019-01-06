@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Conditioner;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.Floor;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Kettle;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.MusicPlayer;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Blind;
@@ -174,11 +175,27 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         application.addSmartDevice(Blind3);
         application.addSmartDevice(Blind4);
 
-        Kettle Kettle1 = new Kettle("Чайник 1", placeGroups.get(3), connection);
-        Kettle Kettle2 = new Kettle("Чайник 2", placeGroups.get(5), connection);
+        Kettle Kettle1 = new Kettle("Чайник 1", placeGroups.get(0), connection);
+        Kettle Kettle2 = new Kettle("Чайник 2", placeGroups.get(3), connection);
+        Kettle Kettle3 = new Kettle("Чайник 3", placeGroups.get(5), connection);
 
         application.addSmartDevice(Kettle1);
         application.addSmartDevice(Kettle2);
+        application.addSmartDevice(Kettle3);
+
+        Floor Floor1 = new Floor("Подогрев 1", placeGroups.get(0), connection);
+        Floor Floor2 = new Floor("Подогрев 2", placeGroups.get(1), connection);
+        Floor Floor3 = new Floor("Подогрев 3", placeGroups.get(2), connection);
+        Floor Floor4 = new Floor("Подогрев 4", placeGroups.get(3), connection);
+        Floor Floor5 = new Floor("Подогрев 5", placeGroups.get(4), connection);
+        Floor Floor6 = new Floor("Подогрев 6", placeGroups.get(5), connection);
+
+        application.addSmartDevice(Floor1);
+        application.addSmartDevice(Floor2);
+        application.addSmartDevice(Floor3);
+        application.addSmartDevice(Floor4);
+        application.addSmartDevice(Floor5);
+        application.addSmartDevice(Floor6);
     }
 
     private void initGUI() {
