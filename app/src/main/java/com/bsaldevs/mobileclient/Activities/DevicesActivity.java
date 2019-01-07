@@ -1,5 +1,8 @@
 package com.bsaldevs.mobileclient.Activities;
 
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
@@ -11,13 +14,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.Fragments.DeviceGroupFragment;
 import com.bsaldevs.mobileclient.Fragments.DevicesFragment;
 import com.bsaldevs.mobileclient.Fragments.RoomsFragment;
 import com.bsaldevs.mobileclient.Fragments.ScheduleFragment;
 import com.bsaldevs.mobileclient.R;
+import com.vk.sdk.VKSdk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +34,9 @@ public class DevicesActivity extends FragmentActivity implements DeviceGroupFrag
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private String placeGroupName;
+    private LinearLayout deviceLayout;
+    private AnimationDrawable animationDrawable;
+    private TransitionDrawable transitionDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +50,16 @@ public class DevicesActivity extends FragmentActivity implements DeviceGroupFrag
 
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+
+        deviceLayout = findViewById(R.id.main_container);
+        deviceLayout.setBackgroundResource(R.drawable.change_bg_anim);
+
+        transitionDrawable = (TransitionDrawable) deviceLayout.getBackground();
+
+        animationDrawable = (AnimationDrawable) transitionDrawable.getDrawable(0);
+        animationDrawable.setEnterFadeDuration(10000);
+        animationDrawable.setExitFadeDuration(10000);
+        animationDrawable.start();
     }
 
     private void setupViewPager(ViewPager viewPager) {

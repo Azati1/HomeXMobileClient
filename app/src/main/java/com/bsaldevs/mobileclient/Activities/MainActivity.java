@@ -119,7 +119,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
 
         Lamp lamp1 = new Lamp("Лампа 1", placeGroups.get(0), connection);
         Lamp lamp2 = new Lamp("Лампа 2", placeGroups.get(0), connection);
-        Lamp lamp3 = new Lamp("Лампа 3", placeGroups.get(0), connection);
+        Lamp lamp3 = new Lamp("булат тупой тупень", placeGroups.get(0), connection);
 
         application.addSmartDevice(lamp1);
         application.addSmartDevice(lamp2);
