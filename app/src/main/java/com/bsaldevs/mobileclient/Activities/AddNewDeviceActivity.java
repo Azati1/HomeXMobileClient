@@ -1,14 +1,13 @@
 package com.bsaldevs.mobileclient.Activities;
 
-import android.app.Dialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +16,14 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.SearchView;
 import android.widget.TextView;
+import com.bsaldevs.mobileclient.Devices.DeviceType;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
+import com.bsaldevs.mobileclient.Dialogs.DialogConfirmAddNewDevice;
+import com.bsaldevs.mobileclient.MyApplication;
+import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,25 +32,29 @@ public class AddNewDeviceActivity extends AppCompatActivity {
     private SearchView searchView;
     private RecyclerView recyclerView;
     private EditText editText;
-    private Button buttonCancel;
-    private Button buttonConfirm;
 
     private List<RecyclerItem> recyclerItems;
-    //private List<RadioButton> radioButtons;
+
+    private MyApplication application;
+    private PlaceGroup placeGroup;
+    private String placeGroupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.dialog_add_new_devices);
+        setContentView(R.layout.activity_add_new_devices);
+
+        application = (MyApplication) getApplication();
+
+        Intent intent = getIntent();
+        placeGroupName = intent.getStringExtra("placeGroupName");
+
+        placeGroup = application.getPlaceGroup(placeGroupName);
 
         searchView = findViewById(R.id.search_device_view);
-        buttonCancel = findViewById(R.id.button_cancel_adding);
-        buttonConfirm = findViewById(R.id.button_confirm_adding);
         recyclerView = findViewById(R.id.recycler_view_all_device_type);
-        editText = findViewById(R.id.edit_new_device_name);
 
-        //radioButtons = new ArrayList<>();
         recyclerItems = new ArrayList<>();
         loadRecyclerItems();
 
@@ -63,27 +69,38 @@ public class AddNewDeviceActivity extends AppCompatActivity {
     }
 
     private void loadRecyclerItems() {
-        recyclerItems.add(new RecyclerItem("Лампочка", R.drawable.lamp_on));
-        recyclerItems.add(new RecyclerItem("Розетка", R.drawable.ic_socket));
-        recyclerItems.add(new RecyclerItem("Замок", R.drawable.ic_lock));
-        recyclerItems.add(new RecyclerItem("Кондиционер", R.drawable.ic_air_conditioner));
-        recyclerItems.add(new RecyclerItem("Обогрев", R.drawable.ic_thermometer));
-        recyclerItems.add(new RecyclerItem("Окружение", R.drawable.ic_sound_system));
-        recyclerItems.add(new RecyclerItem("Пылесос", R.drawable.ic_hoover));
-        recyclerItems.add(new RecyclerItem("Шторы", R.drawable.ic_window));
-        recyclerItems.add(new RecyclerItem("Камера", R.drawable.ic_camera));
-        recyclerItems.add(new RecyclerItem("Чайник", R.drawable.ic_kettle));
+        recyclerItems.add(new RecyclerItem(DeviceType.LAMP));
+        recyclerItems.add(new RecyclerItem(DeviceType.SOCKET));
+        recyclerItems.add(new RecyclerItem(DeviceType.LOCKER));
+        recyclerItems.add(new RecyclerItem(DeviceType.CONDITIONER));
+        recyclerItems.add(new RecyclerItem(DeviceType.HEATERS));
+        recyclerItems.add(new RecyclerItem(DeviceType.MUSIC_PLAYER));
+        recyclerItems.add(new RecyclerItem(DeviceType.HOOVER));
+        recyclerItems.add(new RecyclerItem(DeviceType.JALOUSIE));
+        recyclerItems.add(new RecyclerItem(DeviceType.KETTLE));
+        recyclerItems.add(new RecyclerItem(DeviceType.CAMERA));
+    }
+
+    private DeviceType getSelectedDevice() {
+        DeviceType deviceType = null;
+
+        for (RecyclerItem recyclerItem : recyclerItems) {
+            if (recyclerItem.selected) {
+                deviceType = recyclerItem.deviceType;
+                break;
+            }
+        }
+
+        return deviceType;
     }
 
     private class RecyclerItem {
 
-        private String name;
-        private int imageResId;
         private boolean selected;
+        private DeviceType deviceType;
 
-        public RecyclerItem(String name, int imageResId) {
-            this.name = name;
-            this.imageResId = imageResId;
+        public RecyclerItem(DeviceType deviceType) {
+            this.deviceType = deviceType;
             this.selected = false;
         }
     }
@@ -114,34 +131,43 @@ public class AddNewDeviceActivity extends AppCompatActivity {
 
             private ImageView imageView;
             private TextView textView;
-            private RadioButton radioButton;
 
             public ItemViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 imageView = itemView.findViewById(R.id.card_device_type_image);
                 textView = itemView.findViewById(R.id.card_device_type_text);
-                radioButton = itemView.findViewById(R.id.card_device_radio_button);
-
-                //radioButtons.add(radioButton);
 
             }
 
             private void bind(final RecyclerItem recyclerItem) {
 
-                imageView.setImageResource(recyclerItem.imageResId);
-                textView.setText(recyclerItem.name);
+                final DeviceType deviceType = recyclerItem.deviceType;
+
+                imageView.setImageResource(deviceType.getDeviceImage());
+                textView.setText(deviceType.getDeviceName());
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        for (int i = 0; i < recyclerItems.size(); i++) {
-                            recyclerItems.get(i).selected = false;
-                            //radioButtons.get(i).setActivated(false);
-                        }
+                        DialogConfirmAddNewDevice dialog = new DialogConfirmAddNewDevice(AddNewDeviceActivity.this, placeGroup, deviceType);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-                        recyclerItem.selected = true;
-                        radioButton.setActivated(true);
+                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+
+                                /*int RESULT_OK = 23;
+
+                                finish();
+                                Intent intent = new Intent();
+                                intent.putExtra("update", "true");
+                                setResult(RESULT_OK, intent);*/
+                            }
+                        });
+
+                        dialog.show();
+
                     }
                 });
 

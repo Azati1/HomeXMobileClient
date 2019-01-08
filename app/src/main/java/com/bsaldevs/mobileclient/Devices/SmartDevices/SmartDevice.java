@@ -97,4 +97,72 @@ public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
         else
             return false;
     }
+
+    @Override
+    public int getImageResourceID() {
+        return deviceType.getDeviceImage();
+    }
+
+    public static SmartDevice create(DeviceType deviceType, String name, PlaceGroup placeGroup, TCPConnection connection) throws Exception {
+
+        SmartDevice smartDevice = null;
+
+        switch (deviceType) {
+            case LAMP: {
+                smartDevice = new Lamp(name, placeGroup, connection);
+                break;
+            }
+
+            case CAMERA: {
+                smartDevice = new Camera(name, placeGroup, connection);
+                break;
+            }
+
+            case HOOVER: {
+                smartDevice = new Hoover(name, placeGroup, connection);
+                break;
+            }
+
+            case KETTLE: {
+                smartDevice = new Kettle(name, placeGroup, connection);
+                break;
+            }
+
+            case LOCKER: {
+                smartDevice = new Locker(name, placeGroup, connection);
+                break;
+            }
+
+            case MUSIC_PLAYER: {
+                smartDevice = new MusicPlayer(name, placeGroup, connection);
+                break;
+            }
+
+            case SOCKET: {
+                smartDevice = new Socket(name, placeGroup, connection);
+                break;
+            }
+
+            case HEATERS: {
+                smartDevice = new Heaters(name, placeGroup, connection);
+                break;
+            }
+
+            case JALOUSIE: {
+                smartDevice = new Jalousie(name, placeGroup, connection);
+                break;
+            }
+
+            case CONDITIONER: {
+                smartDevice = new Conditioner(name, placeGroup, connection);
+                break;
+            }
+
+            default: {
+                throw new Exception("SmartDevice creating exception");
+            }
+        }
+
+        return smartDevice;
+    }
 }

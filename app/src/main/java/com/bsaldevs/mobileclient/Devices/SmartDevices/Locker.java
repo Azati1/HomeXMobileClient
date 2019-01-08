@@ -13,11 +13,6 @@ public class Locker extends SmartDevice {
     }
 
     @Override
-    public int getImageResourceID() {
-        return LOCKER_IMG_RES_ID;
-    }
-
-    @Override
     public Class<?> getDisplayActivity() {
         return LOCKER_SETTINGS_ACTIVITY;
     }

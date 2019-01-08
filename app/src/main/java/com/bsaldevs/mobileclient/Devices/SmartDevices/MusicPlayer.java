@@ -6,15 +6,10 @@ import com.bsaldevs.mobileclient.PlaceGroup;
 
 public class MusicPlayer extends SmartDevice {
 
-    private static final DeviceType deviceType = DeviceType.PLAYER;
+    private static final DeviceType deviceType = DeviceType.MUSIC_PLAYER;
 
     public MusicPlayer(String name, PlaceGroup placeGroup, TCPConnection connection) {
         super(deviceType, name, placeGroup, connection);
-    }
-
-    @Override
-    public int getImageResourceID() {
-        return MUSIC_PLAYER_IMG_RES_ID;
     }
 
     @Override

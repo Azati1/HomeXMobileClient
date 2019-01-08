@@ -3,7 +3,6 @@ package com.bsaldevs.mobileclient.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -122,7 +121,7 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
     private List<DeviceGroupLineDisplay> loadDeviceGroupData() {
         List<DeviceGroupLineDisplay> deviceGroupLineDisplays = new ArrayList<>();
 
-        DeviceGroup deviceGroupLamp = new DeviceGroup(DeviceType.LAMP, "Освещение", R.drawable.lamp_on);
+        DeviceGroup deviceGroupLamp = new DeviceGroup(DeviceType.LAMP, "Освещение", R.drawable.ic_bulb);
         DeviceGroup deviceGroupSocket = new DeviceGroup(DeviceType.SOCKET,"Розетки", R.drawable.ic_socket);
         DeviceGroupLineDisplay deviceGroupLineDisplay1 = new DeviceGroupLineDisplay(deviceGroupLamp, deviceGroupSocket);
 
@@ -131,7 +130,7 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
         DeviceGroupLineDisplay deviceGroupLineDisplay2 = new DeviceGroupLineDisplay(deviceGroupLocker, deviceGroupConditioner);
 
         DeviceGroup deviceGroupThermometer = new DeviceGroup(DeviceType.HEATERS,"Обогрев", R.drawable.ic_thermometer);
-        DeviceGroup deviceGroupMusicPlayer = new DeviceGroup(DeviceType.PLAYER,"Окружение", R.drawable.ic_sound_system);
+        DeviceGroup deviceGroupMusicPlayer = new DeviceGroup(DeviceType.MUSIC_PLAYER,"Окружение", R.drawable.ic_sound_system);
         DeviceGroupLineDisplay deviceGroupLineDisplay3 = new DeviceGroupLineDisplay(deviceGroupThermometer, deviceGroupMusicPlayer);
 
         DeviceGroup deviceGroupHoover = new DeviceGroup(DeviceType.HOOVER,"Пылесос", R.drawable.ic_hoover);

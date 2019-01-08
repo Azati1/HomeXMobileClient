@@ -14,8 +14,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,11 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Conditioner;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Floor;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.HeatedFloor;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Kettle;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.MusicPlayer;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Blind;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Socket;
 import com.bsaldevs.mobileclient.Net.Command;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
@@ -117,15 +114,15 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
 
         List<PlaceGroup> placeGroups = application.getPlaceGroups();
 
-        Lamp lamp1 = new Lamp("Лампа 1", placeGroups.get(0), connection);
-        Lamp lamp2 = new Lamp("Лампа 2", placeGroups.get(0), connection);
-        Lamp lamp3 = new Lamp("булат тупой тупень", placeGroups.get(0), connection);
+        Lamp lamp1 = new Lamp("Лампа лампа тумбочка аниме 1", placeGroups.get(0), connection);
+        Lamp lamp2 = new Lamp("Лампа лампа тумбочка аниме 2", placeGroups.get(0), connection);
+        Lamp lamp3 = new Lamp("Лампа лампа тумбочка аниме 3", placeGroups.get(0), connection);
 
         application.addSmartDevice(lamp1);
         application.addSmartDevice(lamp2);
         application.addSmartDevice(lamp3);
 
-        Socket socket1 = new Socket("Розетка 1", placeGroups.get(1), connection);
+        Socket socket1 = new Socket("Розетка конфетка ложка картошка 1", placeGroups.get(1), connection);
         Socket socket2 = new Socket("Розетка 2", placeGroups.get(1), connection);
         Socket socket3 = new Socket("Розетка 3", placeGroups.get(1), connection);
 
@@ -183,19 +180,19 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         application.addSmartDevice(Kettle2);
         application.addSmartDevice(Kettle3);
 
-        Floor Floor1 = new Floor("Подогрев 1", placeGroups.get(0), connection);
-        Floor Floor2 = new Floor("Подогрев 2", placeGroups.get(1), connection);
-        Floor Floor3 = new Floor("Подогрев 3", placeGroups.get(2), connection);
-        Floor Floor4 = new Floor("Подогрев 4", placeGroups.get(3), connection);
-        Floor Floor5 = new Floor("Подогрев 5", placeGroups.get(4), connection);
-        Floor Floor6 = new Floor("Подогрев 6", placeGroups.get(5), connection);
+        HeatedFloor heatedFloor1 = new HeatedFloor("Подогрев 1", placeGroups.get(0), connection);
+        HeatedFloor heatedFloor2 = new HeatedFloor("Подогрев 2", placeGroups.get(1), connection);
+        HeatedFloor heatedFloor3 = new HeatedFloor("Подогрев 3", placeGroups.get(2), connection);
+        HeatedFloor heatedFloor4 = new HeatedFloor("Подогрев 4", placeGroups.get(3), connection);
+        HeatedFloor heatedFloor5 = new HeatedFloor("Подогрев 5", placeGroups.get(4), connection);
+        HeatedFloor heatedFloor6 = new HeatedFloor("Подогрев 6", placeGroups.get(5), connection);
 
-        application.addSmartDevice(Floor1);
-        application.addSmartDevice(Floor2);
-        application.addSmartDevice(Floor3);
-        application.addSmartDevice(Floor4);
-        application.addSmartDevice(Floor5);
-        application.addSmartDevice(Floor6);
+        application.addSmartDevice(heatedFloor1);
+        application.addSmartDevice(heatedFloor2);
+        application.addSmartDevice(heatedFloor3);
+        application.addSmartDevice(heatedFloor4);
+        application.addSmartDevice(heatedFloor5);
+        application.addSmartDevice(heatedFloor6);
     }
 
     private void initGUI() {

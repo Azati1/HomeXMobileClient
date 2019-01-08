@@ -13,11 +13,6 @@ public class Kettle extends SmartDevice {
     }
 
     @Override
-    public int getImageResourceID() {
-        return KETTLE_IMG_RES_ID;
-    }
-
-    @Override
     public Class<?> getDisplayActivity() {
         return KETTLE_SETTINGS_ACTIVITY;
     }

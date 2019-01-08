@@ -26,17 +26,15 @@
         <TextView
             android:id="@+id/card_smart_device_text"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:textIsSelectable="true"
+            android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:freezesText="true"
             android:marqueeRepeatLimit="marquee_forever"
-            android:textSize="24sp"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:text="010110010110010110010110010110010110010110" >
-        </TextView>
+            android:text="010110010110010110010110010110010110010110"></TextView>
 
 
             />

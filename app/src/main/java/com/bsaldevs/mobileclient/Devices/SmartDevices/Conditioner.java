@@ -13,11 +13,6 @@ public class Conditioner extends SmartDevice {
     }
 
     @Override
-    public int getImageResourceID() {
-        return CONDITIONER_IMG_RES_ID;
-    }
-
-    @Override
     public Class<?> getDisplayActivity() {
         return CONDITIONER_SETTINGS_ACTIVITY;
     }

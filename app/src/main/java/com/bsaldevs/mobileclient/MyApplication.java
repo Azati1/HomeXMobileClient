@@ -91,9 +91,9 @@ public class MyApplication extends Application {
                         smartDevices.add(device);
                 }
                 break;
-            case PLAYER:
+            case MUSIC_PLAYER:
                 for (SmartDevice device : devices) {
-                    if (device.getDeviceType() == DeviceType.PLAYER)
+                    if (device.getDeviceType() == DeviceType.MUSIC_PLAYER)
                         smartDevices.add(device);
                 }
                 break;

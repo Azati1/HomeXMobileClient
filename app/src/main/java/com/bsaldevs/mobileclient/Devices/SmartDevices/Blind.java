@@ -13,11 +13,6 @@ public class Blind extends SmartDevice {
     }
 
     @Override
-    public int getImageResourceID() {
-        return BLIND_IMG_RES_ID;
-    }
-
-    @Override
     public Class<?> getDisplayActivity() {
         return BLIND_SETTINGS_ACTIVITY;
     }

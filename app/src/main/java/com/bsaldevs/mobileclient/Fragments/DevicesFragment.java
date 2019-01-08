@@ -243,6 +243,7 @@ public class DevicesFragment extends android.support.v4.app.Fragment {
 
                     TextView textView = textViewsName.get(i);
                     textView.setText(smartDevice.getName());
+                    textView.setSelected(true);
 
                     ImageView imageView = imageViewsPicture.get(i);
                     imageView.setImageResource(smartDevice.getImageResourceID());
@@ -260,8 +261,10 @@ public class DevicesFragment extends android.support.v4.app.Fragment {
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        int RESULT_OK = 23;
                         Intent intent = new Intent(getContext(), AddNewDeviceActivity.class);
-                        startActivity(intent);
+                        intent.putExtra("placeGroupName", placeGroupName);
+                        startActivityForResult(intent, RESULT_OK);
                     }
                 });
 
@@ -273,4 +276,15 @@ public class DevicesFragment extends android.support.v4.app.Fragment {
             }
         }
     }
+
+    /*@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        int RESULT_OK = 23;
+        if (requestCode == RESULT_OK) {
+            String updateBool = data.getStringExtra("update");
+            if (Boolean.parseBoolean(updateBool)) {
+
+            }
+        }
+    }*/
 }
