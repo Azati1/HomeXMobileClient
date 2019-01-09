@@ -69,18 +69,19 @@
         app:cardElevation="0dp">
 
         <LinearLayout
+            android:id="@+id/linearLayoutColor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:paddingTop="50dp"
-            android:gravity="center">
+            android:paddingTop="50dp">
 
-            <ImageView
-                android:layout_width="360dp"
-                android:layout_height="360dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/ic_color_wheel"
-                android:padding="10dp" />
+            <com.skydoves.colorpickerpreference.ColorPickerView
+                android:id="@+id/colorPickerView"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                app:palette="@drawable/palette"
+                app:selector="@drawable/wheel" />
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
@@ -174,6 +175,7 @@
                             android:background="@color/color1" />
 
                         <View
+                            android:id="@+id/current_color_lamp"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center"
