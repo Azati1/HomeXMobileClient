@@ -117,6 +117,7 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
             public ItemViewHolder(@NonNull View itemView) {
                 super(itemView);
                 name = itemView.findViewById(R.id.place_group_name);
+                name.setSelected(true); // для вращения текста(название комнаты), котроый не влезет
                 image = itemView.findViewById(R.id.place_group_image);
             }
 

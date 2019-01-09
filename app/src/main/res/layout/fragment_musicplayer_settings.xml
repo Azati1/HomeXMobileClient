@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:foregroundGravity="clip_horizontal"
@@ -46,8 +46,8 @@
 
         <ImageView
             android:id="@+id/image_music"
-            android:layout_width="288dp"
-            android:layout_height="288dp"
+            android:layout_width="256dp"
+            android:layout_height="256dp"
             android:layout_gravity="center"
             android:background="@drawable/ic_music_cover" />
 
@@ -147,20 +147,22 @@
                 android:id="@+id/image_volume_music_off"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="40dp"
                 android:background="@android:color/transparent"
                 app:srcCompat="@drawable/ic_speaker_off" />
 
             <SeekBar
                 android:id="@+id/volume_bar"
-                android:layout_width="300dp"
-                android:layout_height="28dp" />
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
 
             <ImageView
                 android:id="@+id/image_volume_music_max"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginRight="40dp"
                 android:background="@android:color/transparent"
                 app:srcCompat="@drawable/ic_speaker_max" />
         </LinearLayout>
