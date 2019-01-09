@@ -6,7 +6,8 @@
     android:background="@color/vk_white"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    app:cardElevation="0dp">
+    app:cardElevation="0dp"
+    >
 
 
     <android.support.v7.widget.CardView
@@ -22,9 +23,11 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="57dp"
+                android:layout_height="59dp"
                 android:layout_gravity="top"
-                android:background="@color/color1" />
+                android:background="@color/color1">
+
+            </View>
 
             <ImageButton
                 android:layout_width="28dp"
@@ -43,7 +46,7 @@
                 android:background="@android:color/transparent"
                 android:enabled="false"
                 android:gravity="center"
-                android:text="Освещение"
+                android:text="Лампочка"
                 android:textColor="@color/vk_white"
                 android:textSize="36dp"
                 android:textStyle="bold" />

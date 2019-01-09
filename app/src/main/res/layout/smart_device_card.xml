@@ -34,6 +34,8 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"
+            android:gravity="center"
+            android:layout_margin="5dp"
             android:text="010110010110010110010110010110010110010110"></TextView>
 
 

@@ -129,7 +129,7 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
         DeviceGroup deviceGroupConditioner = new DeviceGroup(DeviceType.CONDITIONER,"Кондиционеры", R.drawable.ic_air_conditioner);
         DeviceGroupLineDisplay deviceGroupLineDisplay2 = new DeviceGroupLineDisplay(deviceGroupLocker, deviceGroupConditioner);
 
-        DeviceGroup deviceGroupThermometer = new DeviceGroup(DeviceType.HEATERS,"Обогрев", R.drawable.ic_thermometer);
+        DeviceGroup deviceGroupThermometer = new DeviceGroup(DeviceType.HEATERS,"Подогрев полов", R.drawable.ic_floor);
         DeviceGroup deviceGroupMusicPlayer = new DeviceGroup(DeviceType.MUSIC_PLAYER,"Окружение", R.drawable.ic_sound_system);
         DeviceGroupLineDisplay deviceGroupLineDisplay3 = new DeviceGroupLineDisplay(deviceGroupThermometer, deviceGroupMusicPlayer);
 

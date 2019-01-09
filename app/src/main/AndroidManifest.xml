@@ -42,7 +42,13 @@
             android:label="@string/title_activity_add_new_smart_device" />
         <activity
             android:name=".Activities.FloorSettingsActivity"
-            android:label="@string/title_activity_floor_settings"></activity>
+            android:label="@string/title_activity_floor_settings" />
+        <activity
+            android:name=".Activities.SocketSettingsActivity"
+            android:label="@string/title_activity_socket_settings" />
+        <activity
+            android:name=".Activities.LockSettingsActivity"
+            android:label="@string/title_activity_lock_settings"></activity>
     </application>
 
 </manifest>

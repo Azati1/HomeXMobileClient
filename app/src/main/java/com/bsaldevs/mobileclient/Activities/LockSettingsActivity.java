@@ -1,16 +1,18 @@
 package com.bsaldevs.mobileclient.Activities;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 
 import com.bsaldevs.mobileclient.R;
 
-public class MusicPlayerSettingsActivity extends AppCompatActivity {
+public class LockSettingsActivity extends AppCompatActivity {
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_musicplayer_settings);
+        setContentView(R.layout.activity_lock_settings);
         getSupportActionBar().hide();
     }
+
 }

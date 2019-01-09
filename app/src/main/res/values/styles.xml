@@ -17,6 +17,10 @@
         <item name="android:windowActivityTransitions">true</item>
     </style>
 
+    <style name="Base.Widget.AppCompat.SeekBar.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+    </style>
+
 
 
     <style name="AppTheme.LighterEditText" parent="Widget.AppCompat.EditText">

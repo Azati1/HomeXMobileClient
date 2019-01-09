@@ -8,4 +8,6 @@
     <string name="title_activity_add_new_smart_device">AddNewSmartDeviceActivity</string>
     <string name="title_activity_kettle_settings">KettleSettingsActivity</string>
     <string name="title_activity_floor_settings">FloorSettingsActivity</string>
+    <string name="title_activity_socket_settings">SocketSettingsActivity</string>
+    <string name="title_activity_lock_settings">LockSettingsActivity</string>
 </resources>

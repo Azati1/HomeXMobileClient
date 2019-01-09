@@ -140,9 +140,9 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         application.addSmartDevice(locker2);
         application.addSmartDevice(locker3);
 
-        Locker locker4 = new Locker("Замок 4", placeGroups.get(2), connection);
-        Locker locker5 = new Locker("Замок 5", placeGroups.get(2), connection);
-        Locker locker6 = new Locker("Замок 6", placeGroups.get(2), connection);
+        Locker locker4 = new Locker("Замок 4", placeGroups.get(0), connection);
+        Locker locker5 = new Locker("Замок 5", placeGroups.get(0), connection);
+        Locker locker6 = new Locker("Замок 6", placeGroups.get(0), connection);
 
         application.addSmartDevice(locker4);
         application.addSmartDevice(locker5);
