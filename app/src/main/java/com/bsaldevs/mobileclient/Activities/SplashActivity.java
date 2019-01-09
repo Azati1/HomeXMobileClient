@@ -15,7 +15,9 @@ import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 
@@ -61,7 +63,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private boolean initUser() {
-        VKRequest request = VKApi.users().get();
+        VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "photo_50"));
+        //VKRequest request = VKApi.users().get();
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
@@ -73,8 +76,11 @@ public class SplashActivity extends AppCompatActivity {
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         String first_name = jsonObject.getString("first_name");
                         String last_name = jsonObject.getString("last_name");
+                        String url_photo = jsonObject.getString("photo_50");
                         Log.d("CDA", first_name + " " + last_name);// Пользователь успешно авторизовался
-                        login(new Account(first_name, last_name));
+                        Account account = new Account(first_name, last_name);
+                        account.setUrlPhoto(url_photo);
+                        login(account);
                     }
 
                 } catch (JSONException e) {

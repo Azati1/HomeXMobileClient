@@ -9,12 +9,18 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/googleplus" />
+        app:cardCornerRadius="40dp">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/googleplus" />
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/navigation_header_title"
