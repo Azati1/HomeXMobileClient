@@ -77,7 +77,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingTop="50dp">
+            android:paddingTop="50dp"    >
 
             <com.skydoves.colorpickerpreference.ColorPickerView
                 android:id="@+id/colorPickerView"
