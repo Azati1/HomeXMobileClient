@@ -3,7 +3,6 @@ package com.bsaldevs.mobileclient.User;
 public class Account {
 
     private String name;
-    private String surname;
     private String email;
     private String password;
     private String urlphoto;
@@ -11,9 +10,8 @@ public class Account {
 
     private static int id = 0;
 
-    public Account(String name, String surname) {
+    public Account(String name) {
         this.name = name;
-        this.surname = surname;
         this.accountId = id++;
     }
 
@@ -29,8 +27,5 @@ public class Account {
         return name;
     }
 
-    public String getSurname() {
-        return surname;
-    }
 
 }

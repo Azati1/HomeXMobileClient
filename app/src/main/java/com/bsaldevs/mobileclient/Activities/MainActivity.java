@@ -43,6 +43,7 @@ import com.bsaldevs.mobileclient.User.Client;
 import com.bsaldevs.mobileclient.User.Mobile;
 import com.bsaldevs.mobileclient.User.MobileClient;
 import com.bsaldevs.mobileclient.User.UserDevice;
+import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKSdk;
 
@@ -235,6 +236,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 VKSdk.logout();
+                LoginManager.getInstance().logOut();
 
                 Intent login = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(login);

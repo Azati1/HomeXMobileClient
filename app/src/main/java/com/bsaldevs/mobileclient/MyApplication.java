@@ -28,7 +28,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         VKSdk.initialize(getApplicationContext());
-        this.account = new Account("#empty", "#empty");
+        this.account = new Account("#empty");
     }
 
     public boolean login(Account account) {

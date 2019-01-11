@@ -26,6 +26,16 @@ import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.RegistrationFragment;
 import com.bsaldevs.mobileclient.User.Account;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginBehavior;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
@@ -40,15 +50,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity implements RegistrationFragment.OnFragmentInteractionListener {
 
     private MyApplication application;
+
+    CallbackManager callbackManager;
+    LoginButton loginButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         application = (MyApplication) getApplication();
+
 
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
@@ -127,12 +144,18 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             }
         });
 
-        loginByFacebookButton.setOnClickListener(new View.OnClickListener() {
+       /* loginByFacebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(LoginActivity.this, "Login by facebook", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+
+
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions("public_profile");
+        loginFB();
 
         loginByGooglePlusButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,8 +174,62 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 
     }
 
+
+
+
+    private void loginFB(){
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+
+                        GraphRequest request=GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                try {
+                                    String first_name = object.getString("first_name");
+                                    String url_photo = "https://graph.facebook.com/"+object.getString("id")+"/picture?width=50&height=50";
+                                    Log.d("CDA", first_name );
+                                    Account account = new Account(first_name);
+                                    account.setUrlPhoto(url_photo);
+                                    login(account);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }
+                        });
+
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields","id,first_name,last_name");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                        Toast.makeText(LoginActivity.this, "Login Cancelled", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+    }
+
+
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
@@ -172,10 +249,9 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                             for (int i = 0; i < 1; i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(0);
                                 String first_name = jsonObject.getString("first_name");
-                                String last_name = jsonObject.getString("last_name");
                                 String url_photo = jsonObject.getString("photo_50");
-                                Log.d("CDA", first_name + " " + last_name);// Пользователь успешно авторизовался
-                                Account account = new Account(first_name, last_name);
+                                Log.d("CDA", first_name );// Пользователь успешно авторизовался
+                                Account account = new Account(first_name);
                                 account.setUrlPhoto(url_photo);
                                 login(account);
                             }
@@ -192,8 +268,12 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 // Произошла ошибка авторизации (например, пользователь запретил авторизацию)
             }
         })) {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
             super.onActivityResult(requestCode, resultCode, data);
         }
+
+
+
     }
 
     @Override
