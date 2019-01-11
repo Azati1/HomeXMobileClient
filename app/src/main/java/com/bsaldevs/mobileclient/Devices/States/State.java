@@ -19,32 +19,28 @@ public abstract class State implements Controllable {
 
     @Override
     public void turnOn() {
-        Command command = new Command("turnOn", new String[]{""});
-        Request request = new Request(sender.getName(), sender.getName(), command);
+        Request request = new Request(sender.getName(), sender.getName(), "turnOn", new String[]{});
         connection.sendRequest(request);
         currentState = ENABLED;
     }
 
     @Override
     public void turnOff() {
-        Command command = new Command("turnOff", new String[]{""});
-        Request request = new Request(sender.getName(), sender.getName(), command);
+        Request request = new Request(sender.getName(), sender.getName(), "turnOff", new String[]{});
         connection.sendRequest(request);
         currentState = DISABLED;
     }
 
     @Override
     public void reset() {
-        Command command = new Command("reset", new String[]{""});
-        Request request = new Request(sender.getName(), sender.getName(), command);
+        Request request = new Request(sender.getName(), sender.getName(), "reset", new String[]{});
         connection.sendRequest(request);
         currentState = RESETED;
     }
 
     @Override
     public void block() {
-        Command command = new Command("block", new String[]{""});
-        Request request = new Request(sender.getName(), sender.getName(), command);
+        Request request = new Request(sender.getName(), sender.getName(), "block", new String[]{});
         connection.sendRequest(request);
         currentState = BLOCKED;
     }

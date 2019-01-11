@@ -17,7 +17,7 @@ public class RegistrationActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.fragment_registration);
 
-        Button reg = findViewById(R.id.button8);
+        Button reg = findViewById(R.id.button_registration);
 
 
         reg.setOnClickListener(new View.OnClickListener() {

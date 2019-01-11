@@ -2,6 +2,7 @@ package com.bsaldevs.mobileclient.Activities;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -23,6 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bsaldevs.mobileclient.MyApplication;
+import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
+import com.bsaldevs.mobileclient.Net.Request;
+import com.bsaldevs.mobileclient.Net.RequestPoll;
+import com.bsaldevs.mobileclient.Net.Response;
+import com.bsaldevs.mobileclient.Net.ServerCallback;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.RegistrationFragment;
 import com.bsaldevs.mobileclient.User.Account;
@@ -36,6 +42,8 @@ import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
@@ -56,8 +64,13 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 
     private MyApplication application;
 
-    CallbackManager callbackManager;
-    LoginButton loginButton;
+    private EditText editTextName;
+    private EditText editTextEmail;
+    private EditText editTextPassword;
+    private Button buttonRegistration;
+
+    private CallbackManager callbackManager;
+    private LoginButton loginButton;
 
 
     @Override
@@ -66,7 +79,6 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 
         application = (MyApplication) getApplication();
 
-
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
 
@@ -74,10 +86,9 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         RegistrationFragment registrationFragment = new RegistrationFragment();
         manager.beginTransaction().replace(R.id.bottom_registration_sheet, registrationFragment).commit();
 
-        TextView title = findViewById(R.id.textView10);
-        EditText editLogin = findViewById(R.id.editText2);
-        EditText editPassword = findViewById(R.id.editText4);
-        Button login = findViewById(R.id.button9);
+        final EditText editLogin = findViewById(R.id.editText2);
+        final EditText editPassword = findViewById(R.id.editText4);
+        Button loginByApplication = findViewById(R.id.button9);
         //TextView titleLoginBy = findViewById(R.id.textView9);
         final ImageButton loginByFacebookButton = findViewById(R.id.imageButtonFacebook);
         final ImageButton loginByGooglePlusButton = findViewById(R.id.imageButtonGoogle);
@@ -87,7 +98,11 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 
         View sheet = findViewById(R.id.bottom_registration_sheet);
 
-        final ImageView slideArrow = sheet.findViewById(R.id.image_slide_sheet_arrow);
+        editTextName = sheet.findViewById(R.id.edit_text_name);
+        editTextEmail = sheet.findViewById(R.id.edit_text_email);
+        editTextPassword = sheet.findViewById(R.id.edit_text_password);
+        buttonRegistration = sheet.findViewById(R.id.button_registration);
+
 
         final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(sheet);
 
@@ -103,21 +118,17 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             }
         });
 
-        final Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_slide_arrow);
-
-        Button button = findViewById(R.id.button10);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                slideArrow.startAnimation(rotation);
-            }
-        });
-
         LinearLayout linearLayout = sheet.findViewById(R.id.bottom_sheet_head);
+
+        final ImageView slideArrow = linearLayout.findViewById(R.id.image_slide_sheet_arrow);
+        final Animation rotation = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.rotate_slide_arrow);
+
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("CDA", bottomSheetBehavior.getState() + "");
+
+                slideArrow.startAnimation(rotation);
 
                 switch (bottomSheetBehavior.getState()) {
                     case BottomSheetBehavior.STATE_COLLAPSED: {
@@ -136,11 +147,14 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
+        loginByApplication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent login = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(login);
+
+                String email = editLogin.getText().toString();
+                String password = editPassword.getText().toString();
+
+                login(email, password);
             }
         });
 
@@ -191,9 +205,11 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                                     String first_name = object.getString("first_name");
                                     String url_photo = "https://graph.facebook.com/"+object.getString("id")+"/picture?width=50&height=50";
                                     Log.d("CDA", first_name );
-                                    Account account = new Account(first_name);
+                                    Account account = new Account();
+                                    account.setName(first_name);
                                     account.setUrlPhoto(url_photo);
-                                    login(account);
+                                    application.setAccount(account);
+                                    //login(account);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -250,10 +266,12 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                                 JSONObject jsonObject = jsonArray.getJSONObject(0);
                                 String first_name = jsonObject.getString("first_name");
                                 String url_photo = jsonObject.getString("photo_50");
-                                Log.d("CDA", first_name );// Пользователь успешно авторизовался
-                                Account account = new Account(first_name);
+                                Log.d("CDA", first_name);// Пользователь успешно авторизовался
+                                Account account = new Account();
+                                account.setName(first_name);
                                 account.setUrlPhoto(url_photo);
-                                login(account);
+                                application.setAccount(account);
+                                //login(account);
                             }
 
                         } catch (JSONException e) {
@@ -281,9 +299,58 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 
     }
 
-    private void login(Account account) {
-        application.login(account);
-        Intent login = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(login);
+    private void login(String email, String password) {
+
+        final Account account = new Account();
+        account.setEmail(email);
+        account.setPassword(password);
+
+        String[] args = new String[2];
+        args[0] = email;
+        args[1] = password;
+
+        RequestPoll requestPoll = application.getRequestPoll();
+        Request request = new Request("client", "server", "login", args);
+        request.executeWithListener(new ServerCallback() {
+            @Override
+            public void onComplete(Response response) {
+
+                if (response.getFuncName().equals("login")) {
+                    String[] args = response.getFuncArgs();
+                    if (args[0].equals("ok")) {
+                        String name = args[1];
+                        account.setName(name);
+                        application.setAccount(account);
+                        Intent login = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(login);
+                    }
+                    if (args[0].equals("error")) {
+                        ShowToast showToast = new ShowToast("Не могу войти");
+                        showToast.execute();
+                    }
+                }
+            }
+        });
+        requestPoll.execute(request);
+
+    }
+
+    private class ShowToast extends AsyncTask<Void, Void, Void> {
+
+        private String value;
+
+        public ShowToast(String value) {
+            this.value = value;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Toast.makeText(LoginActivity.this, value, Toast.LENGTH_SHORT).show();
+        }
     }
 }

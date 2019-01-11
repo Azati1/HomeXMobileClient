@@ -76,10 +76,15 @@ public class SplashActivity extends AppCompatActivity {
                     for (int i = 0; i < 1; i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         String first_name = jsonObject.getString("first_name");
+                        String last_name = jsonObject.getString("last_name");
                         String url_photo = jsonObject.getString("photo_50");
                         Log.d("CDA", first_name );// Пользователь успешно авторизовался
-                        Account account = new Account(first_name);
+
+                        Account account = new Account();
+                        account.setName(first_name);
                         account.setUrlPhoto(url_photo);
+                        account.setLoggedBy("VK");
+
                         login(account);
                     }
 

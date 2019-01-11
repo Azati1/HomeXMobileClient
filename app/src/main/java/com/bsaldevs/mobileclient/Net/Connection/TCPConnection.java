@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.bsaldevs.mobileclient.Net.Request;
+import com.bsaldevs.mobileclient.Net.RequestPoll;
 import com.bsaldevs.mobileclient.User.UserDevice;
 
 import java.io.BufferedReader;
@@ -50,7 +51,10 @@ public class TCPConnection {
                     out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), Charset.forName("UTF-8")));
                     eventListener.onConnectionReady(TCPConnection.this);
                     while (!thread.isInterrupted()) {
-                        String msg = in.readLine();
+                        char[] buffer = new char[4096];
+                        String msg = null;
+                        int size = in.read(buffer);
+                        msg = new String(buffer, 0, size);
                         eventListener.onReceiveString(TCPConnection.this, msg);
                     }
                 } catch (IOException e) {
@@ -65,10 +69,11 @@ public class TCPConnection {
 
     public synchronized void sendString(String value) {
 
-        String deviceName = sender.getName();
+        //String deviceName = sender.getName();
+        System.out.println(value);
 
         try {
-            out.write(deviceName + ":" + value + "\r\n");
+            out.write(value);
             out.flush();
         } catch (IOException e) {
             eventListener.onException(TCPConnection.this, e);

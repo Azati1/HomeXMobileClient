@@ -69,6 +69,8 @@ public class AddNewDeviceActivity extends AppCompatActivity {
     }
 
     private void loadRecyclerItems() {
+
+        recyclerItems.add(new RecyclerItem(DeviceType.LUMP_BULB));
         recyclerItems.add(new RecyclerItem(DeviceType.LAMP));
         recyclerItems.add(new RecyclerItem(DeviceType.SOCKET));
         recyclerItems.add(new RecyclerItem(DeviceType.LOCKER));
@@ -79,6 +81,15 @@ public class AddNewDeviceActivity extends AppCompatActivity {
         recyclerItems.add(new RecyclerItem(DeviceType.JALOUSIE));
         recyclerItems.add(new RecyclerItem(DeviceType.KETTLE));
         recyclerItems.add(new RecyclerItem(DeviceType.CAMERA));
+        recyclerItems.add(new RecyclerItem(DeviceType.AIR_FILTER));
+        recyclerItems.add(new RecyclerItem(DeviceType.PRINTER));
+        recyclerItems.add(new RecyclerItem(DeviceType.OVEN));
+        recyclerItems.add(new RecyclerItem(DeviceType.WATER_HEATER));
+        recyclerItems.add(new RecyclerItem(DeviceType.COFFEE_MACHINE));
+        recyclerItems.add(new RecyclerItem(DeviceType.WASHER));
+        recyclerItems.add(new RecyclerItem(DeviceType.IRON));
+        recyclerItems.add(new RecyclerItem(DeviceType.FAN));
+        recyclerItems.add(new RecyclerItem(DeviceType.HEATED_FLOORS));
     }
 
     private DeviceType getSelectedDevice() {

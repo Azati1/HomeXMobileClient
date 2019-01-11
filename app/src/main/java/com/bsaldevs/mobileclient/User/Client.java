@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnectionListener;
+import com.bsaldevs.mobileclient.Net.RequestPoll;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,12 +14,20 @@ public abstract class Client implements TCPConnectionListener {
 
     protected TCPConnection connection;
     protected List<onExceptionListener> onExceptionListeners;
+    protected List<onRequestReceiveListener> onRequestReceiveListeners;
     private boolean isConnected = false;
+    protected RequestPoll requestPoll;
 
     protected Client(String ip, int port, UserDevice userDevice) {
         connection = new TCPConnection(this, ip, port, userDevice);
         onExceptionListeners = new ArrayList<>();
+        onRequestReceiveListeners = new ArrayList<>();
         userDevice.waitMessage(connection);
+        this.requestPoll = RequestPoll.getInstance(connection);
+    }
+
+    public RequestPoll getRequestPoll() {
+        return requestPoll;
     }
 
     @Override
@@ -28,8 +37,15 @@ public abstract class Client implements TCPConnectionListener {
     }
 
     @Override
-    public void onReceiveString(TCPConnection connection, String value) {
+    public void onReceiveString(final TCPConnection connection, final String value) {
+
         System.out.println(value);
+
+        requestPoll.onReceiveResponse(value);
+
+        for (final onRequestReceiveListener onRequestReceiveListener : onRequestReceiveListeners) {
+            onRequestReceiveListener.onReceiveRequest(connection, value);
+        }
     }
 
     @Override
@@ -52,8 +68,16 @@ public abstract class Client implements TCPConnectionListener {
         onExceptionListeners.add(listener);
     }
 
+    public final void setOnRequestReceive(Client.onRequestReceiveListener listener) {
+        onRequestReceiveListeners.add(listener);
+    }
+
     public interface onExceptionListener {
         void onClientException(TCPConnection connection, Exception e);
+    }
+
+    public interface onRequestReceiveListener {
+        void onReceiveRequest(TCPConnection connection, String request);
     }
 
     public TCPConnection getConnection() {

@@ -2,18 +2,31 @@ package com.bsaldevs.mobileclient.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bsaldevs.mobileclient.Activities.LoginActivity;
+import com.bsaldevs.mobileclient.MyApplication;
+import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
+import com.bsaldevs.mobileclient.Net.Request;
+import com.bsaldevs.mobileclient.Net.RequestPoll;
+import com.bsaldevs.mobileclient.Net.Response;
+import com.bsaldevs.mobileclient.Net.ServerCallback;
 import com.bsaldevs.mobileclient.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 /**
@@ -26,14 +39,8 @@ import com.bsaldevs.mobileclient.R;
  */
 public class RegistrationFragment extends android.support.v4.app.Fragment {
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private MyApplication application;
     private OnFragmentInteractionListener mListener;
 
     public RegistrationFragment() {
@@ -51,20 +58,13 @@ public class RegistrationFragment extends android.support.v4.app.Fragment {
     // TODO: Rename and change types and number of parameters
     public static RegistrationFragment newInstance(String param1, String param2) {
         RegistrationFragment fragment = new RegistrationFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        application = (MyApplication) getContext().getApplicationContext();
 
     }
 
@@ -73,19 +73,41 @@ public class RegistrationFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_registration, container,false);
         TextView titleName = view.findViewById(R.id.textView11);
-        EditText editName = view.findViewById(R.id.editText3);
+        final EditText editName = view.findViewById(R.id.edit_text_name);
         TextView titleEmail = view.findViewById(R.id.textView12);
-        EditText email = view.findViewById(R.id.editText7);
+        final EditText editEmail = view.findViewById(R.id.edit_text_email);
         TextView titlePassword = view.findViewById(R.id.textView15);
-        EditText password = view.findViewById(R.id.editText10);
-        Button makeAccount = view.findViewById(R.id.button8);
+        final EditText editPassword = view.findViewById(R.id.edit_text_password);
+        Button buttonRegistration = view.findViewById(R.id.button_registration);
+        buttonRegistration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(getContext(), "Создаю аккаунт", Toast.LENGTH_SHORT).show();
+
+                String name = editName.getText().toString();
+                String email = editEmail.getText().toString();
+                String password = editPassword.getText().toString();
+
+                register(name, email, password);
+            }
+        });
+        /*final ImageView slideArrow = view.findViewById(R.id.image_slide_sheet_arrow);
+        final Animation rotation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_slide_arrow);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                slideArrow.startAnimation(rotation);
+            }
+        });*/
         Log.d("CDA", "nested fragment onCreate");
-        makeAccount.setOnClickListener(new View.OnClickListener() {
+        /*makeAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 register(view);
             }
-        });
+        });*/
 
         return view;
     }
@@ -114,10 +136,6 @@ public class RegistrationFragment extends android.support.v4.app.Fragment {
         mListener = null;
     }
 
-    public void register(View view) {
-        Toast.makeText(view.getContext(), "Аккаунт создан", Toast.LENGTH_SHORT).show();
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -132,4 +150,73 @@ public class RegistrationFragment extends android.support.v4.app.Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    /*private void register(String name, String email, String password) {
+
+        final TCPConnection connection = application.getClient().getConnection();
+
+        String args[] = new String[] {name, email, password};
+
+        Request request = new Request("client", "server", "register", args);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        final String jsonRequest = gson.toJson(request);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                connection.sendString(jsonRequest);
+            }
+        });
+
+        thread.start();
+
+    }*/
+
+    private void register(String name, String email, String password) {
+
+        String args[] = new String[] {name, email, password};
+
+        RequestPoll requestPoll = application.getRequestPoll();
+        Request request = new Request("client", "server", "register", args);
+        request.executeWithListener(new ServerCallback() {
+            @Override
+            public void onComplete(Response response) {
+
+                if (response.getFuncName().equals("register")) {
+                    String[] args = response.getFuncArgs();
+                    if (args[0].equals("ok")) {
+                        ShowToast showToast = new ShowToast("Аккаунт успешно создан");
+                        showToast.execute();
+                    }
+                    if (args[0].equals("error")) {
+                        ShowToast showToast = new ShowToast("Произошла ошибка при создании аккаунта");
+                        showToast.execute();
+                    }
+                }
+            }
+        });
+        requestPoll.execute(request);
+    }
+
+    private class ShowToast extends AsyncTask<Void, Void, Void> {
+
+        private String value;
+
+        public ShowToast(String value) {
+            this.value = value;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Toast.makeText(getContext(), value, Toast.LENGTH_SHORT).show();
+        }
+    }
+    
 }

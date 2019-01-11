@@ -22,20 +22,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Conditioner;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.HeatedFloor;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Kettle;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.MusicPlayer;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Blind;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Socket;
-import com.bsaldevs.mobileclient.Net.Command;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Lamp;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Locker;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.Net.Request;
-import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.ScheduleFragment;
 import com.bsaldevs.mobileclient.Fragments.RoomsFragment;
@@ -46,7 +35,6 @@ import com.bsaldevs.mobileclient.User.UserDevice;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKSdk;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -56,7 +44,6 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
 
     private MyApplication application;
     private TCPConnection connection;
-    private Client client;
     private AnimationDrawable animationDrawable;
     private TransitionDrawable transitionDrawable;
     private boolean isServerReachable = true;
@@ -73,133 +60,13 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         Window g = getWindow();
         g.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.TYPE_STATUS_BAR);
         setContentView(R.layout.activity_main);
-
-        UserDevice mobile = new Mobile("username");
-
-        //String ip = "localhost";
-        String ip = "192.168.0.100";
-        int port = 3346;
-
         application = (MyApplication) getApplication();
-        application.setupClient(new MobileClient(ip, port, mobile));
         connection = application.getClient().getConnection();
-        client = application.getClient();
-
-        client.setOnClientException(new Client.onExceptionListener() {
-            @Override
-            public void onClientException(TCPConnection connection, Exception e) {
-                Log.d("CDA", "onClientExceptionHandler");
-            }
-        });
-
-        loadPlaceGroups();
-        loadDevices();
 
         initGUI();
         /*Thread thread = new Thread(new ServerStatusCheckThread());
         thread.start();*/
 
-    }
-
-    private void loadPlaceGroups() {
-        PlaceGroup placeGroupOffice = new PlaceGroup("Офис", R.drawable.ic_desk);
-        PlaceGroup placeGroupLivingRoom = new PlaceGroup("Гостиная", R.drawable.ic_livingroom);
-        PlaceGroup placeGroupBathroom = new PlaceGroup("Ванная", R.drawable.ic_bathtub);
-        PlaceGroup placeGroupBedroom = new PlaceGroup("Спальня", R.drawable.ic_bed);
-        PlaceGroup placeGroupRestroom = new PlaceGroup("Уборная", R.drawable.ic_toilet);
-        PlaceGroup placeGroupKitchen = new PlaceGroup("Кухня", R.drawable.ic_coffee_machine);
-
-        application.addPlaceGroup(placeGroupOffice);
-        application.addPlaceGroup(placeGroupLivingRoom);
-        application.addPlaceGroup(placeGroupBathroom);
-        application.addPlaceGroup(placeGroupBedroom);
-        application.addPlaceGroup(placeGroupRestroom);
-        application.addPlaceGroup(placeGroupKitchen);
-    }
-
-    private void loadDevices() {
-
-        List<PlaceGroup> placeGroups = application.getPlaceGroups();
-
-        Lamp lamp1 = new Lamp("Лампа лампа тумбочка аниме 1", placeGroups.get(0), connection);
-        Lamp lamp2 = new Lamp("Лампа лампа тумбочка аниме 2", placeGroups.get(0), connection);
-        Lamp lamp3 = new Lamp("Лампа лампа тумбочка аниме 3", placeGroups.get(0), connection);
-
-        application.addSmartDevice(lamp1);
-        application.addSmartDevice(lamp2);
-        application.addSmartDevice(lamp3);
-
-        Socket socket1 = new Socket("Розетка конфетка ложка картошка 1", placeGroups.get(1), connection);
-        Socket socket2 = new Socket("Розетка 2", placeGroups.get(1), connection);
-        Socket socket3 = new Socket("Розетка 3", placeGroups.get(1), connection);
-
-        application.addSmartDevice(socket1);
-        application.addSmartDevice(socket2);
-        application.addSmartDevice(socket3);
-
-        Locker locker1 = new Locker("Замок 1", placeGroups.get(2), connection);
-        Locker locker2 = new Locker("Замок 2", placeGroups.get(2), connection);
-        Locker locker3 = new Locker("Замок 3", placeGroups.get(2), connection);
-
-        application.addSmartDevice(locker1);
-        application.addSmartDevice(locker2);
-        application.addSmartDevice(locker3);
-
-        Locker locker4 = new Locker("Замок 4", placeGroups.get(0), connection);
-        Locker locker5 = new Locker("Замок 5", placeGroups.get(0), connection);
-        Locker locker6 = new Locker("Замок 6", placeGroups.get(0), connection);
-
-        application.addSmartDevice(locker4);
-        application.addSmartDevice(locker5);
-        application.addSmartDevice(locker6);
-
-        Conditioner conditioner1 = new Conditioner("Кондей 1", placeGroups.get(3), connection);
-        Conditioner conditioner2 = new Conditioner("Кондей 2", placeGroups.get(3), connection);
-        Conditioner conditioner3 = new Conditioner("Кондей 3", placeGroups.get(3), connection);
-
-        application.addSmartDevice(conditioner1);
-        application.addSmartDevice(conditioner2);
-        application.addSmartDevice(conditioner3);
-
-        MusicPlayer musicPlayer1 = new MusicPlayer("Плеер 1", placeGroups.get(5), connection);
-        MusicPlayer musicPlayer2 = new MusicPlayer("Плеер 2", placeGroups.get(5), connection);
-        MusicPlayer musicPlayer3 = new MusicPlayer("Плеер 3", placeGroups.get(5), connection);
-
-        application.addSmartDevice(musicPlayer1);
-        application.addSmartDevice(musicPlayer2);
-        application.addSmartDevice(musicPlayer3);
-
-        Blind Blind1 = new Blind("Шторы 1", placeGroups.get(0), connection);
-        Blind Blind2 = new Blind("Шторы 2", placeGroups.get(1), connection);
-        Blind Blind3 = new Blind("Шторы 3", placeGroups.get(3), connection);
-        Blind Blind4 = new Blind("Шторы 3", placeGroups.get(5), connection);
-
-        application.addSmartDevice(Blind1);
-        application.addSmartDevice(Blind2);
-        application.addSmartDevice(Blind3);
-        application.addSmartDevice(Blind4);
-
-        Kettle Kettle1 = new Kettle("Чайник 1", placeGroups.get(0), connection);
-        Kettle Kettle2 = new Kettle("Чайник 2", placeGroups.get(3), connection);
-        Kettle Kettle3 = new Kettle("Чайник 3", placeGroups.get(5), connection);
-
-        application.addSmartDevice(Kettle1);
-        application.addSmartDevice(Kettle2);
-        application.addSmartDevice(Kettle3);
-
-        HeatedFloor heatedFloor1 = new HeatedFloor("Подогрев 1", placeGroups.get(0), connection);
-        HeatedFloor heatedFloor2 = new HeatedFloor("Подогрев 2", placeGroups.get(1), connection);
-        HeatedFloor heatedFloor3 = new HeatedFloor("Подогрев 3", placeGroups.get(2), connection);
-        HeatedFloor heatedFloor4 = new HeatedFloor("Подогрев 4", placeGroups.get(3), connection);
-        HeatedFloor heatedFloor5 = new HeatedFloor("Подогрев 5", placeGroups.get(4), connection);
-        HeatedFloor heatedFloor6 = new HeatedFloor("Подогрев 6", placeGroups.get(5), connection);
-
-        application.addSmartDevice(heatedFloor1);
-        application.addSmartDevice(heatedFloor2);
-        application.addSmartDevice(heatedFloor3);
-        application.addSmartDevice(heatedFloor4);
-        application.addSmartDevice(heatedFloor5);
-        application.addSmartDevice(heatedFloor6);
     }
 
     private void initGUI() {
@@ -332,10 +199,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         }
 
         private void downloadData() {
-            Command command = new Command("getSmartDevicesList");
-            Request request = new Request("username", "cloudServer", command);
 
-            connection.sendRequest(request);
         }
 
         @Override
