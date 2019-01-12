@@ -1,6 +1,7 @@
 package com.bsaldevs.mobileclient.Activities;
 
 import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.SeekBar;

@@ -96,7 +96,7 @@
     </LinearLayout>
 
     <github.hellocsl.cursorwheel.CursorWheelLayout
-        android:id="@+id/conditioner_controller3"
+        android:id="@+id/conditioner_controller4"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_margin="30dp"

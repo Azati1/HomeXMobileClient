@@ -57,8 +57,6 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Window g = getWindow();
-        g.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.TYPE_STATUS_BAR);
         setContentView(R.layout.activity_main);
         application = (MyApplication) getApplication();
         connection = application.getClient().getConnection();

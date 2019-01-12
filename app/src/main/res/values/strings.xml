@@ -10,6 +10,8 @@
     <string name="title_activity_floor_settings">FloorSettingsActivity</string>
     <string name="title_activity_socket_settings">SocketSettingsActivity</string>
     <string name="title_activity_lock_settings">LockSettingsActivity</string>
-    <string name="facebook_app_id">1155638654560951</string> <string name="fb_login_protocol_scheme">fb1155638654560951</string>
+    <string name="facebook_app_id">1155638654560951</string>
+    <string name="fb_login_protocol_scheme">fb1155638654560951</string>
+    <string name="title_activity_hover_settings">HoverSettingsActivity</string>
 
 </resources>
