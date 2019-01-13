@@ -24,14 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.MyApplication;
-import com.bsaldevs.mobileclient.Net.Request;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.ScheduleFragment;
 import com.bsaldevs.mobileclient.Fragments.RoomsFragment;
-import com.bsaldevs.mobileclient.User.Client;
-import com.bsaldevs.mobileclient.User.Mobile;
-import com.bsaldevs.mobileclient.User.MobileClient;
-import com.bsaldevs.mobileclient.User.UserDevice;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKSdk;
@@ -43,8 +38,6 @@ import java.util.List;
 public class MainActivity extends FragmentActivity implements RoomsFragment.OnFragmentInteractionListener, ScheduleFragment.OnFragmentInteractionListener {
 
     private MyApplication application;
-    private TCPConnection connection;
-    private AnimationDrawable animationDrawable;
     private TransitionDrawable transitionDrawable;
     private boolean isServerReachable = true;
 
@@ -57,9 +50,11 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Window g = getWindow();
+        g.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.TYPE_STATUS_BAR);
         setContentView(R.layout.activity_main);
         application = (MyApplication) getApplication();
-        connection = application.getClient().getConnection();
 
         initGUI();
         /*Thread thread = new Thread(new ServerStatusCheckThread());
@@ -74,7 +69,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
 
         transitionDrawable = (TransitionDrawable) mainLayout.getBackground();
 
-        animationDrawable = (AnimationDrawable) transitionDrawable.getDrawable(0);
+        AnimationDrawable animationDrawable = (AnimationDrawable) transitionDrawable.getDrawable(0);
         animationDrawable.setEnterFadeDuration(10000);
         animationDrawable.setExitFadeDuration(10000);
         animationDrawable.start();
@@ -94,14 +89,16 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         navigationViewHeaderTitle.setText("Привет, " + application.getAccount().getName() + "!");
 
         ImageView profile_photo = headerView.findViewById(R.id.imageView4);
-        Picasso.get().load(application.getAccount().getUrlphoto()).into(profile_photo);
+        Picasso.get().load(application.getAccount().getUrlPhoto()).into(profile_photo);
 
         MenuItem exitMenuButton = navigationView.getMenu().getItem(3);
         exitMenuButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+
                 VKSdk.logout();
                 LoginManager.getInstance().logOut();
+                application.logout();
 
                 Intent login = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(login);

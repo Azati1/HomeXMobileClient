@@ -2,14 +2,14 @@ package com.bsaldevs.mobileclient.User;
 
 public class Account {
 
-    private String name = "#empty";
-    private String email = "#empty";;
-    private String password = "#empty";;
-    private String urlphoto = "#empty";;
-    private int accountId;
-    private String loggedBy = "simple";
-
     private static int id = 0;
+
+    private String name = "#empty";
+    private String email = "#empty";
+    private String password = "#empty";
+    private String urlPhoto = "#empty";
+    private int accountId;
+    private String loggedBy;
 
     public Account() {
         this.accountId = id++;
@@ -31,12 +31,12 @@ public class Account {
         this.name = name;
     }
 
-    public void setUrlPhoto(String photo){
-        urlphoto=photo;
+    public void setUrlPhoto(String url){
+        urlPhoto = url;
     }
 
-    public String getUrlphoto() {
-        return urlphoto;
+    public String getUrlPhoto() {
+        return urlPhoto;
     }
 
     public String getName() {

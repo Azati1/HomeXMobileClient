@@ -31,7 +31,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/edit_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="parent" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/edit_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -63,7 +63,7 @@
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText2" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_login" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout2"
@@ -75,7 +75,7 @@
             android:layout_weight="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText4">
+            app:layout_constraintTop_toBottomOf="@+id/edit_password">
 
             <Button
                 android:id="@+id/button10"
@@ -138,7 +138,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/soc_text" />
 
             <com.facebook.login.widget.LoginButton
-                android:id="@+id/login_button"
+                android:id="@+id/login_facebook_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

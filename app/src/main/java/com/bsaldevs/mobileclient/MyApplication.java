@@ -1,6 +1,7 @@
 package com.bsaldevs.mobileclient;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,12 +15,9 @@ import com.bsaldevs.mobileclient.Devices.SmartDevices.Locker;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.MusicPlayer;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Socket;
-import com.bsaldevs.mobileclient.Fragments.RegistrationFragment;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Net.Request;
 import com.bsaldevs.mobileclient.Net.RequestPoll;
-import com.bsaldevs.mobileclient.Net.Response;
-import com.bsaldevs.mobileclient.Net.ServerCallback;
 import com.bsaldevs.mobileclient.User.Account;
 import com.bsaldevs.mobileclient.User.Client;
 import com.bsaldevs.mobileclient.User.Mobile;
@@ -40,7 +38,12 @@ public class MyApplication extends Application {
     private List<SmartDevice> devices;
     private List<PlaceGroup> placeGroups;
     private Account account;
-    private RequestPoll requestPoll;
+    private SharedPreferences sharedPreferences;
+
+    public static final String APP_PREFERENCES = "USER_DATA";
+    public static final String APP_PREFERENCES_EMAIL = "EMAIL";
+    public static final String APP_PREFERENCES_PASSWORD = "PASSWORD";
+    public static final String APP_PREFERENCES_LOGIN_TYPE = "LOGIN_TYPE";
 
     public MyApplication() {
         super();
@@ -105,42 +108,46 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         VKSdk.initialize(getApplicationContext());
-        this.account = new Account();
+        this.sharedPreferences = getSharedPreferences(APP_PREFERENCES, getApplicationContext().MODE_PRIVATE);
     }
 
-    public boolean login(final Account account) {
+    public void saveUserData() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(APP_PREFERENCES_EMAIL);
+        editor.remove(APP_PREFERENCES_PASSWORD);
+        editor.remove(APP_PREFERENCES_LOGIN_TYPE);
+        editor.putString(APP_PREFERENCES_EMAIL, account.getEmail());
+        editor.putString(APP_PREFERENCES_PASSWORD, account.getPassword());
+        editor.putString(APP_PREFERENCES_LOGIN_TYPE, account.getLoggedBy());
+        editor.apply();
+    }
 
-        final boolean[] successful = {false};
+    public Account loadUserData() {
+        Account account = new Account();
 
-        String[] args = new String[2];
-        args[0] = account.getEmail();
-        args[1] = account.getPassword();
+        String email = sharedPreferences.getString(APP_PREFERENCES_EMAIL, "");
+        String password = sharedPreferences.getString(APP_PREFERENCES_PASSWORD, "");
+        String loggedBy = sharedPreferences.getString(APP_PREFERENCES_LOGIN_TYPE, "");
 
-        RequestPoll requestPoll = getRequestPoll();
-        Request request = new Request("client", "server", "login", args);
-        request.executeWithListener(new ServerCallback() {
-            @Override
-            public void onComplete(Response response) {
+        if (!email.equals("") && !password.equals("") && !loggedBy.equals("")) {
+            account = new Account();
+            account.setEmail(sharedPreferences.getString(APP_PREFERENCES_EMAIL, ""));
+            account.setPassword(sharedPreferences.getString(APP_PREFERENCES_PASSWORD, ""));
+            account.setLoggedBy(sharedPreferences.getString(APP_PREFERENCES_LOGIN_TYPE, ""));
+            setAccount(account);
+        }
+        return account;
+    }
 
-                if (response.getFuncName().equals("login")) {
-                    String[] args = response.getFuncArgs();
-                    if (args[0].equals("ok")) {
-                        successful[0] = true;
-                        setAccount(account);
-                    }
-                    if (args[0].equals("error")) {
-                        successful[0] = false;
-                    }
-                }
-            }
-        });
-        requestPoll.execute(request);
-
-        return successful[0];
+    public boolean isUserLoggedIn() {
+        if (account != null)
+            return true;
+        return false;
     }
 
     public void setAccount(Account account) {
         this.account = account;
+        saveUserData();
     }
 
     public Account getAccount() {
@@ -350,6 +357,16 @@ public class MyApplication extends Application {
         addSmartDevice(heatedFloor4);
         addSmartDevice(heatedFloor5);
         addSmartDevice(heatedFloor6);
+    }
+
+    public void logout() {
+
+        Account account = new Account();
+        account.setEmail("");
+        account.setPassword("");
+        account.setLoggedBy("");
+        setAccount(account);
+
     }
 
     private class ShowToast extends AsyncTask<Void, Void, Void> {

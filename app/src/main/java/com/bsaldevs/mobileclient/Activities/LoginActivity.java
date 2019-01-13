@@ -11,20 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bsaldevs.mobileclient.MyApplication;
-import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Net.Request;
 import com.bsaldevs.mobileclient.Net.RequestPoll;
 import com.bsaldevs.mobileclient.Net.Response;
@@ -35,15 +27,10 @@ import com.bsaldevs.mobileclient.User.Account;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.login.LoginBehavior;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
@@ -53,31 +40,26 @@ import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-
 public class LoginActivity extends AppCompatActivity implements RegistrationFragment.OnFragmentInteractionListener {
 
     private MyApplication application;
-
-    private EditText editTextName;
-    private EditText editTextEmail;
-    private EditText editTextPassword;
-    private Button buttonRegistration;
-
     private CallbackManager callbackManager;
     private LoginButton loginButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         application = (MyApplication) getApplication();
+        initGUI();
+
+    }
+
+    private void initGUI() {
 
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
@@ -86,23 +68,14 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         RegistrationFragment registrationFragment = new RegistrationFragment();
         manager.beginTransaction().replace(R.id.bottom_registration_sheet, registrationFragment).commit();
 
-        final EditText editLogin = findViewById(R.id.editText2);
-        final EditText editPassword = findViewById(R.id.editText4);
-        Button loginByApplication = findViewById(R.id.button9);
-        //TextView titleLoginBy = findViewById(R.id.textView9);
-        final ImageButton loginByFacebookButton = findViewById(R.id.imageButtonFacebook);
+        final EditText editLogin = findViewById(R.id.edit_login);
+        final EditText editPassword = findViewById(R.id.edit_password);
+        final Button loginByApplication = findViewById(R.id.button9);
+
         final ImageButton loginByGooglePlusButton = findViewById(R.id.imageButtonGoogle);
         final ImageButton loginByVKButton = findViewById(R.id.imageButtonVK);
 
-        final TextView textsoc = findViewById(R.id.soc_text);
-
-        View sheet = findViewById(R.id.bottom_registration_sheet);
-
-        editTextName = sheet.findViewById(R.id.edit_text_name);
-        editTextEmail = sheet.findViewById(R.id.edit_text_email);
-        editTextPassword = sheet.findViewById(R.id.edit_text_password);
-        buttonRegistration = sheet.findViewById(R.id.button_registration);
-
+        final View sheet = findViewById(R.id.bottom_registration_sheet);
 
         final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(sheet);
 
@@ -120,15 +93,10 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 
         LinearLayout linearLayout = sheet.findViewById(R.id.bottom_sheet_head);
 
-        final ImageView slideArrow = linearLayout.findViewById(R.id.image_slide_sheet_arrow);
-        final Animation rotation = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.rotate_slide_arrow);
-
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("CDA", bottomSheetBehavior.getState() + "");
-
-                slideArrow.startAnimation(rotation);
 
                 switch (bottomSheetBehavior.getState()) {
                     case BottomSheetBehavior.STATE_COLLAPSED: {
@@ -154,20 +122,12 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                 String email = editLogin.getText().toString();
                 String password = editPassword.getText().toString();
 
-                login(email, password);
+                loginWithUserData(email, password);
             }
         });
 
-       /* loginByFacebookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(LoginActivity.this, "Login by facebook", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-
         callbackManager = CallbackManager.Factory.create();
-        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton = findViewById(R.id.login_facebook_button);
         loginButton.setReadPermissions("public_profile");
         loginFB();
 
@@ -188,33 +148,29 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 
     }
 
-
-
-
-    private void loginFB(){
+    private void loginFB() {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        // App code
-                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
 
-                        GraphRequest request=GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 try {
+
                                     String first_name = object.getString("first_name");
                                     String url_photo = "https://graph.facebook.com/"+object.getString("id")+"/picture?width=50&height=50";
                                     Log.d("CDA", first_name );
                                     Account account = new Account();
                                     account.setName(first_name);
                                     account.setUrlPhoto(url_photo);
-                                    application.setAccount(account);
-                                    //login(account);
+                                    account.setLoggedBy("FB");
+                                    login(account);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
 
                             }
                         });
@@ -239,10 +195,6 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                 });
     }
 
-
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -251,12 +203,10 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             public void onResult(VKAccessToken res) {
 
                 VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "photo_50"));
-                //VKRequest request = VKApi.users().get();
                 request.executeWithListener(new VKRequest.VKRequestListener() {
                     @Override
                     public void onComplete(VKResponse response) {
                         super.onComplete(response);
-                        String status = "";
 
                         try {
 
@@ -270,8 +220,7 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                                 Account account = new Account();
                                 account.setName(first_name);
                                 account.setUrlPhoto(url_photo);
-                                application.setAccount(account);
-                                //login(account);
+                                login(account);
                             }
 
                         } catch (JSONException e) {
@@ -299,34 +248,42 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 
     }
 
-    private void login(String email, String password) {
+    private void login(Account account) {
+        application.setAccount(account);
+        Intent login = new Intent(LoginActivity.this, MainActivity.class);
+        login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(login);
+    }
+
+    private void loginWithUserData(String email, String password) {
 
         final Account account = new Account();
         account.setEmail(email);
         account.setPassword(password);
+        account.setLoggedBy("simple");
 
         String[] args = new String[2];
         args[0] = email;
         args[1] = password;
 
         RequestPoll requestPoll = application.getRequestPoll();
-        Request request = new Request("client", "server", "login", args);
+        Request request = new Request("client", "server", "loginWithUserData", args);
         request.executeWithListener(new ServerCallback() {
             @Override
             public void onComplete(Response response) {
 
-                if (response.getFuncName().equals("login")) {
+                if (response.getFuncName().equals("loginWithUserData")) {
                     String[] args = response.getFuncArgs();
+
                     if (args[0].equals("ok")) {
                         String name = args[1];
                         account.setName(name);
-                        application.setAccount(account);
-                        Intent login = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(login);
+                        login(account);
                     }
+
                     if (args[0].equals("error")) {
-                        ShowToast showToast = new ShowToast("Не могу войти");
-                        showToast.execute();
+                        ShowToastAsync showToastAsync = new ShowToastAsync("Не могу войти");
+                        showToastAsync.execute();
                     }
                 }
             }
@@ -335,11 +292,11 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 
     }
 
-    private class ShowToast extends AsyncTask<Void, Void, Void> {
+    private class ShowToastAsync extends AsyncTask<Void, Void, Void> {
 
         private String value;
 
-        public ShowToast(String value) {
+        public ShowToastAsync(String value) {
             this.value = value;
         }
 
