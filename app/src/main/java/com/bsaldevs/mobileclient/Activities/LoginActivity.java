@@ -68,13 +68,14 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         RegistrationFragment registrationFragment = new RegistrationFragment();
         manager.beginTransaction().replace(R.id.bottom_registration_sheet, registrationFragment).commit();
 
+
         final EditText editLogin = findViewById(R.id.edit_login);
         final EditText editPassword = findViewById(R.id.edit_password);
         final Button loginByApplication = findViewById(R.id.button9);
 
         final ImageButton loginByGooglePlusButton = findViewById(R.id.imageButtonGoogle);
         final ImageButton loginByVKButton = findViewById(R.id.imageButtonVK);
-
+        final ImageButton loginByFB = findViewById(R.id.imageButtonFB);
         final View sheet = findViewById(R.id.bottom_registration_sheet);
 
         final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(sheet);
@@ -143,6 +144,14 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             public void onClick(View view) {
                 Toast.makeText(LoginActivity.this, "Login by vk", Toast.LENGTH_SHORT).show();
                 VKSdk.login(LoginActivity.this);
+            }
+        });
+
+        loginByFB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginButton.performClick();
+
             }
         });
 

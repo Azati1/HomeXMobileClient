@@ -141,11 +141,27 @@
                 android:id="@+id/login_facebook_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="30dp" />
+                android:layout_marginBottom="30dp"
+                android:scaleType="centerInside"
+                />
+
+            <ImageButton
+                android:id="@+id/imageButtonFB"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_facebook_v2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/soc_text" />
 
             <ImageButton
                 android:id="@+id/imageButtonGoogle"
