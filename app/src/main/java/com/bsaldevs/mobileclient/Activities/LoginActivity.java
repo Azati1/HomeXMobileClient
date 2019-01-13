@@ -276,7 +276,7 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         args[1] = password;
 
         RequestPoll requestPoll = application.getRequestPoll();
-        Request request = new Request("client", "server", "loginWithUserData", args);
+        Request request = new Request("client", "server", "login", args);
         request.executeWithListener(new ServerCallback() {
             @Override
             public void onComplete(Response response) {

@@ -3,6 +3,7 @@ package com.bsaldevs.mobileclient.Devices;
 import com.bsaldevs.mobileclient.Activities.BlindSettingsActivity;
 import com.bsaldevs.mobileclient.Activities.ConditionerSettingsActivity;
 import com.bsaldevs.mobileclient.Activities.FloorSettingsActivity;
+import com.bsaldevs.mobileclient.Activities.HoverSettingsActivity;
 import com.bsaldevs.mobileclient.Activities.KettleSettingsActivity;
 import com.bsaldevs.mobileclient.Activities.LampSettingsActivity;
 import com.bsaldevs.mobileclient.Activities.LockSettingsActivity;
@@ -20,6 +21,7 @@ public interface SmartDeviceDisplay {
     Class<SocketSettingsActivity> SOCKET_SETTINGS_ACTIVITY = SocketSettingsActivity.class;
     Class<KettleSettingsActivity> KETTLE_SETTINGS_ACTIVITY = KettleSettingsActivity.class;
     Class<FloorSettingsActivity> FLOOR_SETTINGS_ACTIVITY = FloorSettingsActivity.class;
+    Class<HoverSettingsActivity> HOOVER_SETTINGS_ACTIVITY = HoverSettingsActivity.class;
 
     int getImageResourceID();
     Class<?> getDisplayActivity();

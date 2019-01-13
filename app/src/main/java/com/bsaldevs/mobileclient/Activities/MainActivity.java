@@ -91,7 +91,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         ImageView profile_photo = headerView.findViewById(R.id.imageView4);
         Picasso.get().load(application.getAccount().getUrlPhoto()).into(profile_photo);
 
-        MenuItem exitMenuButton = navigationView.getMenu().getItem(3);
+        MenuItem exitMenuButton = navigationView.getMenu().getItem(4);
         exitMenuButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -106,6 +106,18 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
                 return true;
             }
         });
+
+        MenuItem aboutMenuButton = navigationView.getMenu().getItem(3);
+        aboutMenuButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(MainActivity.this, AboutOfProgramActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

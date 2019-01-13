@@ -9,6 +9,7 @@ import com.bsaldevs.mobileclient.Devices.DeviceType;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Blind;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Conditioner;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.HeatedFloor;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.Hoover;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Kettle;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Lamp;
 import com.bsaldevs.mobileclient.Devices.SmartDevices.Locker;
@@ -107,6 +108,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        this.account = new Account();
         VKSdk.initialize(getApplicationContext());
         this.sharedPreferences = getSharedPreferences(APP_PREFERENCES, getApplicationContext().MODE_PRIVATE);
     }
@@ -259,12 +261,13 @@ public class MyApplication extends Application {
     }
 
     private void loadPlaceGroups() {
-        PlaceGroup placeGroupOffice = new PlaceGroup("Офис", R.drawable.ic_desk);
+        PlaceGroup placeGroupOffice = new PlaceGroup("Кабинет", R.drawable.ic_desk);
         PlaceGroup placeGroupLivingRoom = new PlaceGroup("Гостиная", R.drawable.ic_livingroom);
         PlaceGroup placeGroupBathroom = new PlaceGroup("Ванная", R.drawable.ic_bathtub);
         PlaceGroup placeGroupBedroom = new PlaceGroup("Спальня", R.drawable.ic_bed);
         PlaceGroup placeGroupRestroom = new PlaceGroup("Уборная", R.drawable.ic_toilet);
         PlaceGroup placeGroupKitchen = new PlaceGroup("Кухня", R.drawable.ic_coffee_machine);
+        PlaceGroup placeGroupHall = new PlaceGroup("Коридор", R.drawable.ic_shelf);
 
         addPlaceGroup(placeGroupOffice);
         addPlaceGroup(placeGroupLivingRoom);
@@ -272,59 +275,101 @@ public class MyApplication extends Application {
         addPlaceGroup(placeGroupBedroom);
         addPlaceGroup(placeGroupRestroom);
         addPlaceGroup(placeGroupKitchen);
+        addPlaceGroup(placeGroupHall);
     }
 
     private void loadDevices() {
 
         List<PlaceGroup> placeGroups = getPlaceGroups();
 
-        Lamp lamp1 = new Lamp("Лампа лампа тумбочка аниме 1", placeGroups.get(0), connection);
-        Lamp lamp2 = new Lamp("Лампа лампа тумбочка аниме 2", placeGroups.get(0), connection);
-        Lamp lamp3 = new Lamp("Лампа лампа тумбочка аниме 3", placeGroups.get(0), connection);
+        Lamp lamp1 = new Lamp("Настольная лампа 1", placeGroups.get(0), connection);
+        Lamp lamp2 = new Lamp("Люстра 1", placeGroups.get(0), connection);
+        Lamp lamp3 = new Lamp("Настольная лампа 2", placeGroups.get(1), connection);
+        Lamp lamp4 = new Lamp("Люстра 2", placeGroups.get(1), connection);
+        Lamp lamp5 = new Lamp("Светильник в ванной", placeGroups.get(2), connection);
+        Lamp lamp6 = new Lamp("Ночник", placeGroups.get(3), connection);
+        Lamp lamp7 = new Lamp("Настольная лампа 3", placeGroups.get(3), connection);
+        Lamp lamp8 = new Lamp("Люстра 3", placeGroups.get(3), connection);
+        Lamp lamp9 = new Lamp("Светильник в уборной", placeGroups.get(4), connection);
+        Lamp lamp10 = new Lamp("Подсветка на кухе", placeGroups.get(5), connection);
+        Lamp lamp11 = new Lamp("Люстра 4", placeGroups.get(5), connection);
+        Lamp lamp12 = new Lamp("Бра в коридоре", placeGroups.get(6), connection);
 
         addSmartDevice(lamp1);
         addSmartDevice(lamp2);
         addSmartDevice(lamp3);
+        addSmartDevice(lamp4);
+        addSmartDevice(lamp5);
+        addSmartDevice(lamp6);
+        addSmartDevice(lamp7);
+        addSmartDevice(lamp8);
+        addSmartDevice(lamp9);
+        addSmartDevice(lamp10);
+        addSmartDevice(lamp11);
+        addSmartDevice(lamp12);
 
-        Socket socket1 = new Socket("Розетка конфетка ложка картошка 1", placeGroups.get(1), connection);
+        Socket socket1 = new Socket("Розетка 1", placeGroups.get(0), connection);
         Socket socket2 = new Socket("Розетка 2", placeGroups.get(1), connection);
-        Socket socket3 = new Socket("Розетка 3", placeGroups.get(1), connection);
+        Socket socket3 = new Socket("Розетка 3", placeGroups.get(2), connection);
+        Socket socket4 = new Socket("Розетка 4", placeGroups.get(2), connection);
+        Socket socket5 = new Socket("Розетка 5", placeGroups.get(3), connection);
+        Socket socket6 = new Socket("Розетка 6", placeGroups.get(4), connection);
+        Socket socket7 = new Socket("Розетка 7", placeGroups.get(4), connection);
+        Socket socket8 = new Socket("Розетка 8", placeGroups.get(5), connection);
+        Socket socket9 = new Socket("Розетка 9", placeGroups.get(6), connection);
+        Socket socket10 = new Socket("Розетка 10", placeGroups.get(6), connection);
 
         addSmartDevice(socket1);
         addSmartDevice(socket2);
         addSmartDevice(socket3);
+        addSmartDevice(socket4);
+        addSmartDevice(socket5);
+        addSmartDevice(socket6);
+        addSmartDevice(socket7);
+        addSmartDevice(socket8);
+        addSmartDevice(socket9);
+        addSmartDevice(socket10);
 
-        Locker locker1 = new Locker("Замок 1", placeGroups.get(2), connection);
-        Locker locker2 = new Locker("Замок 2", placeGroups.get(2), connection);
+
+        Locker locker1 = new Locker("Замок 1", placeGroups.get(0), connection);
+        Locker locker2 = new Locker("Замок 2", placeGroups.get(1), connection);
         Locker locker3 = new Locker("Замок 3", placeGroups.get(2), connection);
+        Locker locker4 = new Locker("Замок 4", placeGroups.get(3), connection);
+        Locker locker5 = new Locker("Замок 5", placeGroups.get(4), connection);
+        Locker locker6 = new Locker("Замок 6", placeGroups.get(5), connection);
 
         addSmartDevice(locker1);
         addSmartDevice(locker2);
         addSmartDevice(locker3);
-
-        Locker locker4 = new Locker("Замок 4", placeGroups.get(2), connection);
-        Locker locker5 = new Locker("Замок 5", placeGroups.get(2), connection);
-        Locker locker6 = new Locker("Замок 6", placeGroups.get(2), connection);
-
         addSmartDevice(locker4);
         addSmartDevice(locker5);
         addSmartDevice(locker6);
 
-        Conditioner conditioner1 = new Conditioner("Кондей 1", placeGroups.get(3), connection);
-        Conditioner conditioner2 = new Conditioner("Кондей 2", placeGroups.get(3), connection);
-        Conditioner conditioner3 = new Conditioner("Кондей 3", placeGroups.get(3), connection);
+        Conditioner conditioner1 = new Conditioner("Кондиционер в кабинете", placeGroups.get(0), connection);
+        Conditioner conditioner2 = new Conditioner("Кондиционер в гостиной", placeGroups.get(1), connection);
+        Conditioner conditioner3 = new Conditioner("Кондиционер в спальне", placeGroups.get(3), connection);
+        Conditioner conditioner4 = new Conditioner("Кондиционер на кухне", placeGroups.get(5), connection);
 
         addSmartDevice(conditioner1);
         addSmartDevice(conditioner2);
         addSmartDevice(conditioner3);
+        addSmartDevice(conditioner4);
 
-        MusicPlayer musicPlayer1 = new MusicPlayer("Плеер 1", placeGroups.get(5), connection);
-        MusicPlayer musicPlayer2 = new MusicPlayer("Плеер 2", placeGroups.get(5), connection);
-        MusicPlayer musicPlayer3 = new MusicPlayer("Плеер 3", placeGroups.get(5), connection);
+        MusicPlayer musicPlayer1 = new MusicPlayer("Музыкальный центр", placeGroups.get(0), connection);
+        MusicPlayer musicPlayer2 = new MusicPlayer("Музыкальный центр", placeGroups.get(1), connection);
+        MusicPlayer musicPlayer3 = new MusicPlayer("Музыкальный центр", placeGroups.get(2), connection);
+        MusicPlayer musicPlayer4 = new MusicPlayer("Музыкальный центр", placeGroups.get(3), connection);
+        MusicPlayer musicPlayer5 = new MusicPlayer("Музыкальный центр", placeGroups.get(4), connection);
+        MusicPlayer musicPlayer6 = new MusicPlayer("Музыкальный центр", placeGroups.get(5), connection);
+        MusicPlayer musicPlayer7 = new MusicPlayer("Музыкальный центр", placeGroups.get(6), connection);
 
         addSmartDevice(musicPlayer1);
         addSmartDevice(musicPlayer2);
         addSmartDevice(musicPlayer3);
+        addSmartDevice(musicPlayer4);
+        addSmartDevice(musicPlayer5);
+        addSmartDevice(musicPlayer6);
+        addSmartDevice(musicPlayer7);
 
         Blind Blind1 = new Blind("Шторы 1", placeGroups.get(0), connection);
         Blind Blind2 = new Blind("Шторы 2", placeGroups.get(1), connection);
@@ -350,6 +395,7 @@ public class MyApplication extends Application {
         HeatedFloor heatedFloor4 = new HeatedFloor("Подогрев 4", placeGroups.get(3), connection);
         HeatedFloor heatedFloor5 = new HeatedFloor("Подогрев 5", placeGroups.get(4), connection);
         HeatedFloor heatedFloor6 = new HeatedFloor("Подогрев 6", placeGroups.get(5), connection);
+        HeatedFloor heatedFloor7 = new HeatedFloor("Подогрев 7", placeGroups.get(6), connection);
 
         addSmartDevice(heatedFloor1);
         addSmartDevice(heatedFloor2);
@@ -357,6 +403,24 @@ public class MyApplication extends Application {
         addSmartDevice(heatedFloor4);
         addSmartDevice(heatedFloor5);
         addSmartDevice(heatedFloor6);
+        addSmartDevice(heatedFloor7);
+
+        Hoover hoover1 = new Hoover("Пылесос", placeGroups.get(0), connection);
+        Hoover hoover2 = new Hoover("Пылесос", placeGroups.get(1), connection);
+        Hoover hoover3 = new Hoover("Пылесос", placeGroups.get(2), connection);
+        Hoover hoover4 = new Hoover("Пылесос", placeGroups.get(3), connection);
+        Hoover hoover5 = new Hoover("Пылесос", placeGroups.get(4), connection);
+        Hoover hoover6 = new Hoover("Пылесос", placeGroups.get(5), connection);
+        Hoover hoover7 = new Hoover("Пылесос", placeGroups.get(6), connection);
+
+        addSmartDevice(hoover1);
+        addSmartDevice(hoover2);
+        addSmartDevice(hoover3);
+        addSmartDevice(hoover4);
+        addSmartDevice(hoover5);
+        addSmartDevice(hoover6);
+        addSmartDevice(hoover7);
+
     }
 
     public void logout() {

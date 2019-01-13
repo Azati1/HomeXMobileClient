@@ -14,6 +14,6 @@ public class Hoover extends SmartDevice {
 
     @Override
     public Class<?> getDisplayActivity() {
-        return null;
+        return HOOVER_SETTINGS_ACTIVITY;
     }
 }

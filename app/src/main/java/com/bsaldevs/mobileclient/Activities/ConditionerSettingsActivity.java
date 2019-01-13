@@ -33,7 +33,7 @@ public class ConditionerSettingsActivity extends AppCompatActivity {
         conditionerController.setOnMenuSelectedListener(new CursorWheelLayout.OnMenuSelectedListener() {
             @Override
             public void onItemSelected(CursorWheelLayout parent, View view, int pos) {
-                Toast.makeText(getBaseContext(), "Выбран: " + menuItemDataList.get(pos).getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Выбран режим: " + menuItemDataList.get(pos).getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -42,7 +42,7 @@ public class ConditionerSettingsActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        for (int i = 0; i < 9; i++) {
+        for (int i = 1; i < 9; i++) {
             menuItemDataList.add(new MenuItemData(i + ""));
         }
         ConditionerWheelAdapter adapter = new ConditionerWheelAdapter(getBaseContext(), menuItemDataList);

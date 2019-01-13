@@ -17,7 +17,7 @@ import github.hellocsl.cursorwheel.CursorWheelLayout;
 
 public class FloorSettingsActivity extends AppCompatActivity {
 
-    private CursorWheelLayout floorController;
+    private CursorWheelLayout Controller;
     private List<MenuItemData> menuItemDataList;
 
     @Override
@@ -26,8 +26,8 @@ public class FloorSettingsActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_floor_settings);
         getSupportActionBar().hide();
 
-        floorController = findViewById(R.id.conditioner_controller3);
-        floorController.setOnMenuSelectedListener(new CursorWheelLayout.OnMenuSelectedListener() {
+        Controller = findViewById(R.id.conditioner_controller4);
+        Controller.setOnMenuSelectedListener(new CursorWheelLayout.OnMenuSelectedListener() {
             @Override
             public void onItemSelected(CursorWheelLayout parent, View view, int pos) {
                 Toast.makeText(getBaseContext(), "Температура подогрева: " + menuItemDataList.get(pos).getTitle(), Toast.LENGTH_SHORT).show();
@@ -43,7 +43,7 @@ public class FloorSettingsActivity extends AppCompatActivity {
             menuItemDataList.add(new MenuItemData(i*5 + "°"));
         }
         ConditionerWheelAdapter adapter = new ConditionerWheelAdapter(getBaseContext(), menuItemDataList);
-        floorController.setAdapter(adapter);
+        Controller.setAdapter(adapter);
     }
 
 }
