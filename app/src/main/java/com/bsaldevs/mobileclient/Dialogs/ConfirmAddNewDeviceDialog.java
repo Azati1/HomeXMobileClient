@@ -17,7 +17,7 @@ import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 
-public class DialogConfirmAddNewDevice extends Dialog {
+public class ConfirmAddNewDeviceDialog extends Dialog {
 
     private TextView textViewDeviceTypeName;
     private ImageView imageViewDeviceType;
@@ -29,7 +29,7 @@ public class DialogConfirmAddNewDevice extends Dialog {
     private PlaceGroup placeGroup;
     private DeviceType deviceType;
 
-    public DialogConfirmAddNewDevice(@NonNull Context context, PlaceGroup placeGroup, DeviceType deviceType) {
+    public ConfirmAddNewDeviceDialog(@NonNull Context context, PlaceGroup placeGroup, DeviceType deviceType) {
         super(context);
         this.application = ((MyApplication) getContext().getApplicationContext());
         this.placeGroup = placeGroup;
@@ -50,7 +50,7 @@ public class DialogConfirmAddNewDevice extends Dialog {
         editDeviceName.requestFocus();
 
         textViewDeviceTypeName.setText(deviceType.getDeviceName());
-        imageViewDeviceType.setImageResource(deviceType.getDeviceImage());
+        imageViewDeviceType.setImageResource(deviceType.getImageResourceID());
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override

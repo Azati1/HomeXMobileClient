@@ -33,23 +33,18 @@ import java.util.List;
 
 public class MyApplication extends Application {
 
-    private Gson gson;
+    private static final String APP_PREFERENCES = "USER_DATA";
+
     private MobileClient client;
     private TCPConnection connection;
     private List<SmartDevice> devices;
     private List<PlaceGroup> placeGroups;
-    private Account account;
+    private AccountManager accountManager;
     private SharedPreferences sharedPreferences;
-
-    public static final String APP_PREFERENCES = "USER_DATA";
-    public static final String APP_PREFERENCES_EMAIL = "EMAIL";
-    public static final String APP_PREFERENCES_PASSWORD = "PASSWORD";
-    public static final String APP_PREFERENCES_LOGIN_TYPE = "LOGIN_TYPE";
 
     public MyApplication() {
         super();
 
-        gson = new GsonBuilder().setPrettyPrinting().create();
         UserDevice mobile = new Mobile("username");
 
         String ip100 = "192.168.0.100";
@@ -63,32 +58,6 @@ public class MyApplication extends Application {
             @Override
             public void onClientException(TCPConnection connection, Exception e) {
                 Log.d("CDA", "onClientExceptionHandler");
-            }
-        });
-
-        client.setOnRequestReceive(new Client.onRequestReceiveListener() {
-            @Override
-            public void onReceiveRequest(TCPConnection connection, String stringRequest) {
-                Request request = gson.fromJson(stringRequest, Request.class);
-
-                if (request.getFuncName().equals("register")) {
-                    String[] args = request.getFuncArgs();
-                    if (args[0].equals("ok")) {
-                        ShowToast showToast = new ShowToast("Аккаунт успешно создан");
-                        showToast.execute();
-                    }
-                    if (args[0].equals("error")) {
-                        ShowToast showToast = new ShowToast("Произошла ошибка при создании аккаунта");
-                        showToast.execute();
-                    }
-                }
-
-                if (request.getFuncName().equals("login")) {
-                    String args[] = request.getFuncArgs();
-                    if (args[0].equals("ok")) {
-
-                    }
-                }
             }
         });
 
@@ -108,52 +77,20 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        this.account = new Account();
         VKSdk.initialize(getApplicationContext());
         this.sharedPreferences = getSharedPreferences(APP_PREFERENCES, getApplicationContext().MODE_PRIVATE);
-    }
-
-    public void saveUserData() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(APP_PREFERENCES_EMAIL);
-        editor.remove(APP_PREFERENCES_PASSWORD);
-        editor.remove(APP_PREFERENCES_LOGIN_TYPE);
-        editor.putString(APP_PREFERENCES_EMAIL, account.getEmail());
-        editor.putString(APP_PREFERENCES_PASSWORD, account.getPassword());
-        editor.putString(APP_PREFERENCES_LOGIN_TYPE, account.getLoggedBy());
-        editor.apply();
-    }
-
-    public Account loadUserData() {
-        Account account = new Account();
-
-        String email = sharedPreferences.getString(APP_PREFERENCES_EMAIL, "");
-        String password = sharedPreferences.getString(APP_PREFERENCES_PASSWORD, "");
-        String loggedBy = sharedPreferences.getString(APP_PREFERENCES_LOGIN_TYPE, "");
-
-        if (!email.equals("") && !password.equals("") && !loggedBy.equals("")) {
-            account = new Account();
-            account.setEmail(sharedPreferences.getString(APP_PREFERENCES_EMAIL, ""));
-            account.setPassword(sharedPreferences.getString(APP_PREFERENCES_PASSWORD, ""));
-            account.setLoggedBy(sharedPreferences.getString(APP_PREFERENCES_LOGIN_TYPE, ""));
-            setAccount(account);
-        }
-        return account;
+        this.accountManager = new AccountManager(this, sharedPreferences);
     }
 
     public boolean isUserLoggedIn() {
-        if (account != null)
-            return true;
-        return false;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-        saveUserData();
+        Account account = accountManager.getCurrentAccount();
+        if (account == null)
+            return false;
+        return true;
     }
 
     public Account getAccount() {
-        return account;
+        return accountManager.getCurrentAccount();
     }
 
     public void setupClient(MobileClient client) {
@@ -280,8 +217,6 @@ public class MyApplication extends Application {
 
     private void loadDevices() {
 
-        List<PlaceGroup> placeGroups = getPlaceGroups();
-
         Lamp lamp1 = new Lamp("Настольная лампа 1", placeGroups.get(0), connection);
         Lamp lamp2 = new Lamp("Люстра 1", placeGroups.get(0), connection);
         Lamp lamp3 = new Lamp("Настольная лампа 2", placeGroups.get(1), connection);
@@ -329,7 +264,6 @@ public class MyApplication extends Application {
         addSmartDevice(socket8);
         addSmartDevice(socket9);
         addSmartDevice(socket10);
-
 
         Locker locker1 = new Locker("Замок 1", placeGroups.get(0), connection);
         Locker locker2 = new Locker("Замок 2", placeGroups.get(1), connection);
@@ -423,32 +357,24 @@ public class MyApplication extends Application {
 
     }
 
+    public void login(Account account) {
+        accountManager.login(account);
+    }
+
     public void logout() {
-
-        Account account = new Account();
-        account.setEmail("");
-        account.setPassword("");
-        account.setLoggedBy("");
-        setAccount(account);
-
+        accountManager.logout();
     }
 
-    private class ShowToast extends AsyncTask<Void, Void, Void> {
-
-        private String value;
-
-        public ShowToast(String value) {
-            this.value = value;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
-        }
+    public void initAccount() throws Exception {
+        accountManager.init();
     }
+
+    public void subscribeToAccountManagerListener(AccountManagerListener listener) {
+        accountManager.subscribeListener(listener);
+    }
+
+    public void unsubscribeToAccountManagerListener(AccountManagerListener listener) {
+        accountManager.unsubscribeListener(listener);
+    }
+
 }

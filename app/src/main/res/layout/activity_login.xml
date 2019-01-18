@@ -90,7 +90,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button9"
+                android:id="@+id/button_login_by_application"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -125,7 +125,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButtonVK"
+                android:id="@+id/image_button_login_by_vkontakte"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignTop="@+id/imageButtonFacebook"
@@ -151,7 +151,7 @@
                 />
 
             <ImageButton
-                android:id="@+id/imageButtonFB"
+                android:id="@+id/image_button_login_by_facebook"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
@@ -164,7 +164,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/soc_text" />
 
             <ImageButton
-                android:id="@+id/imageButtonGoogle"
+                android:id="@+id/image_button_login_by_google"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignTop="@+id/imageButtonFacebook"
@@ -173,7 +173,7 @@
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_google_plus_v2"
-                app:layout_constraintEnd_toStartOf="@+id/imageButtonVK"
+                app:layout_constraintEnd_toStartOf="@+id/image_button_login_by_vkontakte"
                 app:layout_constraintStart_toEndOf="@+id/imageButtonFacebook"
                 app:layout_constraintTop_toBottomOf="@+id/soc_text" />
         </LinearLayout>

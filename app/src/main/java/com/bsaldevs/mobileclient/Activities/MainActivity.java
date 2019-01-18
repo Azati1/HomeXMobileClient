@@ -22,10 +22,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
+import com.bsaldevs.mobileclient.Fragments.AllDevicesFragment;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.R;
-import com.bsaldevs.mobileclient.Fragments.ScheduleFragment;
 import com.bsaldevs.mobileclient.Fragments.RoomsFragment;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
@@ -35,14 +34,13 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements RoomsFragment.OnFragmentInteractionListener, ScheduleFragment.OnFragmentInteractionListener {
+public class MainActivity extends FragmentActivity implements RoomsFragment.OnFragmentInteractionListener, AllDevicesFragment.OnFragmentInteractionListener {
 
     private MyApplication application;
     private TransitionDrawable transitionDrawable;
     private boolean isServerReachable = true;
 
     private LinearLayout mainLayout;
-
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private NavigationView navigationView;
@@ -50,10 +48,8 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Window g = getWindow();
-        g.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.TYPE_STATUS_BAR);
         setContentView(R.layout.activity_main);
+
         application = (MyApplication) getApplication();
 
         initGUI();
@@ -63,6 +59,9 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
     }
 
     private void initGUI() {
+
+        Window g = getWindow();
+        g.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.TYPE_STATUS_BAR);
 
         mainLayout = findViewById(R.id.main_container);
         mainLayout.setBackgroundResource(R.drawable.change_bg_anim);
@@ -103,7 +102,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
                 Intent login = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(login);
 
-                return true;
+                return false;
             }
         });
 
@@ -113,7 +112,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent intent = new Intent(MainActivity.this, AboutOfProgramActivity.class);
                 startActivity(intent);
-                return true;
+                return false;
             }
         });
 
@@ -125,7 +124,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragmentPage(new RoomsFragment(), "Комнаты");
-        adapter.addFragmentPage(new ScheduleFragment(), "Расписание");
+        adapter.addFragmentPage(new AllDevicesFragment(), "Все устройства");
 
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0);
@@ -143,7 +142,6 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
     public void onFragmentInteraction(Uri uri) {
 
     }
-
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
 

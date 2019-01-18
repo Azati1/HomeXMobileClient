@@ -1,4 +1,4 @@
-package com.bsaldevs.mobileclient.Activities;
+package com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

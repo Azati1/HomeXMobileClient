@@ -1,6 +1,7 @@
 package com.bsaldevs.mobileclient.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,17 +18,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bsaldevs.mobileclient.Devices.DeviceType;
-import com.bsaldevs.mobileclient.Dialogs.ConfirmEnableDeviceGroup;
+import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
+import com.bsaldevs.mobileclient.Dialogs.ConfirmEnableDeviceGroupDialog;
 import com.bsaldevs.mobileclient.Dialogs.SelectSmartDeviceDialog;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DeviceGroupFragment extends android.support.v4.app.Fragment {
 
+    private static final int DISPLAY_LINE_CAPACITY = 2;
     private OnFragmentInteractionListener mListener;
 
     private RecyclerView recyclerDeviceGroup;
@@ -37,10 +41,9 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
     private String placeGroupName;
 
     public DeviceGroupFragment() {
-        // Required empty public constructor
+
     }
 
-    // TODO: Rename and change types and number of parameters
     public static DeviceGroupFragment newInstance(String placeGroupName) {
         DeviceGroupFragment fragment = new DeviceGroupFragment();
         Bundle args = new Bundle();
@@ -56,7 +59,6 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
         application = (MyApplication) getContext().getApplicationContext();
 
         placeGroupName = getArguments().getString("placeGroupName");
-
         placeGroup = application.getPlaceGroup(placeGroupName);
 
         deviceGroupLineDisplayList = loadDeviceGroupData();
@@ -79,7 +81,6 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -103,49 +104,34 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
     private List<DeviceGroupLineDisplay> loadDeviceGroupData() {
+
         List<DeviceGroupLineDisplay> deviceGroupLineDisplays = new ArrayList<>();
+        List<DeviceType> deviceTypes = Arrays.asList(DeviceType.values());
 
-        DeviceGroup deviceGroupLamp = new DeviceGroup(DeviceType.LAMP, "Освещение", R.drawable.ic_bulb);
-        DeviceGroup deviceGroupSocket = new DeviceGroup(DeviceType.SOCKET,"Розетки", R.drawable.ic_socket);
-        DeviceGroupLineDisplay deviceGroupLineDisplay1 = new DeviceGroupLineDisplay(deviceGroupLamp, deviceGroupSocket);
+        for (int i = 0;; i++) {
 
-        DeviceGroup deviceGroupLocker = new DeviceGroup(DeviceType.LOCKER,"Замки", R.drawable.ic_lock);
-        DeviceGroup deviceGroupConditioner = new DeviceGroup(DeviceType.CONDITIONER,"Кондиционеры", R.drawable.ic_air_conditioner);
-        DeviceGroupLineDisplay deviceGroupLineDisplay2 = new DeviceGroupLineDisplay(deviceGroupLocker, deviceGroupConditioner);
+            if (i * DISPLAY_LINE_CAPACITY >= deviceTypes.size())
+                break;
 
-        DeviceGroup deviceGroupThermometer = new DeviceGroup(DeviceType.HEATERS,"Подогрев полов", R.drawable.ic_floor);
-        DeviceGroup deviceGroupMusicPlayer = new DeviceGroup(DeviceType.MUSIC_PLAYER,"Окружение", R.drawable.ic_sound_system);
-        DeviceGroupLineDisplay deviceGroupLineDisplay3 = new DeviceGroupLineDisplay(deviceGroupThermometer, deviceGroupMusicPlayer);
+            DeviceGroupLineDisplay deviceGroupLineDisplay = new DeviceGroupLineDisplay();
 
-        DeviceGroup deviceGroupHoover = new DeviceGroup(DeviceType.HOOVER,"Пылесос", R.drawable.ic_hoover);
-        DeviceGroup deviceGroupBlind = new DeviceGroup(DeviceType.JALOUSIE,"Шторы", R.drawable.ic_window);
-        DeviceGroupLineDisplay deviceGroupLineDisplay4 = new DeviceGroupLineDisplay(deviceGroupHoover, deviceGroupBlind);
+            for (int j = 0; j < DISPLAY_LINE_CAPACITY; j++) {
 
-        DeviceGroup deviceGroupCamera = new DeviceGroup(DeviceType.CAMERA,"Камеры", R.drawable.ic_security_cam);
-        DeviceGroup deviceGroupKettle = new DeviceGroup(DeviceType.KETTLE,"Чайник", R.drawable.ic_kettle);
-        DeviceGroupLineDisplay deviceGroupLineDisplay5 = new DeviceGroupLineDisplay(deviceGroupCamera, deviceGroupKettle);
+                if (i * DISPLAY_LINE_CAPACITY + j >= deviceTypes.size())
+                    break;
 
-        deviceGroupLineDisplays.add(deviceGroupLineDisplay1);
-        deviceGroupLineDisplays.add(deviceGroupLineDisplay2);
-        deviceGroupLineDisplays.add(deviceGroupLineDisplay3);
-        deviceGroupLineDisplays.add(deviceGroupLineDisplay4);
-        deviceGroupLineDisplays.add(deviceGroupLineDisplay5);
+                DeviceType deviceType = deviceTypes.get(i * DISPLAY_LINE_CAPACITY + j);
+                deviceGroupLineDisplay.addCardDeviceGroupToLine(deviceType);
+            }
+
+            deviceGroupLineDisplays.add(deviceGroupLineDisplay);
+
+        }
 
         return deviceGroupLineDisplays;
     }
@@ -165,12 +151,18 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
 
     private class DeviceGroupLineDisplay {
 
-        private DeviceGroup deviceGroup1;
-        private DeviceGroup deviceGroup2;
+        private List<DeviceType> deviceTypes;
 
-        public DeviceGroupLineDisplay(DeviceGroup deviceGroup1, DeviceGroup deviceGroup2) {
-            this.deviceGroup1 = deviceGroup1;
-            this.deviceGroup2 = deviceGroup2;
+        public DeviceGroupLineDisplay() {
+            this.deviceTypes = new ArrayList<>();
+        }
+
+        public void addCardDeviceGroupToLine(DeviceType deviceType) {
+            deviceTypes.add(deviceType);
+        }
+
+        public List<DeviceType> getDeviceTypes () {
+            return deviceTypes;
         }
     }
 
@@ -179,7 +171,7 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
         @NonNull
         @Override
         public Adapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.device_group_line_view, viewGroup, false);
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_device_group_line_view, viewGroup, false);
             return new Adapter.ItemViewHolder(v);
         }
 
@@ -187,62 +179,44 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
         public void onBindViewHolder(@NonNull final Adapter.ItemViewHolder holder, final int i) {
 
             final DeviceGroupLineDisplay deviceGroupLineDisplay = deviceGroupLineDisplayList.get(i);
+            final List<DeviceType> deviceTypes = deviceGroupLineDisplay.getDeviceTypes();
 
             holder.bind(deviceGroupLineDisplay);
 
-            holder.cardView1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(getContext(), deviceGroupLineDisplay.deviceGroup1.deviceType, placeGroup);
-                    dialog.show();
-                }
-            });
+            final List<CardView> cardViews = holder.cardViews;
 
-            holder.cardView1.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    //Toast.makeText(getApplicationContext(), "Вкл/выкл", Toast.LENGTH_SHORT).show();
-                    ConfirmEnableDeviceGroup dialog = new ConfirmEnableDeviceGroup(getContext(), false) {
-                        @Override
-                        public void setOnConfirmListener(boolean deviceGroupEnabled) {
-                            if (deviceGroupEnabled)
-                                Toast.makeText(getContext(), "Выключено", Toast.LENGTH_SHORT).show();
-                            else
-                                Toast.makeText(getContext(), "Включено", Toast.LENGTH_SHORT).show();
-                        }
-                    };
-                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                    dialog.show();
-                    return true;
-                }
-            });
+            for (int j = 0; j < deviceTypes.size(); j++) {
 
-            holder.cardView2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(getContext(), deviceGroupLineDisplay.deviceGroup2.deviceType, placeGroup);
-                    dialog.show();
-                }
-            });
+                final DeviceType deviceType = deviceTypes.get(j);
+                final CardView cardView = cardViews.get(j);
 
-            holder.cardView2.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    //Toast.makeText(getApplicationContext(), "Вкл/выкл", Toast.LENGTH_SHORT).show();
-                    ConfirmEnableDeviceGroup dialog = new ConfirmEnableDeviceGroup(getContext(), true) {
-                        @Override
-                        public void setOnConfirmListener(boolean deviceGroupEnabled) {
-                            if (deviceGroupEnabled)
-                                Toast.makeText(getContext(), "Выключено", Toast.LENGTH_SHORT).show();
-                            else
-                                Toast.makeText(getContext(), "Включено", Toast.LENGTH_SHORT).show();
-                        }
-                    };
-                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                    dialog.show();
-                    return true;
-                }
-            });
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(getContext(), deviceType, placeGroup);
+                        dialog.show();
+                    }
+                });
+
+                cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        ConfirmEnableDeviceGroupDialog dialog = new ConfirmEnableDeviceGroupDialog(getContext(), false) {
+                            @Override
+                            public void setOnConfirmListener(boolean deviceGroupEnabled) {
+                                if (deviceGroupEnabled)
+                                    Toast.makeText(getContext(), "Выключено", Toast.LENGTH_SHORT).show();
+                                else
+                                    Toast.makeText(getContext(), "Включено", Toast.LENGTH_SHORT).show();
+                            }
+                        };
+                        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                        dialog.show();
+                        return true;
+                    }
+                });
+            }
+
         }
 
         @Override
@@ -252,31 +226,56 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
 
         public class ItemViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView name1;
-            private TextView name2;
-            private ImageView image1;
-            private ImageView image2;
-            private CardView cardView1;
-            private CardView cardView2;
+            private List<TextView> names;
+            private List<ImageView> images;
+            private List<CardView> cardViews;
 
             public ItemViewHolder(@NonNull View itemView) {
                 super(itemView);
-                name1 = itemView.findViewById(R.id.device_group_name1);
-                image1 = itemView.findViewById(R.id.device_group_image1);
-                name2 = itemView.findViewById(R.id.device_group_name2);
-                image2 = itemView.findViewById(R.id.device_group_image2);
-                cardView1 = itemView.findViewById(R.id.cardview_device_group1);
-                cardView2 = itemView.findViewById(R.id.cardview_device_group2);
+
+                names = new ArrayList<>();
+                images = new ArrayList<>();
+                cardViews = new ArrayList<>();
+
+                CardView cardView1 = itemView.findViewById(R.id.card_view_smart_device_group_line_item1);
+                CardView cardView2 = itemView.findViewById(R.id.card_view_smart_device_group_line_item2);
+
+                cardView1.setVisibility(View.INVISIBLE);
+                cardView2.setVisibility(View.INVISIBLE);
+
+                cardViews.add(cardView1);
+                cardViews.add(cardView2);
+
+                for (int i = 0; i < DISPLAY_LINE_CAPACITY; i++) {
+                    CardView cardView = cardViews.get(i);
+
+                    ImageView imageView = cardView.findViewById(R.id.smart_device_group_image);
+                    TextView textView = cardView.findViewById(R.id.smart_device_group_name);
+
+                    names.add(textView);
+                    images.add(imageView);
+                }
+
             }
 
             private void bind(final DeviceGroupLineDisplay deviceGroupLineDisplay) {
-                DeviceGroup deviceGroup1 = deviceGroupLineDisplay.deviceGroup1;
-                DeviceGroup deviceGroup2 = deviceGroupLineDisplay.deviceGroup2;
 
-                name1.setText(deviceGroup1.name);
-                image1.setImageResource(deviceGroup1.imageResId);
-                name2.setText(deviceGroup2.name);
-                image2.setImageResource(deviceGroup2.imageResId);
+                List<DeviceType> deviceTypes = deviceGroupLineDisplay.getDeviceTypes();
+
+                for (int i = 0; i < deviceTypes.size(); i++) {
+                    DeviceType deviceType = deviceTypes.get(i);
+
+                    CardView cardView = cardViews.get(i);
+                    cardView.setVisibility(View.VISIBLE);
+
+                    TextView textView = names.get(i);
+                    textView.setText(deviceType.getDeviceName());
+                    textView.setSelected(true);
+
+                    ImageView imageView = images.get(i);
+                    imageView.setImageResource(deviceType.getImageResourceID());
+                }
+
             }
         }
     }

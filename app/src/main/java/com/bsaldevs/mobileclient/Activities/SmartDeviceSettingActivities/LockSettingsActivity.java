@@ -1,4 +1,4 @@
-package com.bsaldevs.mobileclient.Activities;
+package com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities;
 
 import android.graphics.Color;
 import android.os.Bundle;

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.R;
 
-public abstract class ConfirmEnableDeviceGroup extends Dialog {
+public abstract class ConfirmEnableDeviceGroupDialog extends Dialog {
 
     private TextView title;
     private Button confirm;
@@ -21,7 +21,7 @@ public abstract class ConfirmEnableDeviceGroup extends Dialog {
     private static final String enabledButtonText = "Выключить";
     private static final String disabledButtonText = "Включить";
 
-    public ConfirmEnableDeviceGroup(@NonNull Context context, boolean deviceGroupEnabled) {
+    public ConfirmEnableDeviceGroupDialog(@NonNull Context context, boolean deviceGroupEnabled) {
         super(context);
         this.deviceGroupEnabled = deviceGroupEnabled;
     }

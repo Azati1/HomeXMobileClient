@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import com.bsaldevs.mobileclient.AccountManagerListener;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.Net.Request;
 import com.bsaldevs.mobileclient.Net.RequestPoll;
@@ -44,41 +45,92 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity implements RegistrationFragment.OnFragmentInteractionListener {
+public class LoginActivity extends AppCompatActivity implements RegistrationFragment.OnFragmentInteractionListener, AccountManagerListener {
 
     private MyApplication application;
     private CallbackManager callbackManager;
-    private LoginButton loginButton;
+    private LoginButton facebookBaseLoginButton;
+    private BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
         application = (MyApplication) getApplication();
-        initGUI();
+        application.subscribeToAccountManagerListener(this);
 
+        callbackManager = CallbackManager.Factory.create();
+
+        initGUI();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        application.unsubscribeToAccountManagerListener(this);
     }
 
     private void initGUI() {
 
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_login);
 
         FragmentManager manager = getSupportFragmentManager();
         RegistrationFragment registrationFragment = new RegistrationFragment();
         manager.beginTransaction().replace(R.id.bottom_registration_sheet, registrationFragment).commit();
 
-
         final EditText editLogin = findViewById(R.id.edit_login);
         final EditText editPassword = findViewById(R.id.edit_password);
-        final Button loginByApplication = findViewById(R.id.button9);
 
-        final ImageButton loginByGooglePlusButton = findViewById(R.id.imageButtonGoogle);
-        final ImageButton loginByVKButton = findViewById(R.id.imageButtonVK);
-        final ImageButton loginByFB = findViewById(R.id.imageButtonFB);
+        final Button loginByApplication = findViewById(R.id.button_login_by_application);
+        final ImageButton loginByGooglePlusButton = findViewById(R.id.image_button_login_by_google);
+        final ImageButton loginByVKontakteButton = findViewById(R.id.image_button_login_by_vkontakte);
+        final ImageButton loginByFacebookButton = findViewById(R.id.image_button_login_by_facebook);
+
+        initBottomSheet();
+
+        loginByApplication.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = editLogin.getText().toString();
+                String password = editPassword.getText().toString();
+                loginWithUserData(email, password);
+            }
+        });
+
+        facebookBaseLoginButton = findViewById(R.id.login_facebook_button);
+        facebookBaseLoginButton.setReadPermissions("public_profile");
+
+        loginByGooglePlusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LoginActivity.this, "Login by google plus", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        loginByVKontakteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LoginActivity.this, "Login by vkontakte", Toast.LENGTH_SHORT).show();
+                VKSdk.login(LoginActivity.this);
+            }
+        });
+
+        loginByFacebookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LoginActivity.this, "Login by facebook", Toast.LENGTH_SHORT).show();
+                loginFacebookRequest();
+                facebookBaseLoginButton.performClick();
+            }
+        });
+
+    }
+
+    private void initBottomSheet() {
         final View sheet = findViewById(R.id.bottom_registration_sheet);
 
-        final BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(sheet);
 
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -98,10 +150,8 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             @Override
             public void onClick(View view) {
                 Log.d("CDA", bottomSheetBehavior.getState() + "");
-
                 switch (bottomSheetBehavior.getState()) {
                     case BottomSheetBehavior.STATE_COLLAPSED: {
-
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                         break;
                     }
@@ -115,93 +165,17 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                 }
             }
         });
+    }
 
-        loginByApplication.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String email = editLogin.getText().toString();
-                String password = editPassword.getText().toString();
-
-                loginWithUserData(email, password);
-            }
-        });
-
-        callbackManager = CallbackManager.Factory.create();
-        loginButton = findViewById(R.id.login_facebook_button);
-        loginButton.setReadPermissions("public_profile");
-        loginFB();
-
-        loginByGooglePlusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(LoginActivity.this, "Login by google plus", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        loginByVKButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(LoginActivity.this, "Login by vk", Toast.LENGTH_SHORT).show();
-                VKSdk.login(LoginActivity.this);
-            }
-        });
-
-        loginByFB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginButton.performClick();
-
-            }
-        });
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 
-    private void loginFB() {
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-
-                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
-                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                try {
-
-                                    String first_name = object.getString("first_name");
-                                    String url_photo = "https://graph.facebook.com/"+object.getString("id")+"/picture?width=50&height=50";
-                                    Log.d("CDA", first_name );
-                                    Account account = new Account();
-                                    account.setName(first_name);
-                                    account.setUrlPhoto(url_photo);
-                                    account.setLoggedBy("FB");
-                                    login(account);
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        });
-
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields","id,first_name,last_name");
-                        request.setParameters(parameters);
-                        request.executeAsync();
-
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        // App code
-                        Toast.makeText(LoginActivity.this, "Login Cancelled", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                    }
-                });
+    private void openInteractionActivity() {
+        Intent openMain = new Intent(LoginActivity.this, MainActivity.class);
+        openMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(openMain);
     }
 
     @Override
@@ -229,6 +203,7 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                                 Account account = new Account();
                                 account.setName(first_name);
                                 account.setUrlPhoto(url_photo);
+                                account.setLoggedBy(Account.LOGGED_BY_VKONTAKTE);
                                 login(account);
                             }
 
@@ -248,64 +223,121 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             super.onActivityResult(requestCode, resultCode, data);
         }
 
-
-
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    private void login(Account account) {
-        application.setAccount(account);
-        Intent login = new Intent(LoginActivity.this, MainActivity.class);
-        login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(login);
     }
 
     private void loginWithUserData(String email, String password) {
-
-        final Account account = new Account();
-        account.setEmail(email);
-        account.setPassword(password);
-        account.setLoggedBy("simple");
 
         String[] args = new String[2];
         args[0] = email;
         args[1] = password;
 
+        loginApplicationRequest(args);
+
+    }
+
+    private void loginApplicationRequest(String[] args) {
         RequestPoll requestPoll = application.getRequestPoll();
         Request request = new Request("client", "server", "login", args);
         request.executeWithListener(new ServerCallback() {
             @Override
             public void onComplete(Response response) {
 
-                if (response.getFuncName().equals("loginWithUserData")) {
+                if (response.getFuncName().equals("login")) {
                     String[] args = response.getFuncArgs();
 
                     if (args[0].equals("ok")) {
                         String name = args[1];
+                        Account account = new Account();
+                        account.setEmail(args[0]);
+                        account.setPassword(args[1]);
                         account.setName(name);
+                        account.setLoggedBy(Account.LOGGED_BY_APPLICATION);
                         login(account);
                     }
 
                     if (args[0].equals("error")) {
-                        ShowToastAsync showToastAsync = new ShowToastAsync("Не могу войти");
+                        ShowToast showToastAsync = new ShowToast("Не могу войти");
                         showToastAsync.execute();
                     }
                 }
             }
         });
         requestPoll.execute(request);
+    }
+
+    private void loginFacebookRequest() {
+        facebookBaseLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        try {
+                            String first_name = object.getString("first_name");
+                            String url_photo = "https://graph.facebook.com/" + object.getString("id") + "/picture?width=50&height=50";
+
+                            Account account = new Account();
+                            account.setName(first_name);
+                            account.setUrlPhoto(url_photo);
+                            account.setLoggedBy(Account.LOGGED_BY_FACEBOOK);
+                            login(account);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,first_name,last_name");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+                Toast.makeText(LoginActivity.this, "Login Cancelled", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+        });
+    }
+
+    private void login(Account account) {
+        application.login(account);
+        openInteractionActivity();
+    }
+
+    @Override
+    public void onUserLogged(Account account) {
 
     }
 
-    private class ShowToastAsync extends AsyncTask<Void, Void, Void> {
+    @Override
+    public void onUserUnLogged() {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        else
+            super.onBackPressed();
+    }
+
+    public class ShowToast extends AsyncTask<Void, Void, Void> {
 
         private String value;
 
-        public ShowToastAsync(String value) {
+        public ShowToast(String value) {
             this.value = value;
         }
 
@@ -316,7 +348,7 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            Toast.makeText(LoginActivity.this, value, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
         }
     }
 }

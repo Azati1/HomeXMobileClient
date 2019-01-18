@@ -1,14 +1,14 @@
 package com.bsaldevs.mobileclient.Devices;
 
-import com.bsaldevs.mobileclient.Activities.BlindSettingsActivity;
-import com.bsaldevs.mobileclient.Activities.ConditionerSettingsActivity;
-import com.bsaldevs.mobileclient.Activities.FloorSettingsActivity;
-import com.bsaldevs.mobileclient.Activities.HoverSettingsActivity;
-import com.bsaldevs.mobileclient.Activities.KettleSettingsActivity;
-import com.bsaldevs.mobileclient.Activities.LampSettingsActivity;
-import com.bsaldevs.mobileclient.Activities.LockSettingsActivity;
-import com.bsaldevs.mobileclient.Activities.MusicPlayerSettingsActivity;
-import com.bsaldevs.mobileclient.Activities.SocketSettingsActivity;
+import com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities.BlindSettingsActivity;
+import com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities.ConditionerSettingsActivity;
+import com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities.FloorSettingsActivity;
+import com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities.HoverSettingsActivity;
+import com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities.KettleSettingsActivity;
+import com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities.LampSettingsActivity;
+import com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities.LockSettingsActivity;
+import com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities.MusicPlayerSettingsActivity;
+import com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities.SocketSettingsActivity;
 import com.bsaldevs.mobileclient.R;
 
 public interface SmartDeviceDisplay {
@@ -23,7 +23,5 @@ public interface SmartDeviceDisplay {
     Class<FloorSettingsActivity> FLOOR_SETTINGS_ACTIVITY = FloorSettingsActivity.class;
     Class<HoverSettingsActivity> HOOVER_SETTINGS_ACTIVITY = HoverSettingsActivity.class;
 
-    int getImageResourceID();
     Class<?> getDisplayActivity();
-
 }

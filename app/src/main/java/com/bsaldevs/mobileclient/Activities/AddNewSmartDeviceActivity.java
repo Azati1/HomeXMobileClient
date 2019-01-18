@@ -7,27 +7,24 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import com.bsaldevs.mobileclient.Devices.DeviceType;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
-import com.bsaldevs.mobileclient.Dialogs.DialogConfirmAddNewDevice;
+import com.bsaldevs.mobileclient.Dialogs.ConfirmAddNewDeviceDialog;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddNewDeviceActivity extends AppCompatActivity {
+public class AddNewSmartDeviceActivity extends AppCompatActivity {
 
     private SearchView searchView;
     private RecyclerView recyclerView;
@@ -59,10 +56,10 @@ public class AddNewDeviceActivity extends AppCompatActivity {
         loadRecyclerItems();
 
         int resId = R.anim.layout_animation_fall_down;
-        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(AddNewDeviceActivity.this, resId);
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(AddNewSmartDeviceActivity.this, resId);
 
         recyclerView.setLayoutAnimation(animation);
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(AddNewDeviceActivity.this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(AddNewSmartDeviceActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
         recyclerView.setAdapter(new Adapter());
 
@@ -155,13 +152,13 @@ public class AddNewDeviceActivity extends AppCompatActivity {
 
                 final DeviceType deviceType = recyclerItem.deviceType;
 
-                imageView.setImageResource(deviceType.getDeviceImage());
+                imageView.setImageResource(deviceType.getImageResourceID());
                 textView.setText(deviceType.getDeviceName());
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        DialogConfirmAddNewDevice dialog = new DialogConfirmAddNewDevice(AddNewDeviceActivity.this, placeGroup, deviceType);
+                        ConfirmAddNewDeviceDialog dialog = new ConfirmAddNewDeviceDialog(AddNewSmartDeviceActivity.this, placeGroup, deviceType);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
                         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {

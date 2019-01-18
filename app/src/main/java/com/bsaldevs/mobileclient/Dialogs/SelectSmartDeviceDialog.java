@@ -111,7 +111,7 @@ public class SelectSmartDeviceDialog extends Dialog {
 
             private void bind(final SmartDevice smartDevice) {
                 name.setText(smartDevice.getName());
-                imageView.setImageResource(smartDevice.getImageResourceID());
+                imageView.setImageResource(smartDevice.getDeviceType().getImageResourceID());
                 aSwitch.setChecked(smartDevice.isEnabled());
                 aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override

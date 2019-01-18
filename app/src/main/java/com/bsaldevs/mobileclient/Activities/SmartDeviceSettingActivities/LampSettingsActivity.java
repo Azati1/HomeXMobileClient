@@ -1,4 +1,4 @@
-package com.bsaldevs.mobileclient.Activities;
+package com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities;
 
 import android.service.notification.StatusBarNotification;
 import android.support.v7.app.AppCompatActivity;

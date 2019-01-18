@@ -1,35 +1,27 @@
 package com.bsaldevs.mobileclient.Activities;
 
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.ShadowViewDelegate;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bsaldevs.mobileclient.Fragments.DeviceGroupFragment;
 import com.bsaldevs.mobileclient.Fragments.DevicesFragment;
-import com.bsaldevs.mobileclient.Fragments.RoomsFragment;
-import com.bsaldevs.mobileclient.Fragments.ScheduleFragment;
 import com.bsaldevs.mobileclient.R;
-import com.vk.sdk.VKSdk;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DevicesActivity extends FragmentActivity implements DeviceGroupFragment.OnFragmentInteractionListener, DevicesFragment.OnFragmentInteractionListener {
+public class SmartDevicesActivity extends FragmentActivity implements DeviceGroupFragment.OnFragmentInteractionListener, DevicesFragment.OnFragmentInteractionListener {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -95,7 +87,6 @@ public class DevicesActivity extends FragmentActivity implements DeviceGroupFrag
     public void onFragmentInteraction(Uri uri) {
 
     }
-
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
 

@@ -9,7 +9,7 @@ public enum DeviceType {
     SOCKET("Розетка", R.drawable.ic_socket),
     LOCKER("Замок", R.drawable.ic_lock),
     CONDITIONER("Кондиционер", R.drawable.ic_air_conditioner),
-    HEATERS("Обогрев", R.drawable.ic_floor),
+    HEATERS("Обогрев", R.drawable.ic_heater),
     MUSIC_PLAYER("Окружение", R.drawable.ic_sound_system),
     HOOVER("Пылесос", R.drawable.ic_hoover),
     JALOUSIE("Шторы", R.drawable.ic_window),
@@ -37,7 +37,7 @@ public enum DeviceType {
         return deviceName;
     }
 
-    public int getDeviceImage() {
+    public int getImageResourceID() {
         return deviceImage;
     }
 }

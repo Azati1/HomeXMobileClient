@@ -98,14 +98,9 @@ public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
             return false;
     }
 
-    @Override
-    public int getImageResourceID() {
-        return deviceType.getDeviceImage();
-    }
-
     public static SmartDevice create(DeviceType deviceType, String name, PlaceGroup placeGroup, TCPConnection connection) throws Exception {
 
-        SmartDevice smartDevice = null;
+        SmartDevice smartDevice;
 
         switch (deviceType) {
             case LAMP: {

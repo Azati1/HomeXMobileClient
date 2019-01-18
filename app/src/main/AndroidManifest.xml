@@ -24,30 +24,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.LampSettingsActivity" />
-        <activity android:name=".Activities.ConditionerSettingsActivity" />
-        <activity android:name=".Activities.KettleSettingsActivity" />
-        <activity android:name=".Activities.MusicPlayerSettingsActivity" />
+        <activity android:name=".Activities.SmartDeviceSettingActivities.LampSettingsActivity" />
+        <activity android:name=".Activities.SmartDeviceSettingActivities.ConditionerSettingsActivity" />
+        <activity android:name=".Activities.SmartDeviceSettingActivities.KettleSettingsActivity" />
+        <activity android:name=".Activities.SmartDeviceSettingActivities.MusicPlayerSettingsActivity" />
         <activity android:name=".Activities.LoginActivity" />
         <activity
             android:name=".Activities.AboutOfProgramActivity"
             android:label="@string/title_activity_main2" />
-        <activity android:name=".Activities.RegistrationActivity" />
-        <activity android:name=".Activities.BlindSettingsActivity" />
+        <activity android:name=".Activities.SmartDeviceSettingActivities.BlindSettingsActivity" />
         <activity
-            android:name=".Activities.DevicesActivity"
+            android:name=".Activities.SmartDevicesActivity"
             android:label="@string/title_activity_devices" />
         <activity
-            android:name=".Activities.AddNewDeviceActivity"
+            android:name=".Activities.AddNewSmartDeviceActivity"
             android:label="@string/title_activity_add_new_smart_device" />
         <activity
-            android:name=".Activities.FloorSettingsActivity"
+            android:name=".Activities.SmartDeviceSettingActivities.FloorSettingsActivity"
             android:label="@string/title_activity_floor_settings" />
         <activity
-            android:name=".Activities.SocketSettingsActivity"
+            android:name=".Activities.SmartDeviceSettingActivities.SocketSettingsActivity"
             android:label="@string/title_activity_socket_settings" />
         <activity
-            android:name=".Activities.LockSettingsActivity"
+            android:name=".Activities.SmartDeviceSettingActivities.LockSettingsActivity"
             android:label="@string/title_activity_lock_settings" />
 
         <meta-data
@@ -71,7 +70,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.HoverSettingsActivity"
+            android:name=".Activities.SmartDeviceSettingActivities.HoverSettingsActivity"
             android:label="@string/title_activity_hover_settings"></activity>
     </application>
 

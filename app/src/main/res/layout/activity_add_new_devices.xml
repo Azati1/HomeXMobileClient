@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/vk_white"
     android:orientation="vertical"
-    tools:context=".Activities.AddNewDeviceActivity">
+    tools:context=".Activities.AddNewSmartDeviceActivity">
 
     <SearchView
         android:id="@+id/search_device_view"

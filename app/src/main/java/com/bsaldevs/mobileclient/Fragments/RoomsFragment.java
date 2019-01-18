@@ -17,7 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bsaldevs.mobileclient.Activities.DevicesActivity;
+import com.bsaldevs.mobileclient.Activities.SmartDevicesActivity;
 import com.bsaldevs.mobileclient.Dialogs.ChangePlaceGroupDataDialog;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
@@ -127,7 +127,7 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), DevicesActivity.class);
+                        Intent intent = new Intent(getContext(), SmartDevicesActivity.class);
                         intent.putExtra("placeGroupName", item.getName());
                         startActivity(intent);
                     }
