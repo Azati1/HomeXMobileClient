@@ -36,9 +36,12 @@ public class RequestPoll {
 
         Response response = gson.fromJson(stringResponse, Response.class);
 
-        for (Request request : requests) {
+        for (int i = 0; i < requests.size(); i++) {
+            Request request = requests.get(i);
             if (request.getId() == response.getRequestId()) {
                 request.getServerCallback().onComplete(response);
+                requests.remove(request);
+                break;
             }
         }
 

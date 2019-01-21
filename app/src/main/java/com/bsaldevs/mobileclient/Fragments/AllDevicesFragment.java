@@ -1,13 +1,21 @@
 package com.bsaldevs.mobileclient.Fragments;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.AnimatorRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +23,23 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
+import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
+import com.futuremind.recyclerviewfastscroll.FastScroller;
+import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
+import com.futuremind.recyclerviewfastscroll.viewprovider.DefaultBubbleBehavior;
+import com.futuremind.recyclerviewfastscroll.viewprovider.ScrollerViewProvider;
+import com.futuremind.recyclerviewfastscroll.viewprovider.ViewBehavior;
+import com.futuremind.recyclerviewfastscroll.viewprovider.VisibilityAnimationManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AllDevicesFragment extends android.support.v4.app.Fragment {
 
-    private RecyclerView recyclerDevices;
+    private RecyclerView recyclerSmartDevicesPlageGroup;
     private List<SmartDeviceInsidePlaceGroupDisplay> smartDeviceInsidePlaceGroupDisplays;
     private MyApplication application;
 
@@ -55,15 +68,20 @@ public class AllDevicesFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_all_devices, container, false);
-        recyclerDevices = view.findViewById(R.id.recycler_smart_device_place_groups);
+        recyclerSmartDevicesPlageGroup = view.findViewById(R.id.recycler_smart_device_place_groups);
 
         int resId = R.anim.layout_animation_fall_down;
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
 
-        recyclerDevices.setLayoutAnimation(animation);
+        recyclerSmartDevicesPlageGroup.setLayoutAnimation(animation);
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerDevices.setLayoutManager(horizontalLayoutManager);
-        recyclerDevices.setAdapter(new Adapter());
+        recyclerSmartDevicesPlageGroup.setLayoutManager(horizontalLayoutManager);
+        recyclerSmartDevicesPlageGroup.setAdapter(new Adapter());
+
+        FastScroller fastScroller = view.findViewById(R.id.fast_scroll);
+        fastScroller.setRecyclerView(recyclerSmartDevicesPlageGroup); // only after recyclerView.serAdapter()
+        fastScroller.setViewProvider(new CustomScrollerViewProvider());
+
         return view;
     }
 
@@ -176,7 +194,7 @@ public class AllDevicesFragment extends android.support.v4.app.Fragment {
 
     }
 
-    private class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> {
+    private class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> implements SectionTitleProvider {
 
         @NonNull
         @Override
@@ -187,18 +205,18 @@ public class AllDevicesFragment extends android.support.v4.app.Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull final Adapter.ItemViewHolder holder, final int i) {
-
             final SmartDeviceInsidePlaceGroupDisplay smartDeviceInsidePlaceGroupDisplay = smartDeviceInsidePlaceGroupDisplays.get(i);
-            final List<SmartDeviceLineDisplay> smartDeviceLineDisplay = smartDeviceInsidePlaceGroupDisplay.smartDeviceLineDisplays;
-            final PlaceGroup placeGroups = smartDeviceInsidePlaceGroupDisplay.getPlaceGroup();
-            final List<SmartDevice> smartDevices = placeGroups.getDevicesInside();
-
             holder.bind(smartDeviceInsidePlaceGroupDisplay);
         }
 
         @Override
         public int getItemCount() {
             return smartDeviceInsidePlaceGroupDisplays.size();
+        }
+
+        @Override
+        public String getSectionTitle(int position) {
+            return String.valueOf(smartDeviceInsidePlaceGroupDisplays.get(position).getPlaceGroup().getName().charAt(0));
         }
 
         public class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -334,6 +352,177 @@ public class AllDevicesFragment extends android.support.v4.app.Fragment {
             }
 
         }
+    }
+
+    public class CustomScrollerViewProvider extends ScrollerViewProvider {
+
+        private TextView bubble;
+        private View handle;
+
+        @Override
+        public View provideHandleView(ViewGroup container) {
+            handle = new View(getContext());
+            handle.setLayoutParams(new ViewGroup.LayoutParams(15, 60));
+            handle.setBackgroundResource(R.drawable.rounded_corners_rectangle_slider);
+            handle.setVisibility(View.INVISIBLE);
+            return handle;
+        }
+
+        @Override
+        public View provideBubbleView(ViewGroup container) {
+            bubble = new TextView(getContext());
+            bubble.setTextSize(30);
+            bubble.setLayoutParams(new ViewGroup.LayoutParams(200, 200));
+            bubble.setBackgroundResource(R.drawable.rounded_corners_rectangle_bubble_slider);
+            bubble.setVisibility(View.INVISIBLE);
+            bubble.setGravity(Gravity.CENTER);
+            bubble.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+            /*getScroller().addScrollerListener(new RecyclerViewScrollListener.ScrollerListener() {
+                @Override
+                public void onScroll(float relativePos) {
+                    //Yeah, yeah, but we were so preoccupied with whether or not we could,
+                    //that we didn't stop to think if we should.
+                    bubble.setRotation(relativePos*360f);
+                }
+            });*/
+            return bubble;
+        }
+
+        @Override
+        public TextView provideBubbleTextView() {
+            return bubble;
+        }
+
+        @Override
+        public int getBubbleOffset() {
+            return (int) (getScroller().isVertical() ? (float)handle.getHeight()/2f-(float)bubble.getHeight()/2f : (float)handle.getWidth()/2f-(float)bubble.getWidth()/2);
+        }
+
+        @Override
+        protected ViewBehavior provideHandleBehavior() {
+            return new CustomHandleBehavior(
+                    new VisibilityAnimationManager.Builder(handle)
+                            .withHideDelay(2000)
+                            .build(),
+                    new CustomHandleBehavior.HandleAnimationManager.Builder(handle)
+                            .withGrabAnimator(R.animator.custom_grab)
+                            .withReleaseAnimator(R.animator.custom_release)
+                            .build()
+            );
+        }
+
+        @Override
+        protected ViewBehavior provideBubbleBehavior() {
+            return new DefaultBubbleBehavior(new VisibilityAnimationManager.Builder(bubble).withHideDelay(0).build());
+        }
+
+        private ShapeDrawable drawRect (int width, int height, int color) {
+            ShapeDrawable rect = new ShapeDrawable (new RectShape());
+            rect.setIntrinsicHeight(height);
+            rect.setIntrinsicWidth(width);
+            rect.getPaint().setColor(color);
+            return rect;
+        }
+
+    }
+
+    public static class CustomHandleBehavior implements ViewBehavior{
+
+        private final VisibilityAnimationManager visibilityManager;
+        private final HandleAnimationManager grabManager;
+
+        private boolean isGrabbed;
+
+        public CustomHandleBehavior(VisibilityAnimationManager visibilityManager, HandleAnimationManager grabManager) {
+            this.visibilityManager = visibilityManager;
+            this.grabManager = grabManager;
+        }
+
+        @Override
+        public void onHandleGrabbed() {
+            isGrabbed = true;
+            visibilityManager.show();
+            grabManager.onGrab();
+        }
+
+        @Override
+        public void onHandleReleased() {
+            isGrabbed = false;
+            visibilityManager.hide();
+            grabManager.onRelease();
+        }
+
+        @Override
+        public void onScrollStarted() {
+            visibilityManager.show();
+        }
+
+        @Override
+        public void onScrollFinished() {
+            if(!isGrabbed) visibilityManager.hide();
+        }
+
+        static class HandleAnimationManager {
+
+            @Nullable
+            private AnimatorSet grabAnimator;
+            @Nullable
+            private AnimatorSet releaseAnimator;
+
+            protected HandleAnimationManager(View handle, @AnimatorRes int grabAnimator, @AnimatorRes int releaseAnimator) {
+                if (grabAnimator != -1) {
+                    this.grabAnimator = (AnimatorSet) AnimatorInflater.loadAnimator(handle.getContext(), grabAnimator);
+                    this.grabAnimator.setTarget(handle);
+                }
+                if (releaseAnimator != -1) {
+                    this.releaseAnimator = (AnimatorSet) AnimatorInflater.loadAnimator(handle.getContext(), releaseAnimator);
+                    this.releaseAnimator.setTarget(handle);
+                }
+            }
+
+            public void onGrab() {
+                if (releaseAnimator != null) {
+                    releaseAnimator.cancel();
+                }
+                if (grabAnimator != null) {
+                    grabAnimator.start();
+                }
+            }
+
+            public void onRelease() {
+                if (grabAnimator != null) {
+                    grabAnimator.cancel();
+                }
+                if (releaseAnimator != null) {
+                    releaseAnimator.start();
+                }
+            }
+
+            public static class Builder {
+                private View handle;
+                private int grabAnimator;
+                private int releaseAnimator;
+
+                public Builder(View handle) {
+                    this.handle = handle;
+                }
+
+                public Builder withGrabAnimator(@AnimatorRes int grabAnimator) {
+                    this.grabAnimator = grabAnimator;
+                    return this;
+                }
+
+                public Builder withReleaseAnimator(@AnimatorRes int releaseAnimator) {
+                    this.releaseAnimator = releaseAnimator;
+                    return this;
+                }
+
+                public HandleAnimationManager build() {
+                    return new HandleAnimationManager(handle, grabAnimator, releaseAnimator);
+                }
+            }
+        }
+
     }
 
 }

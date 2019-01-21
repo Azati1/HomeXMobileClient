@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import com.bsaldevs.mobileclient.Devices.DeviceType;
+import com.bsaldevs.mobileclient.SmartDevices.DeviceType;
 import com.bsaldevs.mobileclient.Dialogs.ConfirmAddNewDeviceDialog;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;

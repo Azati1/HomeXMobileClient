@@ -15,7 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
+import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.Activities.AddNewSmartDeviceActivity;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.PlaceGroup;
@@ -36,10 +36,9 @@ public class DevicesFragment extends android.support.v4.app.Fragment {
     private static final int DISPLAY_LINE_CAPACITY = 3;
 
     public DevicesFragment() {
-        // Required empty public constructor
+
     }
 
-    // TODO: Rename and change types and number of parameters
     public static DevicesFragment newInstance(String placeGroupName) {
         DevicesFragment fragment = new DevicesFragment();
         Bundle args = new Bundle();
@@ -78,7 +77,6 @@ public class DevicesFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);

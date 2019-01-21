@@ -3,15 +3,22 @@
     <string name="device_name">Device name</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_smart_devices">SmartDevicesActivity</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_devices">DevicesActivity</string>
     <string name="title_activity_add_new_smart_device">AddNewSmartDeviceActivity</string>
     <string name="title_activity_kettle_settings">KettleSettingsActivity</string>
     <string name="title_activity_floor_settings">FloorSettingsActivity</string>
     <string name="title_activity_socket_settings">SocketSettingsActivity</string>
     <string name="title_activity_lock_settings">LockSettingsActivity</string>
+    <string name="title_activity_main2">How to remove this ****?</string>
     <string name="facebook_app_id">1155638654560951</string>
     <string name="fb_login_protocol_scheme">fb1155638654560951</string>
     <string name="title_activity_hover_settings">HoverSettingsActivity</string>
+    <string name="conditioner_name">Кондиционер</string>
+    <string name="conditioner_adjust_humidity">Настроить влажность</string>
+    <string name="conditioner_set_the_temperature">Настроить температуру</string>
+    <string name="conditioner_temperature_value">100°С</string>
+    <string name="conditioner_humidity_value">100%</string>
+    <string name="devices_activity_fragment_all_device_title">Все устройства</string>
+    <string name="devices_activity_fragment_place_group_title">Комнаты</string>
 
 </resources>

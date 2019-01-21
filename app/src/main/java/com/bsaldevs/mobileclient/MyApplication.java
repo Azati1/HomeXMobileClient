@@ -2,30 +2,26 @@ package com.bsaldevs.mobileclient;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
-import com.bsaldevs.mobileclient.Devices.DeviceType;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Blind;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Conditioner;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.HeatedFloor;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Hoover;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Kettle;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Lamp;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Locker;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.MusicPlayer;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
-import com.bsaldevs.mobileclient.Devices.SmartDevices.Socket;
+
+import com.bsaldevs.mobileclient.SmartDevices.DeviceType;
+import com.bsaldevs.mobileclient.SmartDevices.List.Blind;
+import com.bsaldevs.mobileclient.SmartDevices.List.Conditioner;
+import com.bsaldevs.mobileclient.SmartDevices.List.HeatedFloor;
+import com.bsaldevs.mobileclient.SmartDevices.List.Hoover;
+import com.bsaldevs.mobileclient.SmartDevices.List.Kettle;
+import com.bsaldevs.mobileclient.SmartDevices.List.Lamp;
+import com.bsaldevs.mobileclient.SmartDevices.List.Locker;
+import com.bsaldevs.mobileclient.SmartDevices.List.MusicPlayer;
+import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
+import com.bsaldevs.mobileclient.SmartDevices.List.Socket;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
-import com.bsaldevs.mobileclient.Net.Request;
 import com.bsaldevs.mobileclient.Net.RequestPoll;
 import com.bsaldevs.mobileclient.User.Account;
 import com.bsaldevs.mobileclient.User.Client;
 import com.bsaldevs.mobileclient.User.Mobile;
 import com.bsaldevs.mobileclient.User.MobileClient;
 import com.bsaldevs.mobileclient.User.UserDevice;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.vk.sdk.VKSdk;
 
 import java.util.ArrayList;
@@ -44,22 +40,7 @@ public class MyApplication extends Application {
 
     public MyApplication() {
         super();
-
-        UserDevice mobile = new Mobile("username");
-
-        String ip100 = "192.168.0.100";
-        String ip101 = "192.168.0.101";
-        String ip = "18.216.150.250";
-        int port = 3346;
-
-        setupClient(new MobileClient(ip, port, mobile));
-
-        client.setOnClientException(new Client.onExceptionListener() {
-            @Override
-            public void onClientException(TCPConnection connection, Exception e) {
-                Log.d("CDA", "onClientExceptionHandler");
-            }
-        });
+        setupClient();
 
         this.connection = client.getConnection();
 
@@ -68,6 +49,23 @@ public class MyApplication extends Application {
 
         loadPlaceGroups();
         loadDevices();
+    }
+
+    public void setupClient() {
+        UserDevice mobile = new Mobile("username");
+
+        String ip100 = "192.168.0.100";
+        String ip101 = "192.168.0.101";
+        String ip = "18.216.150.250";
+        int port = 3346;
+
+        this.client = new MobileClient(ip, port, mobile);
+
+        Log.d("CDA_MA", "setupClient");
+    }
+
+    public void connect() {
+        client.connect();
     }
 
     public RequestPoll getRequestPoll() {
@@ -91,10 +89,6 @@ public class MyApplication extends Application {
 
     public Account getAccount() {
         return accountManager.getCurrentAccount();
-    }
-
-    public void setupClient(MobileClient client) {
-        this.client = client;
     }
 
     public MobileClient getClient() {
@@ -369,12 +363,7 @@ public class MyApplication extends Application {
         accountManager.init();
     }
 
-    public void subscribeToAccountManagerListener(AccountManagerListener listener) {
-        accountManager.subscribeListener(listener);
+    public void reconnect() {
+        connect();
     }
-
-    public void unsubscribeToAccountManagerListener(AccountManagerListener listener) {
-        accountManager.unsubscribeListener(listener);
-    }
-
 }

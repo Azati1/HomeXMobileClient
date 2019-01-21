@@ -45,7 +45,7 @@
                     android:background="@android:color/transparent"
                     android:enabled="false"
                     android:gravity="center"
-                    android:text="Кондиционер"
+                    android:text="@string/conditioner_name"
                     android:textColor="@color/vk_white"
                     android:textSize="36dp"
                     android:textStyle="bold" />
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="Настроить температуру" />
+                android:text="@string/conditioner_set_the_temperature" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,7 +124,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="100°С"
+                                android:text="@string/conditioner_temperature_value"
                                 android:textColor="@android:color/black"
                                 android:textSize="64sp" />
 
@@ -157,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="Настроить влажность" />
+                android:text="@string/conditioner_adjust_humidity" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -196,7 +196,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="100%"
+                            android:text="@string/conditioner_humidity_value"
                             android:textColor="@android:color/black"
                             android:textSize="64sp" />
 

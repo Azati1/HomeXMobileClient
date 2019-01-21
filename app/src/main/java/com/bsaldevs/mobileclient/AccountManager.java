@@ -20,8 +20,6 @@ import java.util.List;
 
 public class AccountManager {
 
-    private List<AccountManagerListener> listeners;
-
     private static final String APP_PREFERENCES_EMAIL = "EMAIL";
     private static final String APP_PREFERENCES_PASSWORD = "PASSWORD";
     private static final String APP_PREFERENCES_LOGIN_TYPE = "LOGIN_TYPE";
@@ -33,7 +31,6 @@ public class AccountManager {
     public AccountManager(MyApplication application, SharedPreferences sharedPreferences) {
         this.application = application;
         this.sharedPreferences = sharedPreferences;
-        this.listeners = new ArrayList<>();
     }
 
     public void init() throws Exception {
@@ -173,32 +170,12 @@ public class AccountManager {
 
     public void login(Account account) {
         setCurrentAccount(account);
-        noticeOnLoginListeners();
     }
 
     public void logout() {
         Account account = new Account();
         account.setLoggedBy(Account.NOT_LOGGED);
         setCurrentAccount(account);
-        noticeOnUnLoginListeners();
-    }
-
-    public void subscribeListener(AccountManagerListener listener) {
-        listeners.add(listener);
-    }
-
-    public void unsubscribeListener(AccountManagerListener listener) {
-        listeners.remove(listener);
-    }
-
-    private void noticeOnLoginListeners() {
-        for (AccountManagerListener listener : listeners)
-            listener.onUserLogged(getCurrentAccount());
-    }
-
-    private void noticeOnUnLoginListeners() {
-        for (AccountManagerListener listener : listeners)
-            listener.onUserUnLogged();
     }
 
 }

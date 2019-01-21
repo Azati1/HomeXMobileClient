@@ -1,6 +1,6 @@
 package com.bsaldevs.mobileclient;
 
-import com.bsaldevs.mobileclient.Devices.SmartDevices.SmartDevice;
+import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 
 import java.util.ArrayList;
 import java.util.List;

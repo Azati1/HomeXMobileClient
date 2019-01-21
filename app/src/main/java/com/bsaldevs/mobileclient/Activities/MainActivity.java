@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -22,28 +24,26 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bsaldevs.mobileclient.Fragments.AllDevicesFragment;
 import com.bsaldevs.mobileclient.MyApplication;
+import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
+import com.bsaldevs.mobileclient.Net.Connection.TCPConnectionListener;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.RoomsFragment;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKSdk;
-import java.io.IOException;
-import java.net.InetAddress;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements RoomsFragment.OnFragmentInteractionListener, AllDevicesFragment.OnFragmentInteractionListener {
 
     private MyApplication application;
-    private TransitionDrawable transitionDrawable;
-    private boolean isServerReachable = true;
-
-    private LinearLayout mainLayout;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private NavigationView navigationView;
+    private CoordinatorLayout coordinatorLayout;
+    private long lastBackPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +53,8 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         application = (MyApplication) getApplication();
 
         initGUI();
-        /*Thread thread = new Thread(new ServerStatusCheckThread());
-        thread.start();*/
+        Thread thread = new Thread(new ServerStatusCheckThread());
+        thread.start();
 
     }
 
@@ -63,23 +63,23 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         Window g = getWindow();
         g.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.TYPE_STATUS_BAR);
 
-        mainLayout = findViewById(R.id.main_container);
+        LinearLayout mainLayout = findViewById(R.id.main_container);
         mainLayout.setBackgroundResource(R.drawable.change_bg_anim);
 
-        transitionDrawable = (TransitionDrawable) mainLayout.getBackground();
+        TransitionDrawable transitionDrawable = (TransitionDrawable) mainLayout.getBackground();
 
         AnimationDrawable animationDrawable = (AnimationDrawable) transitionDrawable.getDrawable(0);
         animationDrawable.setEnterFadeDuration(10000);
         animationDrawable.setExitFadeDuration(10000);
         animationDrawable.start();
 
-        viewPager = findViewById(R.id.viewPagerContainer);
+        ViewPager viewPager = findViewById(R.id.view_pager_container);
         setupViewPager(viewPager);
 
-        tabLayout = findViewById(R.id.tab_layout);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
 
-        navigationView = findViewById(R.id.main_navigation_view);
+        NavigationView navigationView = findViewById(R.id.main_navigation_view);
         navigationView.setItemIconTintList(null);
 
         View headerView = navigationView.getHeaderView(0);
@@ -116,6 +116,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
             }
         });
 
+        coordinatorLayout = findViewById(R.id.main_coordinator_layout);
 
     }
 
@@ -141,6 +142,22 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        long currentTime = System.currentTimeMillis();
+
+        Log.d("CDA", "times between back click is " + (currentTime - lastBackPressedTime));
+
+        int EXIT_DELAY_TIME_MILLIS = 2000;
+        if (currentTime - lastBackPressedTime <= EXIT_DELAY_TIME_MILLIS) {
+            super.onBackPressed();
+        } else {
+            Toast.makeText(MainActivity.this, "Для выхода нажмите еще раз", Toast.LENGTH_SHORT).show();
+        }
+        lastBackPressedTime = currentTime;
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -180,123 +197,89 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
 
         @Override
         public void run() {
-            while (true) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                CheckServerStatus task = new CheckServerStatus();
-                task.execute();
-            }
+            CheckServerStatusWrapper statusWrapper = new CheckServerStatusWrapper();
+            application.getClient().subscribeToTCPListener(statusWrapper);
         }
 
     }
 
-    private class BackupData extends AsyncTask<Void, Void, Void> {
-
-        private boolean isLoaded = false;
+    public class CheckServerStatusWrapper implements TCPConnectionListener {
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            downloadData();
-            return null;
-        }
-
-        private void downloadData() {
-
+        public void onConnectionReady(TCPConnection connection) {
+            Log.d("CDA", "CheckServerStatusWrapper: onConnectionReady");
+            ShowSnackBar showSnackbar = new ShowSnackBar("Соединение установлено", true);
+            showSnackbar.execute();
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            //super.onPostExecute(aVoid);
-            if (isLoaded) {
+        public void onReceiveString(TCPConnection connection, String value) {
 
-            }
         }
-    }
-
-    private class CheckServerStatus extends AsyncTask<Void, Void, Boolean> {
 
         @Override
-        protected Boolean doInBackground(Void... voids) {
-            Boolean isReachable = checkServerConnection();
-            return isReachable;
+        public void onDisconnect(TCPConnection connection) {
+            Log.d("CDA", "CheckServerStatusWrapper: onDisconnect");
+            ShowSnackBar showSnackbar = new ShowSnackBar("Соединение разорвано", false);
+            showSnackbar.execute();
         }
 
-        private boolean checkServerConnection() {
-            //boolean isReachable = hostAvailabilityCheck();
-            boolean isReachable = true;
+        @Override
+        public void onException(TCPConnection connection, Exception e) {
 
-            try {
-                InetAddress.getByName("18.223.21.65").isReachable(1000);
-                isReachable = true;
-            } catch (IOException e) {
-                e.printStackTrace();
+            String exceptionValue = String.valueOf(e);
+
+            if (exceptionValue.contains("Connection refused")) {
+                // подключение к выключенному/не существующему серверу
+            } else if (exceptionValue.contains("Connection reset")) {
+                // вырубился сервер
+            } else if (exceptionValue.contains("Software caused connection abort")) {
+                // отключился интернет на телефоне
+            } else if (e.getMessage().contains("send string exception, out object is null")) {
+                // объект аутпута еще не создан
             }
-
-            if (isReachable)
-                Log.d("CDA", "server is reachable");
-            else
-                Log.d("CDA", "server is unreachable");
-
-            return isReachable;
         }
 
-        /*private boolean hostAvailabilityCheck() {
+        public class ShowSnackBar extends AsyncTask<Void, Void, Void> {
 
-            int status = 0;
-            final boolean[] isReachable = {true};
-            Socket s = null;
+            private String text;
+            private boolean isServerReachable;
 
-            Thread supportHostAvailablility = new Thread(new SupportThread());
-            supportHostAvailablility.start();
-
-            try {
-                s = new Socket("18.223.21.65", 3346);
-                status = 1;
-                return true;
-            } catch (IOException ex) {
-
+            public ShowSnackBar(String text, boolean isServerReachable) {
+                this.text = text;
+                this.isServerReachable = isServerReachable;
             }
-            status = -1;
-            return false;
-        }
-
-        class SupportThread implements Runnable {
 
             @Override
-            public void run() {
-                try {
-                    Thread.sleep(5000);
-                    if (status == 1)
-                        isReachable[0] = true;
-                    else
-                        isReachable[0] = false;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            protected Void doInBackground(Void... voids) {
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                if (isServerReachable) {
+                    Log.d("CDA", "onPostExecute: the server is reachable");
+                    Snackbar.make(coordinatorLayout, text, Snackbar.LENGTH_SHORT)
+                            .setAction("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Log.d("CDA", "Snackbar ok clicked");
+                                }
+                            }).show();
+                    //transitionDrawable.reverseTransition(500);
+                } else {
+                    Log.d("CDA", "onPostExecute: the server is not reachable");
+                    Snackbar.make(coordinatorLayout, text, Snackbar.LENGTH_SHORT)
+                            .setAction("Refresh", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Log.d("CDA", "Snackbar refresh clicked");
+                                    application.reconnect();
+                                }
+                            }).show();
+                    //transitionDrawable.startTransition(500);
                 }
             }
-        }
-
-        private boolean checkIsHostAvailablitity(int status) {
-
-        }*/
-
-        @Override
-        protected void onPostExecute(Boolean isReachable) {
-
-            if (isServerReachable == isReachable)
-                return;
-
-            isServerReachable = isReachable;
-
-            if (isReachable) {
-                transitionDrawable.reverseTransition(500);
-            } else {
-                transitionDrawable.startTransition(500);
-            }
-            super.onPostExecute(isReachable);
         }
 
     }

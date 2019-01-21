@@ -10,8 +10,12 @@
         android:id="@+id/place_group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
         android:text="Place group name"
+        android:textColor="@android:color/white"
         android:textSize="24sp" />
 
     <android.support.v7.widget.RecyclerView

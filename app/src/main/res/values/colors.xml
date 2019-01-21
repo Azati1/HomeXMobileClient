@@ -11,4 +11,5 @@
     <color name="StatusBarColor1">#5edaff</color>
     <color name="colorWarmer">#c62828</color>
     <color name="colorColder">#1976d2</color>
+    <color name="statusBarColor">#00FFFFFF</color>
 </resources>

@@ -12,7 +12,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.nio.charset.Charset;
 
 public class TCPConnection {
@@ -46,7 +48,8 @@ public class TCPConnection {
                 intr.start();
 
                 try {
-                    socket = new Socket(ip, port);
+                    socket = new Socket();
+                    socket.connect(new InetSocketAddress(ip, port), 1000);
                     in = new BufferedReader(new InputStreamReader(socket.getInputStream(), Charset.forName("UTF-8")));
                     out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), Charset.forName("UTF-8")));
                     eventListener.onConnectionReady(TCPConnection.this);
@@ -68,13 +71,13 @@ public class TCPConnection {
     }
 
     public synchronized void sendString(String value) {
-
-        //String deviceName = sender.getName();
         System.out.println(value);
-
         try {
-            out.write(value);
-            out.flush();
+            if (out != null) {
+                out.write(value);
+                out.flush();
+            } else
+                eventListener.onException(TCPConnection.this, new IOException("send string exception, out object is null"));
         } catch (IOException e) {
             eventListener.onException(TCPConnection.this, e);
             disconnect();
@@ -82,13 +85,6 @@ public class TCPConnection {
     }
 
     public synchronized void sendRequest(Request request) {
-        /*try {
-            out.write(request.toString()+ "\r\n");
-            out.flush();
-        } catch (IOException e) {
-            eventListener.onException(TCPConnection.this, e);
-            disconnect();
-        }*/
         MessageWriter task = new MessageWriter();
         task.execute(request);
     }
@@ -100,11 +96,6 @@ public class TCPConnection {
         } catch (IOException e) {
             eventListener.onException(TCPConnection.this, e);
         }
-    }
-
-    public synchronized void connect() {
-        if (!thread.isAlive())
-            thread.start();
     }
 
     private class MessageWriter extends AsyncTask<Request, Void, Void> {

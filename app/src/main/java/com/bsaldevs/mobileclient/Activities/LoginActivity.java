@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import com.bsaldevs.mobileclient.AccountManagerListener;
 import com.bsaldevs.mobileclient.MyApplication;
 import com.bsaldevs.mobileclient.Net.Request;
 import com.bsaldevs.mobileclient.Net.RequestPoll;
@@ -45,7 +44,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity implements RegistrationFragment.OnFragmentInteractionListener, AccountManagerListener {
+public class LoginActivity extends AppCompatActivity implements RegistrationFragment.OnFragmentInteractionListener {
 
     private MyApplication application;
     private CallbackManager callbackManager;
@@ -58,7 +57,6 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         setContentView(R.layout.activity_login);
 
         application = (MyApplication) getApplication();
-        application.subscribeToAccountManagerListener(this);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -68,7 +66,6 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        application.unsubscribeToAccountManagerListener(this);
     }
 
     private void initGUI() {
@@ -235,9 +232,9 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
 
     }
 
-    private void loginApplicationRequest(String[] args) {
+    private void loginApplicationRequest(final String[] requestArgs) {
         RequestPoll requestPoll = application.getRequestPoll();
-        Request request = new Request("client", "server", "login", args);
+        Request request = new Request("client", "server", "login", requestArgs);
         request.executeWithListener(new ServerCallback() {
             @Override
             public void onComplete(Response response) {
@@ -248,8 +245,8 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                     if (args[0].equals("ok")) {
                         String name = args[1];
                         Account account = new Account();
-                        account.setEmail(args[0]);
-                        account.setPassword(args[1]);
+                        account.setEmail(requestArgs[0]);
+                        account.setPassword(requestArgs[1]);
                         account.setName(name);
                         account.setLoggedBy(Account.LOGGED_BY_APPLICATION);
                         login(account);
@@ -313,16 +310,6 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
     private void login(Account account) {
         application.login(account);
         openInteractionActivity();
-    }
-
-    @Override
-    public void onUserLogged(Account account) {
-
-    }
-
-    @Override
-    public void onUserUnLogged() {
-
     }
 
     @Override
