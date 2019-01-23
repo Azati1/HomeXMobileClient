@@ -8,7 +8,7 @@ import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 public class WorkingState extends State {
 
     public WorkingState(SmartDevice sender, TCPConnection connection) {
-        super(sender, connection);
+        super(sender);
     }
 
     @Override

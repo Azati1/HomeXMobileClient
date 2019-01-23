@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.bsaldevs.mobileclient.SmartDevices.DeviceType;
 import com.bsaldevs.mobileclient.Dialogs.ConfirmAddNewDeviceDialog;
 import com.bsaldevs.mobileclient.MyApplication;
-import com.bsaldevs.mobileclient.PlaceGroup;
+import com.bsaldevs.mobileclient.DeviceGroup;
 import com.bsaldevs.mobileclient.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +33,8 @@ public class AddNewSmartDeviceActivity extends AppCompatActivity {
     private List<RecyclerItem> recyclerItems;
 
     private MyApplication application;
-    private PlaceGroup placeGroup;
-    private String placeGroupName;
+    private DeviceGroup deviceGroup;
+    private String deviceGroupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +45,13 @@ public class AddNewSmartDeviceActivity extends AppCompatActivity {
         application = (MyApplication) getApplication();
 
         Intent intent = getIntent();
-        placeGroupName = intent.getStringExtra("placeGroupName");
+        deviceGroupName = intent.getStringExtra("deviceGroupName");
 
-        placeGroup = application.getPlaceGroup(placeGroupName);
+        try {
+            deviceGroup = application.getDeviceGroup(deviceGroupName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         searchView = findViewById(R.id.search_device_view);
         recyclerView = findViewById(R.id.recycler_view_all_device_type);
@@ -158,7 +162,7 @@ public class AddNewSmartDeviceActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        ConfirmAddNewDeviceDialog dialog = new ConfirmAddNewDeviceDialog(AddNewSmartDeviceActivity.this, placeGroup, deviceType);
+                        ConfirmAddNewDeviceDialog dialog = new ConfirmAddNewDeviceDialog(AddNewSmartDeviceActivity.this, deviceGroup, deviceType);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
                         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {

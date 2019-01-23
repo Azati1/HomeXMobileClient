@@ -57,9 +57,7 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
         setContentView(R.layout.activity_login);
 
         application = (MyApplication) getApplication();
-
         callbackManager = CallbackManager.Factory.create();
-
         initGUI();
     }
 

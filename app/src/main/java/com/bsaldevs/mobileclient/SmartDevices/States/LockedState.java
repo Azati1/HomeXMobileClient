@@ -7,8 +7,8 @@ import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 
 public class LockedState extends State {
 
-    public LockedState(SmartDevice sender, TCPConnection connection) {
-        super(sender, connection);
+    public LockedState(SmartDevice sender) {
+        super(sender);
     }
 
     @Override

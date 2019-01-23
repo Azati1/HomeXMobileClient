@@ -18,28 +18,27 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.bsaldevs.mobileclient.DeviceGroup;
 import com.bsaldevs.mobileclient.SmartDevices.DeviceType;
 import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.MyApplication;
-import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 
 import java.util.List;
 
 public class SelectSmartDeviceDialog extends Dialog {
 
-    private RecyclerView recyclerView;
     private List<SmartDevice> deviceList;
     private Context context;
     private MyApplication application;
     private DeviceType deviceType;
-    private PlaceGroup placeGroup;
+    private DeviceGroup deviceGroup;
 
-    public SelectSmartDeviceDialog(@NonNull Context context, DeviceType deviceType, PlaceGroup placeGroup) {
+    public SelectSmartDeviceDialog(@NonNull Context context, DeviceType deviceType, DeviceGroup deviceGroup) {
         super(context);
         this.context = context;
         this.deviceType = deviceType;
-        this.placeGroup = placeGroup;
+        this.deviceGroup = deviceGroup;
     }
 
     @Override
@@ -49,9 +48,9 @@ public class SelectSmartDeviceDialog extends Dialog {
         setContentView(R.layout.dialog_select_smart_device);
 
         application = (MyApplication) context.getApplicationContext();
-        deviceList = getDevicesList(deviceType, placeGroup);
+        deviceList = getDevicesList(deviceType, deviceGroup);
 
-        recyclerView = findViewById(R.id.recycler_select_smart_device);
+        RecyclerView recyclerView = findViewById(R.id.recycler_select_smart_device);
 
         int resId = R.anim.layout_animation_fall_down;
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(context, resId);
@@ -62,8 +61,8 @@ public class SelectSmartDeviceDialog extends Dialog {
         recyclerView.setAdapter(new Adapter());
     }
 
-    private List<SmartDevice> getDevicesList(DeviceType deviceType, PlaceGroup placeGroup) {
-        return application.getSmartDevices(deviceType, placeGroup);
+    private List<SmartDevice> getDevicesList(DeviceType deviceType, DeviceGroup deviceGroup) {
+        return application.getSmartDevices(deviceType, deviceGroup);
     }
 
     private class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> {

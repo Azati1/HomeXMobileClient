@@ -17,17 +17,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bsaldevs.mobileclient.Activities.SmartDevicesActivity;
+import com.bsaldevs.mobileclient.Activities.RoomActivity;
+import com.bsaldevs.mobileclient.DeviceGroup;
 import com.bsaldevs.mobileclient.Dialogs.ChangePlaceGroupDataDialog;
 import com.bsaldevs.mobileclient.MyApplication;
-import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 import java.util.List;
 
 public class RoomsFragment extends android.support.v4.app.Fragment {
 
     private OnFragmentInteractionListener mListener;
-    private List<PlaceGroup> placeGroups;
+    private List<DeviceGroup> deviceGroups;
 
     public RoomsFragment() {
         // Required empty public constructor
@@ -41,7 +41,7 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        placeGroups = ((MyApplication) getContext().getApplicationContext()).getPlaceGroups();
+        deviceGroups = ((MyApplication) getContext().getApplicationContext()).getGroups();
     }
 
     @Override
@@ -100,13 +100,13 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull final Adapter.ItemViewHolder holder, final int i) {
-            final PlaceGroup placeGroup = placeGroups.get(i);
-            holder.bind(placeGroup);
+            final DeviceGroup deviceGroup = deviceGroups.get(i);
+            holder.bind(deviceGroup);
         }
 
         @Override
         public int getItemCount() {
-            return placeGroups.size();
+            return deviceGroups.size();
         }
 
         public class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -117,18 +117,18 @@ public class RoomsFragment extends android.support.v4.app.Fragment {
             public ItemViewHolder(@NonNull View itemView) {
                 super(itemView);
                 name = itemView.findViewById(R.id.place_group_name);
-                name.setSelected(true); // для вращения текста(название комнаты), котроый не влезет
+                name.setSelected(true); // для вращения текста(название комнаты), который не влезет
                 image = itemView.findViewById(R.id.place_group_image);
             }
 
-            private void bind(final PlaceGroup item) {
+            private void bind(final DeviceGroup item) {
                 name.setText(item.getName());
                 image.setImageResource(item.getImageResourceID());
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), SmartDevicesActivity.class);
-                        intent.putExtra("placeGroupName", item.getName());
+                        Intent intent = new Intent(getContext(), RoomActivity.class);
+                        intent.putExtra("deviceGroupName", item.getName());
                         startActivity(intent);
                     }
                 });

@@ -1,15 +1,17 @@
 package com.bsaldevs.mobileclient.Activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -25,24 +27,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bsaldevs.mobileclient.Fragments.AllDevicesFragment;
 import com.bsaldevs.mobileclient.MyApplication;
-import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
-import com.bsaldevs.mobileclient.Net.Connection.TCPConnectionListener;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.RoomsFragment;
+import com.bsaldevs.mobileclient.Tasks;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKSdk;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements RoomsFragment.OnFragmentInteractionListener, AllDevicesFragment.OnFragmentInteractionListener {
 
     private MyApplication application;
-    private CoordinatorLayout coordinatorLayout;
     private long lastBackPressedTime = 0;
 
     @Override
@@ -53,7 +51,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         application = (MyApplication) getApplication();
 
         initGUI();
-        Thread thread = new Thread(new ServerStatusCheckThread());
+        Thread thread = new Thread(new Tasks.ServerStatusCheckThread(MainActivity.this));
         thread.start();
 
     }
@@ -63,7 +61,7 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         Window g = getWindow();
         g.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.TYPE_STATUS_BAR);
 
-        LinearLayout mainLayout = findViewById(R.id.main_container);
+        LinearLayout mainLayout = findViewById(R.id.room_recycler_container);
         mainLayout.setBackgroundResource(R.drawable.change_bg_anim);
 
         TransitionDrawable transitionDrawable = (TransitionDrawable) mainLayout.getBackground();
@@ -116,8 +114,6 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
             }
         });
 
-        coordinatorLayout = findViewById(R.id.main_coordinator_layout);
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -165,13 +161,13 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         private List<Fragment> fragments;
         private List<String> titles;
 
-        public ViewPagerAdapter(android.support.v4.app.FragmentManager fm) {
+        private ViewPagerAdapter(android.support.v4.app.FragmentManager fm) {
             super(fm);
             fragments = new ArrayList<>();
             titles = new ArrayList<>();
         }
 
-        public void addFragmentPage(Fragment fragment, String title) {
+        private void addFragmentPage(Fragment fragment, String title) {
             fragments.add(fragment);
             titles.add(title);
         }
@@ -193,95 +189,37 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
         }
     }
 
-    private class ServerStatusCheckThread implements Runnable {
+    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
+
+        private boolean isOnline = true;
 
         @Override
-        public void run() {
-            CheckServerStatusWrapper statusWrapper = new CheckServerStatusWrapper();
-            application.getClient().subscribeToTCPListener(statusWrapper);
+        public void onReceive(Context context, Intent intent) {
+            Log.d("app","Network connectivity change");
+            ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+            if (networkInfo == null || networkInfo.getState() != NetworkInfo.State.CONNECTED) {
+                isOnline = false;
+            } else {
+                if (!isOnline)
+                    application.reconnect();
+                isOnline = true;
+            }
         }
+    };
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
     }
 
-    public class CheckServerStatusWrapper implements TCPConnectionListener {
-
-        @Override
-        public void onConnectionReady(TCPConnection connection) {
-            Log.d("CDA", "CheckServerStatusWrapper: onConnectionReady");
-            ShowSnackBar showSnackbar = new ShowSnackBar("Соединение установлено", true);
-            showSnackbar.execute();
-        }
-
-        @Override
-        public void onReceiveString(TCPConnection connection, String value) {
-
-        }
-
-        @Override
-        public void onDisconnect(TCPConnection connection) {
-            Log.d("CDA", "CheckServerStatusWrapper: onDisconnect");
-            ShowSnackBar showSnackbar = new ShowSnackBar("Соединение разорвано", false);
-            showSnackbar.execute();
-        }
-
-        @Override
-        public void onException(TCPConnection connection, Exception e) {
-
-            String exceptionValue = String.valueOf(e);
-
-            if (exceptionValue.contains("Connection refused")) {
-                // подключение к выключенному/не существующему серверу
-            } else if (exceptionValue.contains("Connection reset")) {
-                // вырубился сервер
-            } else if (exceptionValue.contains("Software caused connection abort")) {
-                // отключился интернет на телефоне
-            } else if (e.getMessage().contains("send string exception, out object is null")) {
-                // объект аутпута еще не создан
-            }
-        }
-
-        public class ShowSnackBar extends AsyncTask<Void, Void, Void> {
-
-            private String text;
-            private boolean isServerReachable;
-
-            public ShowSnackBar(String text, boolean isServerReachable) {
-                this.text = text;
-                this.isServerReachable = isServerReachable;
-            }
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                if (isServerReachable) {
-                    Log.d("CDA", "onPostExecute: the server is reachable");
-                    Snackbar.make(coordinatorLayout, text, Snackbar.LENGTH_SHORT)
-                            .setAction("Ok", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Log.d("CDA", "Snackbar ok clicked");
-                                }
-                            }).show();
-                    //transitionDrawable.reverseTransition(500);
-                } else {
-                    Log.d("CDA", "onPostExecute: the server is not reachable");
-                    Snackbar.make(coordinatorLayout, text, Snackbar.LENGTH_SHORT)
-                            .setAction("Refresh", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Log.d("CDA", "Snackbar refresh clicked");
-                                    application.reconnect();
-                                }
-                            }).show();
-                    //transitionDrawable.startTransition(500);
-                }
-            }
-        }
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
     }
 
 }

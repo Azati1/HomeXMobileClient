@@ -23,9 +23,10 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bsaldevs.mobileclient.DeviceGroup;
 import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.MyApplication;
-import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 import com.futuremind.recyclerviewfastscroll.FastScroller;
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
@@ -115,21 +116,21 @@ public class AllDevicesFragment extends android.support.v4.app.Fragment {
 
     private List<SmartDeviceInsidePlaceGroupDisplay> loadPlaceGroupData() {
         List<SmartDeviceInsidePlaceGroupDisplay> smartDeviceInsidePlaceGroupDisplays = new ArrayList<>();
-        List<PlaceGroup> placeGroups = application.getPlaceGroups();
+        List<DeviceGroup> deviceGroups = application.getGroups();
 
-        for (PlaceGroup placeGroup : placeGroups) {
-            SmartDeviceInsidePlaceGroupDisplay smartDeviceInsidePlaceGroupDisplay = new SmartDeviceInsidePlaceGroupDisplay(placeGroup);
-            smartDeviceInsidePlaceGroupDisplay.setSmartDeviceLineDisplays(loadDeviceData(placeGroup));
+        for (DeviceGroup deviceGroup : deviceGroups) {
+            SmartDeviceInsidePlaceGroupDisplay smartDeviceInsidePlaceGroupDisplay = new SmartDeviceInsidePlaceGroupDisplay(deviceGroup);
+            smartDeviceInsidePlaceGroupDisplay.setSmartDeviceLineDisplays(loadDeviceData(deviceGroup));
             smartDeviceInsidePlaceGroupDisplays.add(smartDeviceInsidePlaceGroupDisplay);
         }
 
         return smartDeviceInsidePlaceGroupDisplays;
     }
 
-    private List<SmartDeviceLineDisplay> loadDeviceData(PlaceGroup placeGroup) {
+    private List<SmartDeviceLineDisplay> loadDeviceData(DeviceGroup deviceGroup) {
 
         List<SmartDeviceLineDisplay> smartDeviceLineDisplayList = new ArrayList<>();
-        List<SmartDevice> smartDevices = placeGroup.getDevicesInside();
+        List<SmartDevice> smartDevices = deviceGroup.getDevicesInside();
 
         for (int i = 0;; i++) {
 
@@ -155,11 +156,11 @@ public class AllDevicesFragment extends android.support.v4.app.Fragment {
     }
 
     private class SmartDeviceInsidePlaceGroupDisplay {
-        private PlaceGroup placeGroup;
+        private DeviceGroup deviceGroup;
         private List<SmartDeviceLineDisplay> smartDeviceLineDisplays;
 
-        public SmartDeviceInsidePlaceGroupDisplay(PlaceGroup placeGroup) {
-            this.placeGroup = placeGroup;
+        public SmartDeviceInsidePlaceGroupDisplay(DeviceGroup deviceGroup) {
+            this.deviceGroup = deviceGroup;
             this.smartDeviceLineDisplays = new ArrayList<>();
         }
 
@@ -171,8 +172,8 @@ public class AllDevicesFragment extends android.support.v4.app.Fragment {
             return smartDeviceLineDisplays;
         }
 
-        public PlaceGroup getPlaceGroup() {
-            return placeGroup;
+        public DeviceGroup getDeviceGroup() {
+            return deviceGroup;
         }
     }
 
@@ -216,24 +217,24 @@ public class AllDevicesFragment extends android.support.v4.app.Fragment {
 
         @Override
         public String getSectionTitle(int position) {
-            return String.valueOf(smartDeviceInsidePlaceGroupDisplays.get(position).getPlaceGroup().getName().charAt(0));
+            return String.valueOf(smartDeviceInsidePlaceGroupDisplays.get(position).getDeviceGroup().getName().charAt(0));
         }
 
         public class ItemViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView placeGroupName;
+            private TextView deviceGroupName;
             private RecyclerView recyclerView;
 
             public ItemViewHolder(@NonNull View itemView) {
                 super(itemView);
-                placeGroupName = itemView.findViewById(R.id.place_group_name);
+                deviceGroupName = itemView.findViewById(R.id.place_group_name);
                 recyclerView = itemView.findViewById(R.id.recycler_smart_devices);
             }
 
             private void bind(final SmartDeviceInsidePlaceGroupDisplay smartDeviceInsidePlaceGroupDisplay) {
 
-                PlaceGroup placeGroup = smartDeviceInsidePlaceGroupDisplay.getPlaceGroup();
-                placeGroupName.setText(placeGroup.getName());
+                DeviceGroup deviceGroup = smartDeviceInsidePlaceGroupDisplay.getDeviceGroup();
+                deviceGroupName.setText(deviceGroup.getName());
                 int resId = R.anim.layout_animation_fall_down;
                 LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
 

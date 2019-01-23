@@ -7,8 +7,8 @@ import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 
 public class SwitchOffState extends State {
 
-    public SwitchOffState(SmartDevice sender, TCPConnection connection) {
-        super(sender, connection);
+    public SwitchOffState(SmartDevice sender) {
+        super(sender);
     }
 
     @Override

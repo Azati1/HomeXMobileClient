@@ -7,8 +7,8 @@ import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 
 public class ReadyState extends State {
 
-    public ReadyState(SmartDevice sender, TCPConnection connection) {
-        super(sender, connection);
+    public ReadyState(SmartDevice sender) {
+        super(sender);
     }
 
     @Override

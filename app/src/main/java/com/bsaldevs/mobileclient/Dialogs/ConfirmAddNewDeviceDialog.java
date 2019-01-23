@@ -11,10 +11,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bsaldevs.mobileclient.DeviceGroup;
 import com.bsaldevs.mobileclient.SmartDevices.DeviceType;
 import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 import com.bsaldevs.mobileclient.MyApplication;
-import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 
 public class ConfirmAddNewDeviceDialog extends Dialog {
@@ -26,13 +26,13 @@ public class ConfirmAddNewDeviceDialog extends Dialog {
     private Button buttonConfirm;
 
     private MyApplication application;
-    private PlaceGroup placeGroup;
+    private DeviceGroup deviceGroup;
     private DeviceType deviceType;
 
-    public ConfirmAddNewDeviceDialog(@NonNull Context context, PlaceGroup placeGroup, DeviceType deviceType) {
+    public ConfirmAddNewDeviceDialog(@NonNull Context context, DeviceGroup deviceGroup, DeviceType deviceType) {
         super(context);
         this.application = ((MyApplication) getContext().getApplicationContext());
-        this.placeGroup = placeGroup;
+        this.deviceGroup = deviceGroup;
         this.deviceType = deviceType;
     }
 
@@ -63,7 +63,7 @@ public class ConfirmAddNewDeviceDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 try {
-                    SmartDevice smartDevice = SmartDevice.create(deviceType, editDeviceName.getText().toString(), placeGroup, application.getClient().getConnection());
+                    SmartDevice smartDevice = SmartDevice.create(deviceType, editDeviceName.getText().toString(), deviceGroup, application.getClient().getConnection());
                     application.addSmartDevice(smartDevice);
                     dismiss();
                 } catch (Exception e) {

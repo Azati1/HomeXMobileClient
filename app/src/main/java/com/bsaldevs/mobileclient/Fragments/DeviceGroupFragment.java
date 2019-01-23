@@ -16,11 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bsaldevs.mobileclient.DeviceGroup;
 import com.bsaldevs.mobileclient.SmartDevices.DeviceType;
 import com.bsaldevs.mobileclient.Dialogs.ConfirmEnableDeviceGroupDialog;
 import com.bsaldevs.mobileclient.Dialogs.SelectSmartDeviceDialog;
 import com.bsaldevs.mobileclient.MyApplication;
-import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
 
 import java.util.ArrayList;
@@ -31,21 +31,17 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
 
     private static final int DISPLAY_LINE_CAPACITY = 2;
     private OnFragmentInteractionListener mListener;
-
-    private RecyclerView recyclerDeviceGroup;
-    private PlaceGroup placeGroup;
+    private DeviceGroup deviceGroup;
     private List<DeviceGroupLineDisplay> deviceGroupLineDisplayList;
     private MyApplication application;
-    private String placeGroupName;
 
     public DeviceGroupFragment() {
-
     }
 
-    public static DeviceGroupFragment newInstance(String placeGroupName) {
+    public static DeviceGroupFragment newInstance(String deviceGroupName) {
         DeviceGroupFragment fragment = new DeviceGroupFragment();
         Bundle args = new Bundle();
-        args.putString("placeGroupName", placeGroupName);
+        args.putString("deviceGroupName", deviceGroupName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,8 +52,12 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
 
         application = (MyApplication) getContext().getApplicationContext();
 
-        placeGroupName = getArguments().getString("placeGroupName");
-        placeGroup = application.getPlaceGroup(placeGroupName);
+        String deviceGroupName = getArguments().getString("deviceGroupName");
+        try {
+            deviceGroup = application.getDeviceGroup(deviceGroupName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         deviceGroupLineDisplayList = loadDeviceGroupData();
     }
@@ -67,7 +67,7 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_device_group, container, false);
 
-        recyclerDeviceGroup = view.findViewById(R.id.device_group_recycler);
+        RecyclerView recyclerDeviceGroup = view.findViewById(R.id.device_group_recycler);
 
         int resId = R.anim.layout_animation_fall_down;
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
@@ -134,19 +134,6 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
         return deviceGroupLineDisplays;
     }
 
-    private class DeviceGroup {
-
-        private String name;
-        private int imageResId;
-        private DeviceType deviceType;
-
-        public DeviceGroup(DeviceType deviceType, String name, int imageResId) {
-            this.deviceType = deviceType;
-            this.imageResId = imageResId;
-            this.name = name;
-        }
-    }
-
     private class DeviceGroupLineDisplay {
 
         private List<DeviceType> deviceTypes;
@@ -191,7 +178,7 @@ public class DeviceGroupFragment extends android.support.v4.app.Fragment {
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(getContext(), deviceType, placeGroup);
+                        SelectSmartDeviceDialog dialog = new SelectSmartDeviceDialog(getContext(), deviceType, deviceGroup);
                         dialog.show();
                     }
                 });

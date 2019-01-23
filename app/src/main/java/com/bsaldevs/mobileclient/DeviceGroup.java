@@ -5,13 +5,13 @@ import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceGroup {
+public class DeviceGroup {
 
     private String name;
     private int imageResourceID;
     private List<SmartDevice> devicesInside;
 
-    public PlaceGroup(String name, int imageResourceID) {
+    public DeviceGroup(String name, int imageResourceID) {
         this.name = name;
         this.imageResourceID = imageResourceID;
         this.devicesInside = new ArrayList<>();

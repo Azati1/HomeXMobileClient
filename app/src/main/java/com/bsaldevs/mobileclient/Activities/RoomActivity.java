@@ -1,113 +1,94 @@
-package com.bsaldevs.mobileclient.Fragments;
+package com.bsaldevs.mobileclient.Activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
-import com.bsaldevs.mobileclient.Activities.AddNewSmartDeviceActivity;
+import com.bsaldevs.mobileclient.DeviceGroup;
 import com.bsaldevs.mobileclient.MyApplication;
-import com.bsaldevs.mobileclient.PlaceGroup;
 import com.bsaldevs.mobileclient.R;
+import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DevicesFragment extends android.support.v4.app.Fragment {
-
-    private OnFragmentInteractionListener mListener;
-
-    private RecyclerView recyclerDeviceGroup;
-    private PlaceGroup placeGroup;
-    private List<SmartDeviceLineDisplay> deviceGroupLineDisplayList;
-    private MyApplication application;
-    private String placeGroupName;
+public class RoomActivity extends AppCompatActivity {
 
     private static final int DISPLAY_LINE_CAPACITY = 3;
+    private String deviceGroupName;
 
-    public DevicesFragment() {
-
-    }
-
-    public static DevicesFragment newInstance(String placeGroupName) {
-        DevicesFragment fragment = new DevicesFragment();
-        Bundle args = new Bundle();
-        args.putString("placeGroupName", placeGroupName);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private MyApplication application;
+    private DeviceGroup deviceGroup;
+    private RecyclerView recycler;
+    private List<SmartDeviceLineDisplay> deviceGroupLineDisplayList;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_room);
 
-        application = (MyApplication) getContext().getApplicationContext();
+        application = (MyApplication) getApplication();
 
-        placeGroupName = getArguments().getString("placeGroupName");
+        deviceGroupName = getIntent().getStringExtra(getString(R.string.device_group_bundle_name));
 
-        placeGroup = application.getPlaceGroup(placeGroupName);
+        try {
+            deviceGroup = application.getDeviceGroup(deviceGroupName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("CDA_DF", e.getMessage());
+        }
+
+        initGUI();
 
         deviceGroupLineDisplayList = loadDeviceGroupData();
+
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    private void initGUI() {
 
-        View view = inflater.inflate(R.layout.fragment_devices, container, false);
-        recyclerDeviceGroup = view.findViewById(R.id.recycler_all_devices);
+        setTitle(deviceGroupName);
+
+        DrawerLayout deviceLayout = findViewById(R.id.drawer_layout);
+        deviceLayout.setBackgroundResource(R.drawable.change_bg_anim);
+
+        TransitionDrawable transitionDrawable = (TransitionDrawable) deviceLayout.getBackground();
+
+        AnimationDrawable animationDrawable = (AnimationDrawable) transitionDrawable.getDrawable(0);
+        animationDrawable.setEnterFadeDuration(10000);
+        animationDrawable.setExitFadeDuration(10000);
+        animationDrawable.start();
+
+        recycler = findViewById(R.id.recycler_all_devices);
 
         int resId = R.anim.layout_animation_fall_down;
-        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(RoomActivity.this, resId);
 
-        recyclerDeviceGroup.setLayoutAnimation(animation);
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerDeviceGroup.setLayoutManager(horizontalLayoutManager);
-        recyclerDeviceGroup.setAdapter(new Adapter());
-        return view;
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+        recycler.setLayoutAnimation(animation);
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(RoomActivity.this, LinearLayoutManager.VERTICAL, false);
+        recycler.setLayoutManager(horizontalLayoutManager);
+        recycler.setAdapter(new Adapter());
     }
 
     private List<SmartDeviceLineDisplay> loadDeviceGroupData() {
 
         List<SmartDeviceLineDisplay> smartDeviceLineDisplayList = new ArrayList<>();
-        List<SmartDevice> smartDevices = placeGroup.getDevicesInside();
+        List<SmartDevice> smartDevices = deviceGroup.getDevicesInside();
 
         for (int i = 0;; i++) {
 
@@ -177,7 +158,7 @@ public class DevicesFragment extends android.support.v4.app.Fragment {
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), smartDevice.getDisplayActivity());
+                        Intent intent = new Intent(RoomActivity.this, smartDevice.getDisplayActivity());
                         startActivity(intent);
                     }
                 });
@@ -258,8 +239,8 @@ public class DevicesFragment extends android.support.v4.app.Fragment {
                     @Override
                     public void onClick(View view) {
                         int RESULT_OK = 23;
-                        Intent intent = new Intent(getContext(), AddNewSmartDeviceActivity.class);
-                        intent.putExtra("placeGroupName", placeGroupName);
+                        Intent intent = new Intent(RoomActivity.this, AddNewSmartDeviceActivity.class);
+                        intent.putExtra("deviceGroupName", deviceGroupName);
                         startActivityForResult(intent, RESULT_OK);
                     }
                 });

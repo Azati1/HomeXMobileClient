@@ -1,12 +1,11 @@
 package com.bsaldevs.mobileclient.SmartDevices.States;
 
-import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 
 public class LoadingState extends State {
 
-    public LoadingState(SmartDevice sender, TCPConnection connection) {
-        super(sender, connection);
+    public LoadingState(SmartDevice sender) {
+        super(sender);
         currentState = LOADED;
     }
 

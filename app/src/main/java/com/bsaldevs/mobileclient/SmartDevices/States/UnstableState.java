@@ -6,8 +6,8 @@ import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
 
 public class UnstableState extends State {
-    public UnstableState(SmartDevice sender, TCPConnection connection) {
-        super(sender, connection);
+    public UnstableState(SmartDevice sender) {
+        super(sender);
     }
 
     @Override

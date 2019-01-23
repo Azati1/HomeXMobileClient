@@ -1,5 +1,6 @@
 package com.bsaldevs.mobileclient.SmartDevices;
 
+import com.bsaldevs.mobileclient.DeviceGroup;
 import com.bsaldevs.mobileclient.SmartDevices.Abilities.Controllable;
 import com.bsaldevs.mobileclient.SmartDevices.List.Camera;
 import com.bsaldevs.mobileclient.SmartDevices.List.Conditioner;
@@ -17,28 +18,29 @@ import com.bsaldevs.mobileclient.SmartDevices.States.LockedState;
 import com.bsaldevs.mobileclient.SmartDevices.States.ReadyState;
 import com.bsaldevs.mobileclient.SmartDevices.States.SwitchOffState;
 import com.bsaldevs.mobileclient.SmartDevices.States.State;
-import com.bsaldevs.mobileclient.PlaceGroup;
 
 public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
 
+    private static int counter;
+
+    private DeviceGroup deviceGroup;
+    private TCPConnection connection;
     private String name;
     private int id;
     private State state;
-    private TCPConnection connection;
-    private static int counter;
-    private PlaceGroup place;
     private DeviceType deviceType;
-    private int currentState;
 
-    public SmartDevice(DeviceType deviceType, String name, PlaceGroup placeGroup, final TCPConnection connection) {
+    public SmartDevice(DeviceType deviceType, String name, TCPConnection connection) {
         this.id = counter++;
-        this.name = name;
-        this.place = placeGroup;
-        this.deviceType = deviceType;
         this.connection = connection;
-        state = new LoadingState(this, connection);
+        this.name = name;
+        this.deviceType = deviceType;
+        state = new LoadingState(this);
         load();
-        placeGroup.addSmartDevice(this);
+    }
+
+    public TCPConnection getConnection() {
+        return connection;
     }
 
     public String getName() {
@@ -53,20 +55,20 @@ public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
         return deviceType;
     }
 
-    private void changeState(State state) {
+    private void setState(State state) {
         this.state = state;
     }
 
     @Override
     public void turnOn() {
         state.turnOn();
-        changeState(new ReadyState(this, connection));
+        setState(new ReadyState(this));
     }
 
     @Override
     public void turnOff() {
         state.turnOff();
-        changeState(new SwitchOffState(this, connection));
+        setState(new SwitchOffState(this));
     }
 
     @Override
@@ -77,7 +79,7 @@ public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
     @Override
     public void block() {
         state.block();
-        changeState(new LockedState(this, connection));
+        setState(new LockedState(this));
     }
 
     private void load() {
@@ -85,18 +87,10 @@ public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
             @Override
             public void run() {
                 //TODO(Принять сообщение о готовности устройства к работе)
-                changeState(new ReadyState(SmartDevice.this, connection));
+                setState(new ReadyState(SmartDevice.this));
             }
         });
         thread.start();
-    }
-
-    public int getState() {
-        return currentState;
-    }
-
-    public PlaceGroup placedIn() {
-        return place;
     }
 
     public boolean isEnabled() {
@@ -106,58 +100,58 @@ public abstract class SmartDevice implements Controllable, SmartDeviceDisplay {
             return false;
     }
 
-    public static SmartDevice create(DeviceType deviceType, String name, PlaceGroup placeGroup, TCPConnection connection) throws Exception {
+    public static SmartDevice create(DeviceType deviceType, String name, DeviceGroup deviceGroup, TCPConnection connection) throws Exception {
 
         SmartDevice smartDevice;
 
         switch (deviceType) {
             case LAMP: {
-                smartDevice = new Lamp(name, placeGroup, connection);
+                smartDevice = new Lamp(name, connection);
                 break;
             }
 
             case CAMERA: {
-                smartDevice = new Camera(name, placeGroup, connection);
+                smartDevice = new Camera(name, connection);
                 break;
             }
 
             case HOOVER: {
-                smartDevice = new Hoover(name, placeGroup, connection);
+                smartDevice = new Hoover(name, connection);
                 break;
             }
 
             case KETTLE: {
-                smartDevice = new Kettle(name, placeGroup, connection);
+                smartDevice = new Kettle(name, connection);
                 break;
             }
 
             case LOCKER: {
-                smartDevice = new Locker(name, placeGroup, connection);
+                smartDevice = new Locker(name, connection);
                 break;
             }
 
             case MUSIC_PLAYER: {
-                smartDevice = new MusicPlayer(name, placeGroup, connection);
+                smartDevice = new MusicPlayer(name, connection);
                 break;
             }
 
             case SOCKET: {
-                smartDevice = new Socket(name, placeGroup, connection);
+                smartDevice = new Socket(name, connection);
                 break;
             }
 
             case HEATERS: {
-                smartDevice = new Heaters(name, placeGroup, connection);
+                smartDevice = new Heaters(name, connection);
                 break;
             }
 
             case JALOUSIE: {
-                smartDevice = new Jalousie(name, placeGroup, connection);
+                smartDevice = new Jalousie(name, connection);
                 break;
             }
 
             case CONDITIONER: {
-                smartDevice = new Conditioner(name, placeGroup, connection);
+                smartDevice = new Conditioner(name, connection);
                 break;
             }
 

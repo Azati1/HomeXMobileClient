@@ -20,5 +20,8 @@
     <string name="conditioner_humidity_value">100%</string>
     <string name="devices_activity_fragment_all_device_title">Все устройства</string>
     <string name="devices_activity_fragment_place_group_title">Комнаты</string>
+    <string name="device_group_bundle_name">deviceGroupName</string>
+    <string name="coordinator_layout_message_connection_refused">Соединение разорвано</string>
+    <string name="coordinator_layout_message_connection_ready">Соединение установлено</string>
 
 </resources>

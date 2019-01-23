@@ -1,11 +1,10 @@
 package com.bsaldevs.mobileclient.SmartDevices.List;
 
+import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.SmartDevices.DeviceType;
 import com.bsaldevs.mobileclient.SmartDevices.Abilities.IntensityChangeable;
 import com.bsaldevs.mobileclient.SmartDevices.SmartDevice;
-import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.SmartDevices.Abilities.ColorChangeable;
-import com.bsaldevs.mobileclient.PlaceGroup;
 
 public class Lamp extends SmartDevice implements ColorChangeable, IntensityChangeable {
 
@@ -14,8 +13,8 @@ public class Lamp extends SmartDevice implements ColorChangeable, IntensityChang
     private float warmDegrees;
     private float intensity;
 
-    public Lamp(String name, PlaceGroup placeGroup, TCPConnection connection) {
-        super(deviceType, name, placeGroup, connection);
+    public Lamp(String name, TCPConnection connection) {
+        super(deviceType, name, connection);
         lightColor = 0;
         warmDegrees = 0;
         intensity = 0;
