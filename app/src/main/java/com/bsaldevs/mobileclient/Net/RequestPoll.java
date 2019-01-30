@@ -40,7 +40,7 @@ public class RequestPoll {
             Request request = requests.get(i);
             if (request.getId() == response.getRequestId()) {
                 request.getServerCallback().onComplete(response);
-                //requests.remove(request);
+                requests.remove(request);
                 break;
             }
         }

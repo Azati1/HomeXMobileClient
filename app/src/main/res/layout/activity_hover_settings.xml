@@ -52,7 +52,7 @@
             <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_margin="8dp"
                 android:orientation="horizontal"
                 app:srcCompat="@drawable/ic_hoover" />
@@ -96,7 +96,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_kettle_style"
                 android:elevation="2dp"
-                android:text="Отчключить питание" />
+                android:text="Отключить питание" />
 
         </LinearLayout>
 
@@ -111,93 +111,51 @@
                 android:orientation="vertical"
                 android:padding="8dp">
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:autoSizeTextType="uniform"
                         android:text="Объем пыли в контейнере"
-                        android:textColor="@color/primary_text_drak"
-                        android:textSize="24sp"
-                        android:layout_gravity="center_vertical"/>
+                        android:textColor="@color/primary_text_drak" />
 
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:indeterminate="false"
-                        android:indeterminateTint="#e94b37"
-                        android:max="100"
-                        android:progress="20" />
+                    <com.bsaldevs.mobileclient.CustomViews.CircleStatusBar
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="5dp"
+                        app:stroke_width="3dp"/>
 
-                </FrameLayout>
+                </LinearLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    >
+                    android:orientation="horizontal" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Заряд аккумулятра"
+                        android:autoSizeTextType="uniform"
                         android:textColor="@color/primary_text_drak"
-                        android:textSize="24sp"
                         android:layout_gravity="center_vertical"/>
 
-                    <ProgressBar
-                        android:id="@+id/progressBar1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:indeterminate="false"
-                        android:indeterminateTint="#fdc32b"
-                        android:max="100"
-                        android:progress="80" />
+                    <com.bsaldevs.mobileclient.CustomViews.CircleStatusBar
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="5dp"
+                        app:stroke_width="3dp"/>
 
-                </FrameLayout>
+                </LinearLayout>
 
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <github.hellocsl.cursorwheel.CursorWheelLayout
-                    android:id="@+id/conditioner_controller3"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:layout_gravity="center"
-
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.496"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:wheelBackgroundColor="@color/color1"
-                    app:wheelCursorHeight="20dp"
-                    app:wheelItemRotateMode="none"
-                    app:wheelSelectedAngle="360" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Мощность"
-                    android:textColor="@color/vk_black"
-                    android:textSize="24sp" />
-            </FrameLayout>
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="4dp"
-                android:background="@color/color1"
-                android:layout_marginTop="16dp"/>
-
-
         </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>

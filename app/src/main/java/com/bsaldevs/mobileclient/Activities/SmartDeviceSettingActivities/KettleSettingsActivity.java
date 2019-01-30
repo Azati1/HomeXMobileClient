@@ -24,7 +24,6 @@ public class KettleSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_kettle_settings);
-        getSupportActionBar().hide();
 
         kettleController = findViewById(R.id.conditioner_controller2);
         kettleController.setOnMenuSelectedListener(new CursorWheelLayout.OnMenuSelectedListener() {

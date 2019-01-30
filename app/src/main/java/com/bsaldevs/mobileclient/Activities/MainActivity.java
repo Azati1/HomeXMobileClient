@@ -114,6 +114,16 @@ public class MainActivity extends FragmentActivity implements RoomsFragment.OnFr
             }
         });
 
+        MenuItem scheduleMenuButton = navigationView.getMenu().getItem(1);
+        scheduleMenuButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(MainActivity.this, ActionScheduleActivity.class);
+                startActivity(intent);
+                return false;
+            }
+        });
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

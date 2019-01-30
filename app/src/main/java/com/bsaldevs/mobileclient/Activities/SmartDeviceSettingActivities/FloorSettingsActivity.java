@@ -3,7 +3,9 @@ package com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bsaldevs.mobileclient.ConditionerWheelAdapter;
@@ -19,12 +21,16 @@ public class FloorSettingsActivity extends AppCompatActivity {
 
     private CursorWheelLayout Controller;
     private List<MenuItemData> menuItemDataList;
+    private TextView textViewTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_floor_settings);
-        getSupportActionBar().hide();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("qweg");
+        setSupportActionBar(toolbar);
 
         Controller = findViewById(R.id.conditioner_controller4);
         Controller.setOnMenuSelectedListener(new CursorWheelLayout.OnMenuSelectedListener() {

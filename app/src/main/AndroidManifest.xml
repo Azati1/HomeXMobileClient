@@ -13,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activities.ActionPickerActivity"></activity>
+        <activity android:name=".Activities.ActionScheduleActivity" />
         <activity
             android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"
@@ -70,7 +72,7 @@
         </activity>
         <activity
             android:name=".Activities.SmartDeviceSettingActivities.HoverSettingsActivity"
-            android:label="@string/title_activity_hover_settings"></activity>
+            android:label="@string/title_activity_hover_settings" />
     </application>
 
 </manifest>

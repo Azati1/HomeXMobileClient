@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#304ffe</color>
+    <color name="colorPrimary">#304FFE</color>
     <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#6200ea</color>
-    <color name="colorAccent2">#6200ea</color>
+    <color name="colorAccent2">#6200EA</color>
     <color name="colorSoftPrimary">#4db6ac</color>
-    <color name="colorSoftPrimaryDark">#00796b</color>
+    <color name="colorSoftPrimaryDark">#00796B</color>
     <color name="colorPrimaryText">#000000</color>
     <color name="color1">#58d8ff</color>
     <color name="StatusBarColor1">#5edaff</color>
     <color name="colorWarmer">#c62828</color>
-    <color name="colorColder">#1976d2</color>
+    <color name="colorColder">#1976D2</color>
     <color name="statusBarColor">#00FFFFFF</color>
 </resources>

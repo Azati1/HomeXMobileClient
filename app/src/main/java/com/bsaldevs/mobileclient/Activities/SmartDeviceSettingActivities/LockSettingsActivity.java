@@ -15,7 +15,6 @@ public class LockSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_settings);
-        getSupportActionBar().hide();
 
         /*final ImageButton backar = findViewById(R.id.backar);
         backar.setOnClickListener(new View.OnClickListener() {

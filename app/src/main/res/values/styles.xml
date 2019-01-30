@@ -9,12 +9,11 @@
         <item name="android:windowActivityTransitions">true</item>
     </style>
 
-    <style name="SeekBarColor"
-        parent="Widget.AppCompat.SeekBar">
+    <style name="SeekBarColor" parent="Widget.AppCompat.SeekBar">
         <item name="colorAccent">#ff0000</item>
     </style>
 
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/StatusBarColor1</item>
@@ -26,13 +25,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
     </style>
 
-
-
     <style name="AppTheme.LighterEditText" parent="Widget.AppCompat.EditText">
         <item name="colorControlActivated">@color/colorAccent2</item>
         <item name="colorControlNormal">@color/colorPrimaryDark</item>
     </style>
-    
+
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowMinWidthMajor">70%</item>
         <item name="android:windowMinWidthMinor">70%</item>
@@ -46,6 +43,13 @@
 
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

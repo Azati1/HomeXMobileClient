@@ -23,5 +23,12 @@
     <string name="device_group_bundle_name">deviceGroupName</string>
     <string name="coordinator_layout_message_connection_refused">Соединение разорвано</string>
     <string name="coordinator_layout_message_connection_ready">Соединение установлено</string>
+    <string name="smart_device_bundle_name">smartDeviceName</string>
+    <string name="autoheating">Автоподогрев</string>
+    <string name="turn_on">Включить</string>
+    <string name="turn_off">Выключить</string>
+    <string name="current_temperature">Текущая температура:</string>
+    <string name="current_temperature_value">25°</string>
+    <string name="title_activity_smart_device_settings">SmartDeviceSettingsActivity</string>
 
 </resources>

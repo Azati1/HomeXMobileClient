@@ -34,7 +34,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void initGUI() {
-        getSupportActionBar().hide();
         setupLoadingAnimation();
     }
 
@@ -47,11 +46,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void initAccount() {
-        try {
-            application.initAccount();
-        } catch (Exception e) {
-            Log.d("CDA_SA", "init account exception: " + e.getMessage());
-        }
+        application.initAccount();
     }
 
     private void loginAction() {
@@ -126,9 +121,4 @@ public class SplashActivity extends AppCompatActivity {
         application.getClient().unsubscribeFromTCPListener(statusWrapper);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        application.getClient().unsubscribeFromTCPListener(statusWrapper);
-    }
 }

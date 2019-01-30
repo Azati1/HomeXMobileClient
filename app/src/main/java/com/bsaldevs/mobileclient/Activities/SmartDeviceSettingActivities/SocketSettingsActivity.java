@@ -16,7 +16,6 @@ public class SocketSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_socket_settings);
-        getSupportActionBar().hide();
     }
 
 }

@@ -17,33 +17,10 @@ package com.bsaldevs.mobileclient.Activities.SmartDeviceSettingActivities;
 
 public class HoverSettingsActivity extends AppCompatActivity {
 
-    private CursorWheelLayout Controller;
-    private List<MenuItemData> menuItemDataList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hover_settings);
-        getSupportActionBar().hide();
-
-        Controller = findViewById(R.id.conditioner_controller3);
-        Controller.setOnMenuSelectedListener(new CursorWheelLayout.OnMenuSelectedListener() {
-            @Override
-            public void onItemSelected(CursorWheelLayout parent, View view, int pos) {
-                Toast.makeText(getBaseContext(), "Температура подогрева: " + menuItemDataList.get(pos).getTitle(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        menuItemDataList = new ArrayList<>();
-        loadData();
-    }
-
-    private void loadData() {
-        for (int i = 1; i < 21; i++) {
-            menuItemDataList.add(new MenuItemData(i + "%"));
-        }
-        ConditionerWheelAdapter adapter = new ConditionerWheelAdapter(getBaseContext(), menuItemDataList);
-        Controller.setAdapter(adapter);
     }
 
 }

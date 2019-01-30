@@ -26,7 +26,6 @@ public class ConditionerSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_conditioner_settings);
 
         conditionerController = findViewById(R.id.conditioner_controller);

@@ -22,13 +22,10 @@ import java.util.List;
 
 public class MyApplication extends Application {
 
-    private static final String APP_PREFERENCES = "USER_DATA";
-
     private MobileClient client;
     private TCPConnection connection;
     private AccountManager accountManager;
     private SmartDeviceManager smartDeviceManager;
-    private SharedPreferences sharedPreferences;
 
     public MyApplication() {
         super();
@@ -38,9 +35,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         VKSdk.initialize(getApplicationContext());
-        this.sharedPreferences = getSharedPreferences(APP_PREFERENCES, getApplicationContext().MODE_PRIVATE);
-        this.accountManager = new AccountManager(this, sharedPreferences);
-        this.smartDeviceManager = new SmartDeviceManager(this);
+        this.accountManager = new AccountManager(getApplicationContext());
+        this.smartDeviceManager = new SmartDeviceManager();
         smartDeviceManager.load(connection);
         setupClient();
         this.connection = client.getConnection();
@@ -70,9 +66,7 @@ public class MyApplication extends Application {
 
     public boolean isUserLoggedIn() {
         Account account = accountManager.getCurrentAccount();
-        if (account == null)
-            return false;
-        return true;
+        return account != null;
     }
 
     public Account getAccount() {
@@ -91,7 +85,7 @@ public class MyApplication extends Application {
         accountManager.logout();
     }
 
-    public void initAccount() throws Exception {
+    public void initAccount() {
         accountManager.init();
     }
 
@@ -99,8 +93,17 @@ public class MyApplication extends Application {
         connect();
     }
 
-    public DeviceGroup getDeviceGroup(String groupName) throws Exception {
-        return smartDeviceManager.getDeviceGroup(groupName);
+    public DeviceGroup getDeviceGroup(String groupName) {
+
+        DeviceGroup deviceGroup = null;
+
+        try {
+            deviceGroup = smartDeviceManager.getDeviceGroup(groupName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return deviceGroup;
     }
 
     public List<DeviceGroup> getGroups() {

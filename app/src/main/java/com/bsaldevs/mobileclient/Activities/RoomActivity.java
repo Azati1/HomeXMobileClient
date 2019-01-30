@@ -10,16 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bsaldevs.mobileclient.DeviceGroup;
 import com.bsaldevs.mobileclient.MyApplication;
@@ -46,18 +42,9 @@ public class RoomActivity extends AppCompatActivity {
         application = (MyApplication) getApplication();
 
         deviceGroupName = getIntent().getStringExtra(getString(R.string.device_group_bundle_name));
-
-        try {
-            deviceGroup = application.getDeviceGroup(deviceGroupName);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.d("CDA_DF", e.getMessage());
-        }
+        deviceGroup = application.getDeviceGroup(deviceGroupName);
 
         initGUI();
-
-        deviceGroupLineDisplayList = loadDeviceGroupData();
-
     }
 
     private void initGUI() {
@@ -83,6 +70,9 @@ public class RoomActivity extends AppCompatActivity {
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(RoomActivity.this, LinearLayoutManager.VERTICAL, false);
         recycler.setLayoutManager(horizontalLayoutManager);
         recycler.setAdapter(new Adapter());
+
+
+        deviceGroupLineDisplayList = loadDeviceGroupData();
     }
 
     private List<SmartDeviceLineDisplay> loadDeviceGroupData() {
@@ -159,6 +149,7 @@ public class RoomActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(RoomActivity.this, smartDevice.getDisplayActivity());
+                        intent.putExtra(getString(R.string.smart_device_bundle_name), smartDevice.getName());
                         startActivity(intent);
                     }
                 });

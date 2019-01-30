@@ -17,12 +17,10 @@ import java.util.List;
 
 public class SmartDeviceManager {
 
-    private List<SmartDevice> smartDevices;
-    private List<DeviceGroup> deviceGroups;
-    private MyApplication application;
+    private final List<SmartDevice> smartDevices;
+    private final List<DeviceGroup> deviceGroups;
 
-    public SmartDeviceManager(MyApplication application) {
-        this.application = application;
+    public SmartDeviceManager() {
         this.deviceGroups = new ArrayList<>();
         this.smartDevices = new ArrayList<>();
     }
@@ -185,48 +183,48 @@ public class SmartDeviceManager {
 
     public List<SmartDevice> getSmartDevices(DeviceType deviceType) {
 
-        List<SmartDevice> smartDevices = new ArrayList<>();
+        List<SmartDevice> resultSmartDevicesList = new ArrayList<>();
 
         switch (deviceType) {
             case LAMP:
                 for (SmartDevice device : smartDevices) {
                     if (device.getDeviceType() == DeviceType.LAMP)
-                        smartDevices.add(device);
+                        resultSmartDevicesList.add(device);
                 }
                 break;
             case CONDITIONER:
                 for (SmartDevice device : smartDevices) {
                     if (device.getDeviceType() == DeviceType.CONDITIONER)
-                        smartDevices.add(device);
+                        resultSmartDevicesList.add(device);
                 }
                 break;
             case LOCKER:
                 for (SmartDevice device : smartDevices) {
                     if (device.getDeviceType() == DeviceType.LOCKER)
-                        smartDevices.add(device);
+                        resultSmartDevicesList.add(device);
                 }
                 break;
             case HEATERS:
                 for (SmartDevice device : smartDevices) {
                     if (device.getDeviceType() == DeviceType.HEATERS)
-                        smartDevices.add(device);
+                        resultSmartDevicesList.add(device);
                 }
                 break;
             case MUSIC_PLAYER:
                 for (SmartDevice device : smartDevices) {
                     if (device.getDeviceType() == DeviceType.MUSIC_PLAYER)
-                        smartDevices.add(device);
+                        resultSmartDevicesList.add(device);
                 }
                 break;
             case SOCKET:
                 for (SmartDevice device : smartDevices) {
                     if (device.getDeviceType() == DeviceType.SOCKET)
-                        smartDevices.add(device);
+                        resultSmartDevicesList.add(device);
                 }
                 break;
         }
 
-        return smartDevices;
+        return resultSmartDevicesList;
     }
 
     public List<SmartDevice> getSmartDevices(DeviceType deviceType, DeviceGroup deviceGroup) {

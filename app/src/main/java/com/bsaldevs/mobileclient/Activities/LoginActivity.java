@@ -23,6 +23,7 @@ import com.bsaldevs.mobileclient.Net.Response;
 import com.bsaldevs.mobileclient.Net.ServerCallback;
 import com.bsaldevs.mobileclient.R;
 import com.bsaldevs.mobileclient.Fragments.RegistrationFragment;
+import com.bsaldevs.mobileclient.Tasks;
 import com.bsaldevs.mobileclient.User.Account;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -67,8 +68,6 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
     }
 
     private void initGUI() {
-
-        getSupportActionBar().hide();
 
         FragmentManager manager = getSupportFragmentManager();
         RegistrationFragment registrationFragment = new RegistrationFragment();
@@ -251,7 +250,7 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
                     }
 
                     if (args[0].equals("error")) {
-                        ShowToast showToastAsync = new ShowToast("Не могу войти");
+                        Tasks.ShowToast showToastAsync = new Tasks.ShowToast("Не могу войти", LoginActivity.this);
                         showToastAsync.execute();
                     }
                 }
@@ -318,22 +317,4 @@ public class LoginActivity extends AppCompatActivity implements RegistrationFrag
             super.onBackPressed();
     }
 
-    public class ShowToast extends AsyncTask<Void, Void, Void> {
-
-        private String value;
-
-        public ShowToast(String value) {
-            this.value = value;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
-        }
-    }
 }

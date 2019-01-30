@@ -10,8 +10,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnection;
 import com.bsaldevs.mobileclient.Net.Connection.TCPConnectionListener;
+
+import java.lang.ref.WeakReference;
 
 public class Tasks {
 
@@ -82,7 +85,7 @@ public class Tasks {
     public static class ShowSnackBar extends AsyncTask<Void, Void, Void> {
 
         private String message;
-        private CoordinatorLayout coordinatorLayout;
+        private WeakReference<CoordinatorLayout> weakCoordinatorLayout;
         private SnackBarType snackBarType;
 
         public enum SnackBarType {
@@ -90,7 +93,7 @@ public class Tasks {
         }
 
         public ShowSnackBar(CoordinatorLayout coordinatorLayout, String message, SnackBarType snackBarType) {
-            this.coordinatorLayout = coordinatorLayout;
+            this.weakCoordinatorLayout = new WeakReference<>(coordinatorLayout);
             this.message = message;
             this.snackBarType = snackBarType;
         }
@@ -103,27 +106,26 @@ public class Tasks {
         @Override
         protected void onPostExecute(Void aVoid) {
             Log.d("CDA", "onPostExecute: " + message);
-
-            Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
-
-            if (snackBarType == SnackBarType.ERROR)
-                snackbar.getView().setBackgroundColor(Color.RED);
-            if (snackBarType == SnackBarType.NOTIFICATION)
-                snackbar.getView().setBackgroundColor(Color.GREEN);
-
-            snackbar.show();
-
+            if (weakCoordinatorLayout != null) {
+                CoordinatorLayout coordinatorLayout = weakCoordinatorLayout.get();
+                Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
+                if (snackBarType == SnackBarType.ERROR)
+                    snackbar.getView().setBackgroundColor(Color.RED);
+                if (snackBarType == SnackBarType.NOTIFICATION)
+                    snackbar.getView().setBackgroundColor(Color.GREEN);
+                snackbar.show();
+            }
         }
     }
 
     public static class ShowDialog extends AsyncTask<Void, Void, Void> {
 
         private String message;
-        private Context context;
+        private WeakReference<Context> weakContext;
 
         public ShowDialog(String message, Context context) {
             this.message = message;
-            this.context = context;
+            this.weakContext = new WeakReference<>(context);
         }
 
         @Override
@@ -133,31 +135,35 @@ public class Tasks {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Ошибка!")
-                    .setMessage(message)
-                    .setCancelable(false)
-                    .setPositiveButton("Попробовать еще раз",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                    MyApplication application = (MyApplication) context.getApplicationContext();
-                                    application.reconnect();
-                                }
-                            });
-            AlertDialog alert = builder.create();
-            alert.show();
+            if (weakContext != null) {
+                final Context context = weakContext.get();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Ошибка!")
+                        .setMessage(message)
+                        .setCancelable(false)
+                        .setPositiveButton("Попробовать еще раз",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                        MyApplication application = (MyApplication) context.getApplicationContext();
+                                        application.reconnect();
+                                    }
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
         }
     }
 
     public static class ShowToast extends AsyncTask<Void, Void, Void> {
 
         private String value;
-        private Context context;
+        private WeakReference<Context> weakContext;
 
         public ShowToast(String value, Context context) {
             this.value = value;
-            this.context = context;
+            this.weakContext = new WeakReference<>(context);
         }
 
         @Override
@@ -167,7 +173,8 @@ public class Tasks {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
+            if (weakContext != null)
+                Toast.makeText(weakContext.get(), value, Toast.LENGTH_SHORT).show();
         }
     }
 

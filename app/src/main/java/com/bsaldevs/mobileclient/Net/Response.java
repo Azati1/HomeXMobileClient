@@ -2,14 +2,14 @@ package com.bsaldevs.mobileclient.Net;
 
 public class Response {
 
-    private int requestId;
+    private int id;
     private String sender;
     private String address;
     private String funcName;
     private String[] funcArgs;
 
     public Response(int id, String sender, String address, String funcName, String[] funcArgs) {
-        this.requestId = id;
+        this.id = id;
         this.address = address;
         this.sender = sender;
         this.funcName = funcName;
@@ -17,7 +17,7 @@ public class Response {
     }
 
     public int getRequestId() {
-        return requestId;
+        return id;
     }
 
     public String getSender() {
